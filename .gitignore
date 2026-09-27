@@ -43,5 +43,5 @@ scratch/
 # Internal patch/migration scripts
 scripts/_patch_*.py
 
-# ETL validation output (generated at runtime)
-data/validation/
+# ETL validation output (summary included in repo)
+# data/validation/logs/
