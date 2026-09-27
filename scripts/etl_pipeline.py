@@ -10,7 +10,6 @@ import json
 import logging
 from datetime import datetime
 import pandas as pd
-import numpy as np
 from sqlalchemy import text
 from dotenv import load_dotenv
 
@@ -143,7 +142,11 @@ def run_etl():
 
         df_dept_clean = df_dept.drop_duplicates(subset=["department_name"]).copy()
         # Drop raw department_id string if present to allow MySQL auto-increment integer PK
-        if "department_id" in df_dept_clean.columns and df_dept_clean["department_id"].dtype == object:
+        # Use pd.api.types.is_string_dtype for reliable detection in all pandas versions
+        if "department_id" in df_dept_clean.columns and (
+            pd.api.types.is_string_dtype(df_dept_clean["department_id"])
+            or df_dept_clean["department_id"].apply(lambda x: isinstance(x, str)).any()
+        ):
             raw_dept_code_map = dict(zip(df_dept_clean["department_id"], df_dept_clean["department_name"]))
             df_dept_clean_insert = df_dept_clean.drop(columns=["department_id"])
         else:
@@ -175,7 +178,7 @@ def run_etl():
         df_locs["village"] = df_locs["village"].fillna("Not Specified")
 
         df_locs.to_sql("locations", con=conn, if_exists="append", index=False)
-        df_locs.to_csv(os.path.join(PROCESSED_DIR, "locations_clean.csv"), index=False)
+        pd.DataFrame(df_locs).to_csv(os.path.join(PROCESSED_DIR, "locations_clean.csv"), index=False)
 
         loc_records = conn.execute(text("SELECT location_id, state, district, taluka, village FROM locations;")).fetchall()
         loc_key_to_id = {(r[1], r[2], r[3], r[4]): r[0] for r in loc_records}
@@ -209,7 +212,7 @@ def run_etl():
         df_sch_clean["department_id"] = mapped_dept_ids
         df_sch_insert = df_sch_clean.drop(columns=["scheme_id", "start_date", "end_date"], errors="ignore")
         df_sch_insert.to_sql("schemes", con=conn, if_exists="append", index=False)
-        df_sch_clean.to_csv(os.path.join(PROCESSED_DIR, "schemes_clean.csv"), index=False)
+        pd.DataFrame(df_sch_clean).to_csv(os.path.join(PROCESSED_DIR, "schemes_clean.csv"), index=False)
 
         sch_records = conn.execute(text("SELECT scheme_id, scheme_name, scheme_code FROM schemes;")).fetchall()
         sch_name_to_id = {r[1]: r[0] for r in sch_records}
@@ -263,12 +266,10 @@ def run_etl():
         ]
         df_projects_insert = df_projects[[c for c in proj_insert_cols if c in df_projects.columns]].copy()
         df_projects_insert.to_sql("projects", con=conn, if_exists="append", index=False)
-        df_projects.to_csv(os.path.join(PROCESSED_DIR, "projects_clean.csv"), index=False)
+        pd.DataFrame(df_projects).to_csv(os.path.join(PROCESSED_DIR, "projects_clean.csv"), index=False)
 
         # Build mapping from raw project_id string & project_code to DB auto_increment project_id
         db_projects = conn.execute(text("SELECT project_id, project_code, project_name FROM projects;")).fetchall()
-        db_prj_code_to_id = {r[1]: r[0] for r in db_projects if r[1]}
-        
         # Link raw project_id (row index alignment)
         raw_prj_id_to_db_id = {}
         for idx, r_id in enumerate(raw_prj_ids):
@@ -310,7 +311,7 @@ def run_etl():
         })
 
         ben_insert_df.to_sql("beneficiaries", con=conn, if_exists="append", index=False)
-        ben_insert_df.to_csv(os.path.join(PROCESSED_DIR, "beneficiaries_clean.csv"), index=False)
+        pd.DataFrame(ben_insert_df).to_csv(os.path.join(PROCESSED_DIR, "beneficiaries_clean.csv"), index=False)
         logger.info(f"Populated {len(ben_insert_df)} beneficiary records.")
         summary_report["tables_loaded"]["beneficiaries"] = len(ben_insert_df)
 
@@ -339,7 +340,7 @@ def run_etl():
         })
 
         fin_insert_df.to_sql("financials", con=conn, if_exists="append", index=False)
-        fin_insert_df.to_csv(os.path.join(PROCESSED_DIR, "financials_clean.csv"), index=False)
+        pd.DataFrame(fin_insert_df).to_csv(os.path.join(PROCESSED_DIR, "financials_clean.csv"), index=False)
         logger.info(f"Populated {len(fin_insert_df)} financial budget records.")
         summary_report["tables_loaded"]["financials"] = len(fin_insert_df)
 

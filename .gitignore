@@ -14,11 +14,12 @@ __pycache__/
 *.so
 .pytest_cache/
 
-# Virtual Environments
+# Virtual Environments & Conda
 venv/
 env/
 .venv/
 conda-env/
+.conda/
 
 # IDE configurations
 .vscode/
@@ -35,3 +36,12 @@ Desktop.ini
 # Temporary logs & databases
 *.log
 scratch/
+
+# Generated HTML reports (auto-created at runtime, not source code)
+data/reports/
+
+# Internal patch/migration scripts
+scripts/_patch_*.py
+
+# ETL validation output (generated at runtime)
+data/validation/

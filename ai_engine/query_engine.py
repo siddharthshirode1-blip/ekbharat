@@ -126,66 +126,235 @@ class GovernmentAIEngine:
     def _rule_based_sql_generator(self, question: str) -> str:
         """
         Intelligent pattern-based SQL generator for common cross-departmental,
-        financial, geographic, and beneficiary queries.
+        financial, geographic, beneficiary, and project queries.
+        Handles: state/district/department/scheme groupings + status filters.
         """
         q = question.lower()
 
-        # Cross department overlap / simultaneous projects
-        if any(w in q for w in ["both road and water", "cross-department", "multiple department", "overlap", "active simultaneously"]):
+        def has(words):
+            return any(w in q for w in words)
+
+        # ── Grouping dimension detection ──────────────────────────────────
+        by_state      = has(['state', 'states', 'each state', 'per state', 'by state'])
+        by_district   = has(['district', 'districts', 'each district', 'per district'])
+        by_department = has(['department', 'ministry', 'ministries', 'each department',
+                             'per department', 'by department'])
+        by_scheme     = has(['scheme', 'schemes', 'each scheme', 'per scheme', 'programme'])
+
+        # ── Status filter detection ───────────────────────────────────────
+        status_filter = ''
+        if has(['delayed', 'overdue', 'behind', 'late']):
+            status_filter = "AND p.status = 'DELAYED'"
+        elif has(['completed', 'finished', 'done']):
+            status_filter = "AND p.status = 'COMPLETED'"
+        elif has(['ongoing', 'active', 'running', 'in progress']):
+            status_filter = "AND p.status = 'ONGOING'"
+        elif has(['planned', 'upcoming']):
+            status_filter = "AND p.status = 'PLANNED'"
+        elif has(['cancelled', 'canceled']):
+            status_filter = "AND p.status = 'CANCELLED'"
+
+        # ── 1. Cross-department overlap / multi-ministry villages ─────────
+        if has(['both road and water', 'cross-department', 'multiple department',
+                'overlap', 'active simultaneously', 'more than one department',
+                'multiple ministry']):
             return (
-                "SELECT l.village, "
+                "SELECT l.village, l.state, "
                 "COUNT(DISTINCT p.department_id) AS department_count, "
                 "GROUP_CONCAT(DISTINCT d.department_name SEPARATOR ', ') AS active_departments "
                 "FROM projects p "
                 "JOIN locations l ON p.location_id = l.location_id "
                 "JOIN departments d ON p.department_id = d.department_id "
-                "GROUP BY l.village "
+                "GROUP BY l.village, l.state "
                 "HAVING COUNT(DISTINCT p.department_id) > 1 "
                 "ORDER BY department_count DESC LIMIT 20;"
             )
 
-        # Beneficiaries by scheme / category
-        if "beneficiar" in q or "bpl" in q:
+        # ── 2. Budget / Financial queries ─────────────────────────────────
+        if has(['budget', 'spent', 'expenditure', 'allocated', 'released',
+                'utilization', 'utilisation', 'fund', 'financial', 'money']):
+            if by_state:
+                return (
+                    "SELECT l.state, "
+                    "SUM(f.budget_allocated) AS total_allocated, "
+                    "SUM(f.amount_released) AS total_released, "
+                    "SUM(f.amount_spent) AS total_spent, "
+                    "ROUND((SUM(f.amount_spent) / NULLIF(SUM(f.budget_allocated), 0)) * 100, 2) "
+                    "  AS utilization_rate_pct "
+                    "FROM financials f "
+                    "JOIN projects p ON f.project_id = p.project_id "
+                    "JOIN locations l ON p.location_id = l.location_id "
+                    "GROUP BY l.state "
+                    "ORDER BY total_allocated DESC;"
+                )
+            elif by_district:
+                return (
+                    "SELECT l.state, l.district, "
+                    "SUM(f.budget_allocated) AS total_allocated, "
+                    "SUM(f.amount_spent) AS total_spent, "
+                    "ROUND((SUM(f.amount_spent) / NULLIF(SUM(f.budget_allocated), 0)) * 100, 2) "
+                    "  AS utilization_rate_pct "
+                    "FROM financials f "
+                    "JOIN projects p ON f.project_id = p.project_id "
+                    "JOIN locations l ON p.location_id = l.location_id "
+                    "GROUP BY l.state, l.district "
+                    "ORDER BY total_allocated DESC LIMIT 20;"
+                )
+            elif by_scheme:
+                return (
+                    "SELECT s.scheme_name, "
+                    "SUM(f.budget_allocated) AS total_allocated, "
+                    "SUM(f.amount_released) AS total_released, "
+                    "SUM(f.amount_spent) AS total_spent, "
+                    "ROUND((SUM(f.amount_spent) / NULLIF(SUM(f.budget_allocated), 0)) * 100, 2) "
+                    "  AS utilization_rate_pct "
+                    "FROM financials f "
+                    "JOIN schemes s ON f.scheme_id = s.scheme_id "
+                    "GROUP BY s.scheme_name "
+                    "ORDER BY total_allocated DESC;"
+                )
+            else:
+                # By department (default for budget queries)
+                return (
+                    "SELECT d.department_name, "
+                    "SUM(f.budget_allocated) AS total_allocated, "
+                    "SUM(f.amount_released) AS total_released, "
+                    "SUM(f.amount_spent) AS total_spent, "
+                    "ROUND((SUM(f.amount_spent) / NULLIF(SUM(f.budget_allocated), 0)) * 100, 2) "
+                    "  AS utilization_rate_pct "
+                    "FROM financials f "
+                    "JOIN schemes s ON f.scheme_id = s.scheme_id "
+                    "JOIN departments d ON s.department_id = d.department_id "
+                    "GROUP BY d.department_name "
+                    "ORDER BY total_allocated DESC;"
+                )
+
+        # ── 3. Beneficiary queries ────────────────────────────────────────
+        if has(['beneficiar', 'bpl', 'household', 'families', 'people covered', 'reach', 'recipients']):
+            if by_state:
+                return (
+                    "SELECT l.state, SUM(b.beneficiary_count) AS total_beneficiaries "
+                    "FROM beneficiaries b "
+                    "JOIN locations l ON b.location_id = l.location_id "
+                    "GROUP BY l.state "
+                    "ORDER BY total_beneficiaries DESC;"
+                )
+            elif by_district:
+                return (
+                    "SELECT l.state, l.district, SUM(b.beneficiary_count) AS total_beneficiaries "
+                    "FROM beneficiaries b "
+                    "JOIN locations l ON b.location_id = l.location_id "
+                    "GROUP BY l.state, l.district "
+                    "ORDER BY total_beneficiaries DESC LIMIT 20;"
+                )
+            elif by_scheme:
+                return (
+                    "SELECT s.scheme_name, b.beneficiary_category, "
+                    "SUM(b.beneficiary_count) AS total_beneficiaries "
+                    "FROM beneficiaries b "
+                    "JOIN schemes s ON b.scheme_id = s.scheme_id "
+                    "GROUP BY s.scheme_name, b.beneficiary_category "
+                    "ORDER BY total_beneficiaries DESC LIMIT 15;"
+                )
+            elif by_department:
+                return (
+                    "SELECT d.department_name, SUM(b.beneficiary_count) AS total_beneficiaries "
+                    "FROM beneficiaries b "
+                    "JOIN schemes s ON b.scheme_id = s.scheme_id "
+                    "JOIN departments d ON s.department_id = d.department_id "
+                    "GROUP BY d.department_name "
+                    "ORDER BY total_beneficiaries DESC;"
+                )
+            else:
+                return (
+                    "SELECT s.scheme_name, b.beneficiary_category, "
+                    "SUM(b.beneficiary_count) AS total_beneficiaries "
+                    "FROM beneficiaries b "
+                    "JOIN schemes s ON b.scheme_id = s.scheme_id "
+                    "GROUP BY s.scheme_name, b.beneficiary_category "
+                    "ORDER BY total_beneficiaries DESC LIMIT 15;"
+                )
+
+        # ── 4. Project count queries (with status filters) ────────────────
+        if has(['project', 'projects', 'how many', 'count', 'status', 'progress',
+                'completed', 'ongoing', 'delayed', 'planned', 'cancelled',
+                'total project', 'most project', 'least project']):
+            if by_state:
+                return (
+                    f"SELECT l.state, COUNT(p.project_id) AS project_count "
+                    f"FROM projects p "
+                    f"JOIN locations l ON p.location_id = l.location_id "
+                    f"WHERE 1=1 {status_filter} "
+                    f"GROUP BY l.state "
+                    f"ORDER BY project_count DESC;"
+                )
+            elif by_district:
+                return (
+                    f"SELECT l.state, l.district, COUNT(p.project_id) AS project_count "
+                    f"FROM projects p "
+                    f"JOIN locations l ON p.location_id = l.location_id "
+                    f"WHERE 1=1 {status_filter} "
+                    f"GROUP BY l.state, l.district "
+                    f"ORDER BY project_count DESC LIMIT 20;"
+                )
+            elif by_scheme:
+                return (
+                    f"SELECT s.scheme_name, COUNT(p.project_id) AS project_count "
+                    f"FROM projects p "
+                    f"JOIN schemes s ON p.scheme_id = s.scheme_id "
+                    f"WHERE 1=1 {status_filter} "
+                    f"GROUP BY s.scheme_name "
+                    f"ORDER BY project_count DESC;"
+                )
+            elif by_department:
+                return (
+                    f"SELECT d.department_name, COUNT(p.project_id) AS project_count "
+                    f"FROM projects p "
+                    f"JOIN departments d ON p.department_id = d.department_id "
+                    f"WHERE 1=1 {status_filter} "
+                    f"GROUP BY d.department_name "
+                    f"ORDER BY project_count DESC;"
+                )
+            else:
+                # Status breakdown
+                return (
+                    "SELECT p.status, COUNT(*) AS project_count "
+                    "FROM projects p "
+                    "GROUP BY p.status "
+                    "ORDER BY project_count DESC;"
+                )
+
+        # ── 5. State / District / Location overview ───────────────────────
+        if has(['state', 'district', 'location', 'village', 'taluka', 'region', 'area', 'where']):
             return (
-                "SELECT s.scheme_name, b.beneficiary_category, "
-                "SUM(b.beneficiary_count) AS total_beneficiaries, "
-                "ds.data_period, ds.source_updated_date "
-                "FROM beneficiaries b "
-                "JOIN schemes s ON b.scheme_id = s.scheme_id "
-                "LEFT JOIN data_sources ds ON b.source_id = ds.source_id "
-                "GROUP BY s.scheme_name, b.beneficiary_category, ds.data_period, ds.source_updated_date "
-                "ORDER BY total_beneficiaries DESC LIMIT 10;"
+                "SELECT l.state, l.district, COUNT(p.project_id) AS total_projects, "
+                "SUM(b.beneficiary_count) AS total_beneficiaries "
+                "FROM locations l "
+                "LEFT JOIN projects p ON l.location_id = p.location_id "
+                "LEFT JOIN beneficiaries b ON l.location_id = b.location_id "
+                "GROUP BY l.state, l.district "
+                "ORDER BY total_projects DESC LIMIT 20;"
             )
 
-        # Budget / expenditure by department / ministry
-        if any(w in q for w in ["budget", "spent", "expenditure", "allocated", "released"]):
+        # ── 6. Scheme listing ─────────────────────────────────────────────
+        if has(['scheme', 'programme', 'list scheme', 'all scheme']):
             return (
-                "SELECT d.department_name, "
-                "SUM(f.budget_allocated) AS total_allocated, "
-                "SUM(f.amount_released) AS total_released, "
-                "SUM(f.amount_spent) AS total_spent, "
-                "ROUND((SUM(f.amount_spent) / NULLIF(SUM(f.budget_allocated), 0)) * 100, 2) AS utilization_rate_pct "
-                "FROM financials f "
-                "JOIN schemes s ON f.scheme_id = s.scheme_id "
+                "SELECT s.scheme_name, d.department_name, s.scheme_type, "
+                "COUNT(p.project_id) AS total_projects "
+                "FROM schemes s "
                 "JOIN departments d ON s.department_id = d.department_id "
-                "GROUP BY d.department_name "
-                "ORDER BY total_allocated DESC;"
+                "LEFT JOIN projects p ON s.scheme_id = p.scheme_id "
+                "GROUP BY s.scheme_name, d.department_name, s.scheme_type "
+                "ORDER BY total_projects DESC;"
             )
 
-        # Projects status summary
-        if "status" in q or "progress" in q or "completed" in q or "ongoing" in q:
-            return (
-                "SELECT p.status, COUNT(*) AS project_count "
-                "FROM projects p "
-                "GROUP BY p.status "
-                "ORDER BY project_count DESC;"
-            )
-
-        # Default: Project count by department
+        # ── 7. Default: department overview ──────────────────────────────
         return (
-            "SELECT d.department_name, COUNT(p.project_id) AS total_projects "
+            "SELECT d.department_name, COUNT(p.project_id) AS total_projects, "
+            "SUM(f.budget_allocated) AS total_budget "
             "FROM departments d "
             "LEFT JOIN projects p ON d.department_id = p.department_id "
+            "LEFT JOIN financials f ON p.project_id = f.project_id "
             "GROUP BY d.department_name "
             "ORDER BY total_projects DESC;"
         )
