@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interactive India HeatMap & Aspirational Districts | EkBhaarat | भारत सरकार</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body data-page="map">
+
+<header class="navbar">
+  <div class="logo-area">
+    <div class="logo-symbol">
+      <svg viewBox="0 0 24 24" width="24" height="24" stroke="#FF671F" stroke-width="1.3" fill="none">
+        <circle cx="12" cy="12" r="10" stroke="#C59B27" stroke-width="1.8"/>
+        <circle cx="12" cy="12" r="2.2" fill="#FF671F"/>
+        <line x1="12" y1="2" x2="12" y2="22"/>
+        <line x1="2" y1="12" x2="22" y2="12"/>
+      </svg>
+    </div>
+    <div class="logo-text">
+      <h2>EkBhaarat</h2>
+      <span>भारत सरकार • Spatial Governance HeatMap</span>
+    </div>
+  </div>
+  <nav></nav>
+  <div class="nav-actions"></div>
+</header>
+
+<main>
+  <section class="feature-page-header">
+    <span class="section-label">GEOSPATIAL IMPACT & ASPIRATIONAL DISTRICTS</span>
+    <h1>HeatMapping of <span>Underdeveloped Regions.</span></h1>
+    <p>Explore state-level saturation benchmarks, NITI Aayog Aspirational Districts, poverty indices, and infrastructure development gaps across India.</p>
+  </section>
+
+  <section class="map-feature-section">
+    <div class="map-panel">
+      <div class="map-panel-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+        <div>
+          <span class="section-label">REPUBLIC OF INDIA</span>
+          <h2>Interactive State Saturation & Pockets</h2>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <button id="viewChoroplethBtn" class="primary-btn" style="padding: 6px 12px; font-size: 12px;" onclick="setMapMode('choropleth')">State Saturation</button>
+          <button id="viewAspirationalBtn" class="secondary-btn" style="padding: 6px 12px; font-size: 12px;" onclick="setMapMode('aspirational')">📍 Underdeveloped Pockets</button>
+        </div>
+      </div>
+
+      <div id="indiaMap" class="india-map-canvas" style="height: 520px;" aria-label="Interactive map of India"></div>
+      <div id="mapLoading" class="map-loading" style="display: none;">Loading Cartography…</div>
+
+      <div class="map-legend">
+        <strong>Geospatial Saturation Indicators</strong>
+        <div class="legend-items">
+          <div><span class="legend-dot high"></span>High Saturation (≥75%)</div>
+          <div><span class="legend-dot medium"></span>Moderate Progress (60%-74%)</div>
+          <div><span class="legend-dot low"></span>Aspirational / Lag (&lt;60%)</div>
+          <div><span style="display:inline-block; width:12px; height:12px; border-radius:50%; background:#DC2626; margin-right:5px;"></span>Critical Village Hotspot</div>
+        </div>
+        <small class="map-demo-note">Click any state point or hotspot circle to inspect local welfare projects, budget allocations, and active ministries.</small>
+      </div>
+    </div>
+
+    <aside class="map-info-panel">
+      <span class="section-label">SELECTED JURISDICTION</span>
+      <h2 id="selectedState">Andhra Pradesh</h2>
+      <p id="stateDescription">Click on any State, Union Territory, or Village circle to view verified scheme implementations.</p>
+      
+      <div class="state-info-card">
+        <span>JURISDICTION</span>
+        <strong id="stateName">Andhra Pradesh</strong>
+      </div>
+      <div class="state-info-card">
+        <span>ACTIVE WELFARE SCHEMES</span>
+        <strong id="schemeCount">42 Active Schemes</strong>
+      </div>
+      <div class="state-info-card">
+        <span>REGISTERED CITIZEN BENEFICIARIES</span>
+        <strong id="beneficiaryCount">2.8 Cr</strong>
+      </div>
+      <div class="state-info-card">
+        <span>BUDGET ABSORPTION RATE</span>
+        <strong id="budgetUtilisation">78%</strong>
+      </div>
+      <div class="state-info-card">
+        <span>SATURATION SCORE</span>
+        <strong id="coverageIndicator">74 / 100</strong>
+      </div>
+      
+      <button class="primary-btn map-login-btn" onclick="openDashboard()">Explore Complete Governance Dashboard →</button>
+    </aside>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-gov-info">
+    <div class="footer-nic-text">
+      Geospatial Governance Intelligence Portal. Compliant with <strong>GIGW 3.0</strong> and Survey of India boundary guidelines.
+    </div>
+    <div class="copyright">© 2026 EkBhaarat. All Rights Reserved.</div>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="india_geojson.js"></script>
+<script src="script.js"></script>
+<script>
+let aspirationalMarkersGroup = null;
+
+function setMapMode(mode) {
+    document.getElementById("viewChoroplethBtn").className = mode === "choropleth" ? "primary-btn" : "secondary-btn";
+    document.getElementById("viewAspirationalBtn").className = mode === "aspirational" ? "primary-btn" : "secondary-btn";
+    
+    if (mode === "aspirational") {
+        fetchAspirationalPockets();
+    } else {
+        if (aspirationalMarkersGroup && window.leafletMapInstance) {
+            aspirationalMarkersGroup.clearLayers();
+        }
+    }
+}
+
+async function fetchAspirationalPockets() {
+    if (!window.leafletMapInstance) return;
+    if (!aspirationalMarkersGroup) {
+        aspirationalMarkersGroup = L.layerGroup().addTo(window.leafletMapInstance);
+    }
+    aspirationalMarkersGroup.clearLayers();
+
+    try {
+        const res = await fetch("/api/heatmap/underdeveloped");
+        const data = await res.json();
+        
+        data.locations.slice(0, 40).forEach(loc => {
+            const isCritical = loc.lag_severity_score > 50;
+            const color = isCritical ? "#DC2626" : "#FF671F";
+            const marker = L.circleMarker([loc.latitude, loc.longitude], {
+                radius: isCritical ? 9 : 6,
+                fillColor: color,
+                color: "#FFFFFF",
+                weight: 1.5,
+                opacity: 1,
+                fillOpacity: 0.9
+            });
+
+            marker.bindPopup(`
+                <div style="font-family: var(--gov-font-sans); font-size: 12px; min-width: 200px;">
+                    <strong style="color: var(--gov-navy-dark); font-size: 13px; display: block;">${loc.village} (${loc.district})</strong>
+                    <span style="color: var(--gov-text-muted);">${loc.state}</span>
+                    <hr style="margin: 6px 0; border: none; border-top: 1px solid #E2E8F0;">
+                    <div>Poverty Index: <strong>${loc.poverty_index}</strong></div>
+                    <div>Saturation: <strong>${loc.saturation_score}%</strong></div>
+                    <div>Active Projects: <strong>${loc.total_projects}</strong> (Delayed: <strong style="color:#DC2626;">${loc.delayed_projects}</strong>)</div>
+                    <div style="margin-top: 6px; font-weight: 700; color: ${color};">Status: ${loc.urgency_tier}</div>
+                </div>
+            `);
+
+            marker.on('click', () => {
+                document.getElementById("selectedState").textContent = `${loc.village}, ${loc.state}`;
+                document.getElementById("stateName").textContent = `${loc.district}, ${loc.state}`;
+                document.getElementById("schemeCount").textContent = `${loc.total_projects} Active Initiatives`;
+                document.getElementById("beneficiaryCount").textContent = `${loc.total_beneficiaries.toLocaleString()} Citizens`;
+                document.getElementById("budgetUtilisation").textContent = `₹${(loc.total_allocated / 10000000).toFixed(2)} Cr`;
+                document.getElementById("coverageIndicator").textContent = `${loc.saturation_score} / 100 (${loc.urgency_tier})`;
+            });
+
+            aspirationalMarkersGroup.addLayer(marker);
+        });
+
+        showToast("📍 Highlighted 40 Aspirational / Underdeveloped village pockets on map.");
+    } catch (e) {
+        console.warn("Could not load aspirational heatmap layer:", e);
+    }
+}
+</script>
+</body>
+</html>

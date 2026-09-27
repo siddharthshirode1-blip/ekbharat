@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Governance Intelligence & Query Engine | EkBhaarat | भारत सरकार</title>
+<link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+<!-- Chart.js for AI Data Visualizations -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body data-page="ai">
+
+<header class="navbar">
+  <div class="logo-area">
+    <div class="logo-symbol" aria-label="National Emblem Motif">
+      <svg viewBox="0 0 24 24" width="24" height="24" stroke="#FF671F" stroke-width="1.3" fill="none">
+        <circle cx="12" cy="12" r="10" stroke="#C59B27" stroke-width="1.8"/>
+        <circle cx="12" cy="12" r="2.2" fill="#FF671F"/>
+        <line x1="12" y1="2" x2="12" y2="22"/>
+        <line x1="2" y1="12" x2="22" y2="12"/>
+      </svg>
+    </div>
+    <div class="logo-text">
+      <h2>EkBhaarat</h2>
+      <span>भारत सरकार • AI Governance Intelligence</span>
+    </div>
+  </div>
+  <nav></nav>
+  <div class="nav-actions"></div>
+</header>
+
+<main class="page-container" style="max-width: 1200px; margin: 0 auto; padding: 40px 5%;">
+  <section class="page-hero" style="text-align: center; margin-bottom: 30px;">
+    <span class="section-label">AUTONOMOUS TEXT-TO-SQL & IMPACT INTELLIGENCE</span>
+    <h1 style="font-size: 32px; font-weight: 800; color: var(--gov-navy-dark); margin-top: 8px;">
+      Cross-Ministry <span>AI Query Studio.</span>
+    </h1>
+    <p style="max-width: 750px; margin: 10px auto 0; font-size: 15px; color: var(--gov-text-secondary);">
+      Ask questions in plain English across multi-departmental government datasets. The AI engine validates SQL security, checks dataset provenance, and synthesizes evidence-backed insights.
+    </p>
+  </section>
+
+  <!-- SEARCH CONSOLE -->
+  <div class="ai-console-card">
+    <span class="section-label">NATURAL LANGUAGE GOVERNANCE QUERY</span>
+    <div class="ai-search" style="margin-top: 12px; display: flex; gap: 10px;">
+      <span style="font-size: 20px; color: var(--gov-saffron);">✦</span>
+      <input type="text" id="aiQueryBox" placeholder="e.g. Which villages have multiple departments active simultaneously?" style="flex: 1; padding: 14px 18px; border: 1px solid var(--gov-border); border-radius: 8px; font-size: 15px; outline: none;">
+      <button class="primary-btn" onclick="executeAIQuery()" style="padding: 14px 28px;">Generate Insights →</button>
+    </div>
+
+    <!-- QUICK PROMPT CHIPS -->
+    <div style="margin-top: 18px;">
+      <span style="font-size: 11px; font-weight: 700; color: var(--gov-text-muted); text-transform: uppercase;">Suggested Governance Queries:</span>
+      <div class="ai-chip-container">
+        <button class="ai-prompt-chip" onclick="executeAIQuery('Which villages have multiple departments active simultaneously?')">
+          🔎 Multi-Department Villages Overlap
+        </button>
+        <button class="ai-prompt-chip" onclick="executeAIQuery('Show state wise budget allocation and fund utilization rate')">
+          💰 State Budget & Fund Utilization
+        </button>
+        <button class="ai-prompt-chip" onclick="executeAIQuery('List delayed projects and physical progress across ministries')">
+          ⚠️ Delayed Infrastructure Projects
+        </button>
+        <button class="ai-prompt-chip" onclick="executeAIQuery('Top schemes by citizen beneficiary count')">
+          👥 Flagship Schemes by Beneficiaries
+        </button>
+        <button class="ai-prompt-chip" onclick="executeAIQuery('Show priority aspirational villages with high poverty index')">
+          📍 Aspirational Villages Requiring Intervention
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI RESULTS CONTAINER -->
+  <div id="aiResultsArea">
+    <div class="ai-console-card" style="text-align: center; padding: 40px 20px;">
+      <div style="font-size: 40px; color: var(--gov-saffron);">🏛️</div>
+      <h3 style="margin-top: 12px; color: var(--gov-navy-dark); font-size: 18px;">Ready to Analyze National Public Datasets</h3>
+      <p style="color: var(--gov-text-muted); font-size: 13px; max-width: 550px; margin: 6px auto 0;">
+        Click any suggested query above or type your own question to inspect verified data, generated SQL, and automated data provenance.
+      </p>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-gov-info">
+    <div class="footer-nic-text">
+      Portal designed and developed for Government of India Cross-Ministry Governance Intelligence. Compliant with <strong>GIGW 3.0</strong> and <strong>NDSAP Open Data</strong> standards.
+    </div>
+    <div class="copyright">© 2026 EkBhaarat. All Rights Reserved.</div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const savedQuestion = localStorage.getItem("ekBhaaratAIQuestion");
+    if (savedQuestion) {
+        localStorage.removeItem("ekBhaaratAIQuestion");
+        const box = document.getElementById("aiQueryBox");
+        if (box) box.value = savedQuestion;
+        executeAIQuery(savedQuestion);
+    }
+});
+</script>
+</body>
+</html>

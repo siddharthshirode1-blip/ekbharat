@@ -1,0 +1,8 @@
+department_id,department_name,department_code,ministry_name
+DEPT-001,Department of Rural Development,DoRD,Ministry of Rural Development
+DEPT-002,Department of Road Transport and Highways,DoRTH,Ministry of Road Transport and Highways
+DEPT-003,Department of Agriculture,DoA,Ministry of Agriculture
+DEPT-004,Department of Women and Child Development,DoWCD,Ministry of Women and Child Development
+DEPT-005,Department of Drinking Water and Sanitation,DDWS,Ministry of Jal Shakti
+DEPT-006,Department of School Education and Literacy,DoSEL,Ministry of Education
+DEPT-007,Department of Health and Family Welfare,DoHFW,Ministry of Health and Family Welfare

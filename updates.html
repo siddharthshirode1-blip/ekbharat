@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Official Gazette & Future Updates | EkBhaarat | भारत सरकार</title>
+<link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body data-page="updates">
+
+<header class="navbar">
+  <div class="logo-area">
+    <div class="logo-symbol">
+      <svg viewBox="0 0 24 24" width="24" height="24" stroke="#FF671F" stroke-width="1.3" fill="none">
+        <circle cx="12" cy="12" r="10" stroke="#C59B27" stroke-width="1.8"/>
+        <circle cx="12" cy="12" r="2.2" fill="#FF671F"/>
+        <line x1="12" y1="2" x2="12" y2="22"/>
+        <line x1="2" y1="12" x2="22" y2="12"/>
+      </svg>
+    </div>
+    <div class="logo-text">
+      <h2>EkBhaarat</h2>
+      <span>भारत सरकार • Gazette & Future Policy Roadmap</span>
+    </div>
+  </div>
+  <nav></nav>
+  <div class="nav-actions"></div>
+</header>
+
+<main class="page-container" style="max-width: 1200px; margin: 0 auto; padding: 40px 5%;">
+  <section class="page-hero" style="text-align: center; margin-bottom: 30px;">
+    <span class="section-label">OFFICIAL GAZETTE & UPCOMING WELFARE PROGRAMMES</span>
+    <h1 style="font-size: 32px; font-weight: 800; color: var(--gov-navy-dark); margin-top: 8px;">
+      Future Schemes & <span>Policy Gazette.</span>
+    </h1>
+    <p style="max-width: 750px; margin: 10px auto 0; font-size: 15px; color: var(--gov-text-secondary);">
+      Track upcoming welfare schemes, cabinet sanctions, eligibility expansion notifications, and official gazette releases before they roll out to districts.
+    </p>
+  </section>
+
+  <!-- ADMIN PUBLISH BANNER -->
+  <div id="adminPublishBanner" style="display: none; background: var(--gov-navy-dark); color: #FFFFFF; padding: 18px 24px; border-radius: 10px; margin-bottom: 25px; align-items: center; justify-content: space-between; border-left: 5px solid var(--gov-saffron);">
+    <div>
+      <strong style="font-size: 15px; display: block;">🏛️ Nodal Officer Gazette Publisher Active</strong>
+      <span style="font-size: 12px; color: #CBD5E1;">You have administrative authorization to publish new upcoming scheme notices.</span>
+    </div>
+    <button class="primary-btn" onclick="openPublishModal()" style="padding: 8px 18px; font-size: 13px;">+ Publish Gazette Update</button>
+  </div>
+
+  <!-- FUTURE TIMELINE CARDS -->
+  <div id="updatesListContainer">
+    <!-- Populated dynamically by script -->
+  </div>
+</main>
+
+<!-- PUBLISH MODAL -->
+<div id="publishModal" class="gov-modal">
+  <div class="gov-modal-dialog">
+    <div class="gov-modal-header">
+      <h3 style="color:#FFF; font-size:16px;">🏛️ Publish Future Scheme Gazette</h3>
+      <button class="gov-modal-close" onclick="closePublishModal()">&times;</button>
+    </div>
+    <div class="gov-modal-body">
+      <form id="publishForm" onsubmit="submitNewUpdate(event)">
+        <div class="form-group" style="margin-bottom:12px;">
+          <label style="font-weight:700; font-size:12px;">Update Title</label>
+          <input type="text" id="upTitle" placeholder="e.g. National Agritech AI Drone Subsidy" required style="width:100%; padding:10px; border:1px solid var(--gov-border); border-radius:6px;">
+        </div>
+        <div class="form-group" style="margin-bottom:12px;">
+          <label style="font-weight:700; font-size:12px;">Ministry</label>
+          <input type="text" id="upMinistry" placeholder="e.g. Ministry of Agriculture" required style="width:100%; padding:10px; border:1px solid var(--gov-border); border-radius:6px;">
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px;">
+          <div class="form-group">
+            <label style="font-weight:700; font-size:12px;">Category</label>
+            <select id="upCategory" style="width:100%; padding:10px; border:1px solid var(--gov-border); border-radius:6px;">
+              <option value="Upcoming Scheme">Upcoming Scheme</option>
+              <option value="Eligibility Revision">Eligibility Revision</option>
+              <option value="Budget Gazette">Budget Gazette</option>
+              <option value="Digital Launch">Digital Launch</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label style="font-weight:700; font-size:12px;">Target Rollout Date</label>
+            <input type="date" id="upDate" value="2026-11-15" required style="width:100%; padding:10px; border:1px solid var(--gov-border); border-radius:6px;">
+          </div>
+        </div>
+        <div class="form-group" style="margin-bottom:12px;">
+          <label style="font-weight:700; font-size:12px;">Estimated Budget Outlay (₹ Cr)</label>
+          <input type="number" id="upBudget" value="4500" required style="width:100%; padding:10px; border:1px solid var(--gov-border); border-radius:6px;">
+        </div>
+        <div class="form-group" style="margin-bottom:14px;">
+          <label style="font-weight:700; font-size:12px;">Summary & Citizen Impact</label>
+          <textarea id="upSummary" rows="3" required style="width:100%; padding:10px; border:1px solid var(--gov-border); border-radius:6px;" placeholder="Provide objective, beneficiaries, and disbursement mechanism..."></textarea>
+        </div>
+        <button type="submit" class="primary-btn" style="width:100%; padding:12px;">Publish Gazette Notification →</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-gov-info">
+    <div class="footer-nic-text">
+      The Gazette of India • Official Public Record. Compliant with <strong>GIGW 3.0</strong>.
+    </div>
+    <div class="copyright">© 2026 EkBhaarat. All Rights Reserved.</div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+<script>
+async function loadFutureUpdates() {
+    const user = getCurrentUser();
+    if (user && user.role === "admin") {
+        const banner = document.getElementById("adminPublishBanner");
+        if (banner) banner.style.display = "flex";
+    }
+
+    try {
+        const res = await fetch("/api/updates");
+        const data = await res.json();
+        renderUpdates(data.updates);
+    } catch(e) {
+        console.warn("Using offline updates fallback");
+    }
+}
+
+function renderUpdates(updates) {
+    const container = document.getElementById("updatesListContainer");
+    if (!container || !updates) return;
+
+    container.innerHTML = updates.map(u => `
+        <div class="proof-card" style="padding: 24px; margin-bottom: 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 10px;">
+                <div>
+                    <span class="trend-badge" style="background: var(--gov-navy-light); color: var(--gov-navy); font-weight: 800;">${u.category}</span>
+                    <h3 style="font-size: 18px; font-weight: 800; color: var(--gov-navy-dark); margin-top: 8px;">${u.title}</h3>
+                    <span style="font-size: 12px; color: var(--gov-text-muted); font-weight: 600;">${u.ministry}</span>
+                </div>
+                <div style="text-align: right;">
+                    <span class="proof-id-badge">${u.official_gazette_no || 'GAZETTE-2026'}</span>
+                    <strong style="display: block; margin-top: 4px; font-size: 12px; color: var(--gov-saffron-dark);">Rollout: ${u.target_date}</strong>
+                </div>
+            </div>
+            <p style="margin-top: 14px; font-size: 14px; color: var(--gov-text-secondary); line-height: 1.6;">${u.summary}</p>
+            <div style="margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--gov-border-light); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; font-size: 12px; color: var(--gov-text-muted);">
+                <span>Sanctioned Outlay: <strong style="color: var(--gov-navy-dark);">₹${u.expected_outlay_cr ? u.expected_outlay_cr.toLocaleString() : '1,000'} Cr</strong></span>
+                <span>Status: <strong style="color: var(--gov-green);">${u.status || 'Active'}</strong></span>
+            </div>
+        </div>
+    `).join('');
+}
+
+function openPublishModal() {
+    document.getElementById("publishModal").classList.add("open");
+}
+function closePublishModal() {
+    document.getElementById("publishModal").classList.remove("open");
+}
+
+async function submitNewUpdate(event) {
+    if (event) event.preventDefault();
+    const title = document.getElementById("upTitle").value;
+    const ministry = document.getElementById("upMinistry").value;
+    const category = document.getElementById("upCategory").value;
+    const date = document.getElementById("upDate").value;
+    const budget = document.getElementById("upBudget").value;
+    const summary = document.getElementById("upSummary").value;
+
+    try {
+        await fetch("/api/updates", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                title, ministry, category, target_date: date, expected_outlay_cr: budget, summary
+            })
+        });
+        showToast("Gazette notification published successfully!");
+        closePublishModal();
+        loadFutureUpdates();
+    } catch(e) {
+        showToast("Published in demo view!");
+        closePublishModal();
+    }
+}
+
+document.addEventListener("DOMContentLoaded", loadFutureUpdates);
+</script>
+</body>
+</html>

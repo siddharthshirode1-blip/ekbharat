@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Citizen Account & Welfare Hub | EkBhaarat | भारत सरकार</title>
+<link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body data-page="account">
+
+<header class="navbar">
+  <div class="logo-area">
+    <div class="logo-symbol">
+      <svg viewBox="0 0 24 24" width="24" height="24" stroke="#FF671F" stroke-width="1.3" fill="none">
+        <circle cx="12" cy="12" r="10" stroke="#C59B27" stroke-width="1.8"/>
+        <circle cx="12" cy="12" r="2.2" fill="#FF671F"/>
+        <line x1="12" y1="2" x2="12" y2="22"/>
+        <line x1="2" y1="12" x2="22" y2="12"/>
+      </svg>
+    </div>
+    <div class="logo-text">
+      <h2>EkBhaarat</h2>
+      <span>भारत सरकार • Citizen Welfare Hub</span>
+    </div>
+  </div>
+  <nav></nav>
+  <div class="nav-actions"></div>
+</header>
+
+<main class="page-container" style="max-width: 1200px; margin: 0 auto; padding: 40px 5%;">
+  <!-- USER PROFILE CARD -->
+  <section style="background: #FFFFFF; border: 1px solid var(--gov-border-light); border-radius: 14px; padding: 28px; box-shadow: var(--gov-shadow-md); margin-bottom: 30px;">
+    <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px;">
+      <div style="display: flex; align-items: center; gap: 20px;">
+        <div id="accAvatar" style="font-size: 48px; background: var(--gov-navy-light); width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; border-radius: 50%; border: 2px solid var(--gov-saffron);">
+          👨‍🌾
+        </div>
+        <div>
+          <span class="trend-badge" id="accRoleBadge" style="background: var(--gov-green-light); color: var(--gov-green); font-weight: 800;">✓ VERIFIED CITIZEN</span>
+          <h1 id="accFullName" style="font-size: 24px; font-weight: 800; color: var(--gov-navy-dark); margin-top: 4px;">Rahul Sharma</h1>
+          <p id="accDesignation" style="font-size: 13px; color: var(--gov-text-muted);">Farmer & Citizen Beneficiary • Varanasi, Uttar Pradesh</p>
+        </div>
+      </div>
+      <div style="display: flex; gap: 10px;">
+        <button class="primary-btn" onclick="window.location.href='complaints.html'">+ Report Issue with Photo</button>
+        <button class="secondary-btn" onclick="logout()">Logout</button>
+      </div>
+    </div>
+
+    <!-- PROFILE ATTRIBUTES GRID -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--gov-border-light);">
+      <div style="padding: 12px; background: #F8FAFC; border-radius: 8px;">
+        <small style="font-size: 10px; color: var(--gov-text-muted); font-weight: 700; text-transform: uppercase;">Aadhaar Seeding Status</small>
+        <strong style="display: block; font-size: 13px; color: var(--gov-green-dark); margin-top: 2px;">✓ Verified (Biometric Linked)</strong>
+      </div>
+      <div style="padding: 12px; background: #F8FAFC; border-radius: 8px;">
+        <small style="font-size: 10px; color: var(--gov-text-muted); font-weight: 700; text-transform: uppercase;">Registered Mobile</small>
+        <strong id="accPhone" style="display: block; font-size: 13px; color: var(--gov-navy-dark); margin-top: 2px;">+91 98765 43210</strong>
+      </div>
+      <div style="padding: 12px; background: #F8FAFC; border-radius: 8px;">
+        <small style="font-size: 10px; color: var(--gov-text-muted); font-weight: 700; text-transform: uppercase;">Direct Bank Account (DBT)</small>
+        <strong style="display: block; font-size: 13px; color: var(--gov-navy-dark); margin-top: 2px;">State Bank of India (••• 4910)</strong>
+      </div>
+      <div style="padding: 12px; background: #F8FAFC; border-radius: 8px;">
+        <small style="font-size: 10px; color: var(--gov-text-muted); font-weight: 700; text-transform: uppercase;">Ration Card / Socio Category</small>
+        <strong style="display: block; font-size: 13px; color: var(--gov-navy-dark); margin-top: 2px;">BPL / Marginal Landholder</strong>
+      </div>
+    </div>
+  </section>
+
+  <!-- ENROLLED WELFARE SCHEMES -->
+  <section style="background: #FFFFFF; border: 1px solid var(--gov-border-light); border-radius: 14px; padding: 28px; box-shadow: var(--gov-shadow-md); margin-bottom: 30px;">
+    <div class="section-heading" style="margin-bottom: 18px;">
+      <div>
+        <span class="section-label">MY CITIZEN ENTITLEMENTS</span>
+        <h2 style="font-size: 20px; font-weight: 800; color: var(--gov-navy-dark);">Enrolled Government Schemes</h2>
+      </div>
+      <button class="outline-btn" onclick="window.location.href='schemes.html'">Explore More Schemes →</button>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px;">
+      <div style="padding: 16px; border: 1px solid var(--gov-border-light); border-radius: 10px; background: var(--gov-navy-light);">
+        <span class="trend-badge" style="background: var(--gov-green-light); color: var(--gov-green); font-size: 11px;">Active DBT</span>
+        <h3 style="font-size: 15px; font-weight: 800; color: var(--gov-navy-dark); margin-top: 8px;">PM-KISAN Samman Nidhi</h3>
+        <p style="font-size: 12px; color: var(--gov-text-secondary); margin-top: 4px;">Direct income transfer of ₹2,000/installment. Last received: ₹2,000 on 15 Aug 2026.</p>
+      </div>
+
+      <div style="padding: 16px; border: 1px solid var(--gov-border-light); border-radius: 10px; background: var(--gov-navy-light);">
+        <span class="trend-badge" style="background: var(--gov-green-light); color: var(--gov-green); font-size: 11px;">Sanctioned</span>
+        <h3 style="font-size: 15px; font-weight: 800; color: var(--gov-navy-dark); margin-top: 8px;">Pradhan Mantri Awas Yojana - Gramin</h3>
+        <p style="font-size: 12px; color: var(--gov-text-secondary); margin-top: 4px;">Pucca house construction subsidy. Stage 2 inspection approved.</p>
+      </div>
+
+      <div style="padding: 16px; border: 1px solid var(--gov-border-light); border-radius: 10px; background: var(--gov-navy-light);">
+        <span class="trend-badge" style="background: var(--gov-green-light); color: var(--gov-green); font-size: 11px;">Active Connection</span>
+        <h3 style="font-size: 15px; font-weight: 800; color: var(--gov-navy-dark); margin-top: 8px;">Jal Jeevan Mission (Har Ghar Jal)</h3>
+        <p style="font-size: 12px; color: var(--gov-text-secondary); margin-top: 4px;">Individual household tap connection sanctioned for Ward 4.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- MY SUBMITTED GRIEVANCES & PROOFS -->
+  <section style="background: #FFFFFF; border: 1px solid var(--gov-border-light); border-radius: 14px; padding: 28px; box-shadow: var(--gov-shadow-md);">
+    <div class="section-heading" style="margin-bottom: 18px;">
+      <div>
+        <span class="section-label">CPGRAMS STATUS TRACKER</span>
+        <h2 style="font-size: 20px; font-weight: 800; color: var(--gov-navy-dark);">My Reported Issues & Resolution Proofs</h2>
+      </div>
+      <button class="primary-btn" onclick="window.location.href='complaints.html'">Lodge New Issue →</button>
+    </div>
+
+    <div id="myComplaintsList">
+      <!-- Populated by script.js -->
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-gov-info">
+    <div class="footer-nic-text">
+      National Citizen Welfare Account Portal. Compliant with <strong>GIGW 3.0</strong> and <strong>DigiLocker / Jan Parichay</strong> standards.
+    </div>
+    <div class="copyright">© 2026 EkBhaarat. All Rights Reserved.</div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const user = getCurrentUser() || DEMO_ACCOUNTS.citizen1;
+    document.getElementById("accAvatar").textContent = user.avatar || "👤";
+    document.getElementById("accFullName").textContent = user.full_name;
+    document.getElementById("accDesignation").textContent = `${user.designation || 'Citizen'} • ${user.district || 'Varanasi'}, ${user.state || 'Uttar Pradesh'}`;
+    document.getElementById("accPhone").textContent = user.phone || "+91 98765 43210";
+    document.getElementById("accRoleBadge").textContent = user.role === "admin" ? "★ CENTRAL NODAL OFFICER" : "✓ VERIFIED CITIZEN";
+});
+</script>
+</body>
+</html>

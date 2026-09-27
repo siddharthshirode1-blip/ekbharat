@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Government Schemes | EkBhaarat</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="logo-area">
+      <div class="logo-symbol">E</div>
+      <div>
+        <strong>EkBhaarat</strong>
+        <small>India in one view</small>
+      </div>
+    </div>
+
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="features.html">Features</a>
+      <a href="account.html">Account</a>
+    </nav>
+
+    <div class="nav-actions">
+      <button class="login-btn" data-login-button>Login</button>
+    </div>
+  </header>
+
+
+  <!-- PAGE HEADER -->
+  <section class="page-hero">
+    <span class="section-label">GOVERNMENT SCHEME EXPLORER</span>
+
+    <h1>
+      Explore Government
+      <span>Schemes.</span>
+    </h1>
+
+    <p>
+      Search and explore government schemes by ministry,
+      department, category, state and implementation status.
+    </p>
+  </section>
+
+
+  <main class="schemes-page">
+
+    <!-- SEARCH & FILTERS -->
+    <section class="scheme-search-card">
+
+      <div class="search-box">
+
+        <input
+          type="text"
+          id="schemeSearch"
+          placeholder="Search schemes by name or keyword..."
+          oninput="filterSchemes()"
+        >
+
+        <button onclick="filterSchemes()">
+          🔍 Search
+        </button>
+
+      </div>
+
+
+      <div class="scheme-filters">
+
+        <select id="ministryFilter" onchange="filterSchemes()">
+          <option value="">All Ministries</option>
+          <option value="Ministry of Education">
+            Ministry of Education
+          </option>
+          <option value="Ministry of Health">
+            Ministry of Health
+          </option>
+          <option value="Ministry of Agriculture">
+            Ministry of Agriculture
+          </option>
+          <option value="Ministry of Rural Development">
+            Ministry of Rural Development
+          </option>
+        </select>
+
+
+        <select id="categoryFilter" onchange="filterSchemes()">
+          <option value="">All Categories</option>
+          <option value="Education">Education</option>
+          <option value="Health">Health</option>
+          <option value="Agriculture">Agriculture</option>
+          <option value="Employment">Employment</option>
+          <option value="Housing">Housing</option>
+        </select>
+
+
+        <select id="stateFilter" onchange="filterSchemes()">
+          <option value="">All States</option>
+          <option value="Maharashtra">Maharashtra</option>
+          <option value="Karnataka">Karnataka</option>
+          <option value="Tamil Nadu">Tamil Nadu</option>
+          <option value="Madhya Pradesh">Madhya Pradesh</option>
+          <option value="West Bengal">West Bengal</option>
+        </select>
+
+
+        <select id="statusFilter" onchange="filterSchemes()">
+          <option value="">All Status</option>
+          <option value="Active">Active</option>
+          <option value="Upcoming">Upcoming</option>
+          <option value="Closed">Closed</option>
+        </select>
+
+      </div>
+
+    </section>
+
+
+    <!-- RESULTS HEADER -->
+    <div class="scheme-results-header">
+
+      <div>
+        <span class="section-label">SCHEMES</span>
+        <h2>Available Government Schemes</h2>
+      </div>
+
+      <span id="schemeResultCount">
+        6 schemes
+      </span>
+
+    </div>
+
+
+    <!-- SCHEME GRID -->
+    <section
+      class="scheme-grid"
+      id="schemeGrid"
+    >
+
+      <!-- SCHEME 1 -->
+      <article
+        class="scheme-card"
+        data-name="Student Education Support Scheme"
+        data-ministry="Ministry of Education"
+        data-category="Education"
+        data-state="Maharashtra"
+        data-status="Active"
+      >
+
+        <div class="scheme-card-top">
+          <span class="scheme-category">Education</span>
+          <span class="scheme-status active">Active</span>
+        </div>
+
+        <h3>Student Education Support Scheme</h3>
+
+        <p>
+          Financial support programme designed to assist
+          eligible students with educational expenses.
+        </p>
+
+        <div class="scheme-meta">
+          <span>🏛 Ministry of Education</span>
+          <span>📍 Maharashtra</span>
+        </div>
+
+        <button
+          class="outline-btn"
+          onclick="showSchemeDetails('Student Education Support Scheme')"
+        >
+          View Details
+        </button>
+
+      </article>
+
+
+      <!-- SCHEME 2 -->
+      <article
+        class="scheme-card"
+        data-name="National Health Support Programme"
+        data-ministry="Ministry of Health"
+        data-category="Health"
+        data-state="Karnataka"
+        data-status="Active"
+      >
+
+        <div class="scheme-card-top">
+          <span class="scheme-category">Health</span>
+          <span class="scheme-status active">Active</span>
+        </div>
+
+        <h3>National Health Support Programme</h3>
+
+        <p>
+          Supports access to essential healthcare services
+          for eligible beneficiaries.
+        </p>
+
+        <div class="scheme-meta">
+          <span>🏛 Ministry of Health</span>
+          <span>📍 Karnataka</span>
+        </div>
+
+        <button
+          class="outline-btn"
+          onclick="showSchemeDetails('National Health Support Programme')"
+        >
+          View Details
+        </button>
+
+      </article>
+
+
+      <!-- SCHEME 3 -->
+      <article
+        class="scheme-card"
+        data-name="Farmer Development Assistance Scheme"
+        data-ministry="Ministry of Agriculture"
+        data-category="Agriculture"
+        data-state="Madhya Pradesh"
+        data-status="Active"
+      >
+
+        <div class="scheme-card-top">
+          <span class="scheme-category">Agriculture</span>
+          <span class="scheme-status active">Active</span>
+        </div>
+
+        <h3>Farmer Development Assistance Scheme</h3>
+
+        <p>
+          Provides support intended to improve agricultural
+          productivity and farmer welfare.
+        </p>
+
+        <div class="scheme-meta">
+          <span>🏛 Ministry of Agriculture</span>
+          <span>📍 Madhya Pradesh</span>
+        </div>
+
+        <button
+          class="outline-btn"
+          onclick="showSchemeDetails('Farmer Development Assistance Scheme')"
+        >
+          View Details
+        </button>
+
+      </article>
+
+
+      <!-- SCHEME 4 -->
+      <article
+        class="scheme-card"
+        data-name="Rural Employment Support Scheme"
+        data-ministry="Ministry of Rural Development"
+        data-category="Employment"
+        data-state="West Bengal"
+        data-status="Active"
+      >
+
+        <div class="scheme-card-top">
+          <span class="scheme-category">Employment</span>
+          <span class="scheme-status active">Active</span>
+        </div>
+
+        <h3>Rural Employment Support Scheme</h3>
+
+        <p>
+          Provides employment opportunities and livelihood
+          support for eligible rural communities.
+        </p>
+
+        <div class="scheme-meta">
+          <span>🏛 Ministry of Rural Development</span>
+          <span>📍 West Bengal</span>
+        </div>
+
+        <button
+          class="outline-btn"
+          onclick="showSchemeDetails('Rural Employment Support Scheme')"
+        >
+          View Details
+        </button>
+
+      </article>
+
+
+      <!-- SCHEME 5 -->
+      <article
+        class="scheme-card"
+        data-name="Affordable Housing Initiative"
+        data-ministry="Ministry of Rural Development"
+        data-category="Housing"
+        data-state="Maharashtra"
+        data-status="Upcoming"
+      >
+
+        <div class="scheme-card-top">
+          <span class="scheme-category">Housing</span>
+          <span class="scheme-status upcoming">Upcoming</span>
+        </div>
+
+        <h3>Affordable Housing Initiative</h3>
+
+        <p>
+          Programme focused on improving access to affordable
+          housing for eligible families.
+        </p>
+
+        <div class="scheme-meta">
+          <span>🏛 Ministry of Rural Development</span>
+          <span>📍 Maharashtra</span>
+        </div>
+
+        <button
+          class="outline-btn"
+          onclick="showSchemeDetails('Affordable Housing Initiative')"
+        >
+          View Details
+        </button>
+
+      </article>
+
+
+      <!-- SCHEME 6 -->
+      <article
+        class="scheme-card"
+        data-name="Youth Skill Development Programme"
+        data-ministry="Ministry of Education"
+        data-category="Employment"
+        data-state="Tamil Nadu"
+        data-status="Active"
+      >
+
+        <div class="scheme-card-top">
+          <span class="scheme-category">Employment</span>
+          <span class="scheme-status active">Active</span>
+        </div>
+
+        <h3>Youth Skill Development Programme</h3>
+
+        <p>
+          Supports skill development and training opportunities
+          for young people.
+        </p>
+
+        <div class="scheme-meta">
+          <span>🏛 Ministry of Education</span>
+          <span>📍 Tamil Nadu</span>
+        </div>
+
+        <button
+          class="outline-btn"
+          onclick="showSchemeDetails('Youth Skill Development Programme')"
+        >
+          View Details
+        </button>
+
+      </article>
+
+    </section>
+
+
+    <!-- NO RESULTS -->
+    <div
+      id="noResults"
+      class="no-results"
+      style="display:none;"
+    >
+      <h3>No schemes found</h3>
+      <p>
+        Try changing your search or filter options.
+      </p>
+    </div>
+
+
+    <!-- DETAILS PANEL -->
+    <section
+      id="schemeDetails"
+      class="scheme-details-panel"
+      style="display:none;"
+    >
+
+      <div class="details-header">
+
+        <div>
+          <span class="section-label">SCHEME DETAILS</span>
+          <h2 id="detailName">Scheme Name</h2>
+        </div>
+
+        <button
+          class="close-btn"
+          onclick="closeSchemeDetails()"
+        >
+          ✕
+        </button>
+
+      </div>
+
+
+      <div class="details-grid">
+
+        <div>
+          <strong>Ministry</strong>
+          <p id="detailMinistry">—</p>
+        </div>
+
+        <div>
+          <strong>Objective</strong>
+          <p id="detailObjective">—</p>
+        </div>
+
+        <div>
+          <strong>Beneficiary Group</strong>
+          <p id="detailBeneficiary">—</p>
+        </div>
+
+        <div>
+          <strong>Budget</strong>
+          <p id="detailBudget">—</p>
+        </div>
+
+        <div>
+          <strong>Beneficiaries</strong>
+          <p id="detailBeneficiaries">—</p>
+        </div>
+
+        <div>
+          <strong>Implementation Status</strong>
+          <p id="detailStatus">—</p>
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- FOOTER -->
+  <footer class="footer">
+
+    <div class="footer-brand">
+      <strong>EkBhaarat</strong>
+      <p>
+        Connecting citizens with India's government information.
+      </p>
+    </div>
+
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="features.html">Features</a>
+      <a href="account.html">Account</a>
+    </div>
+
+    <p class="copyright">
+      © 2026 EkBhaarat. All rights reserved.
+    </p>
+
+  </footer>
+
+
+  <script src="script.js"></script>
+
+  <script>
+
+    const schemeDetails = {
+
+      "Student Education Support Scheme": {
+        ministry: "Ministry of Education",
+        objective: "Support eligible students with educational expenses.",
+        beneficiary: "Eligible students",
+        budget: "₹12,500 Cr",
+        beneficiaries: "48 Lakh",
+        status: "Active"
+      },
+
+      "National Health Support Programme": {
+        ministry: "Ministry of Health",
+        objective: "Improve access to essential healthcare services.",
+        beneficiary: "Eligible citizens",
+        budget: "₹28,000 Cr",
+        beneficiaries: "1.6 Crore",
+        status: "Active"
+      },
+
+      "Farmer Development Assistance Scheme": {
+        ministry: "Ministry of Agriculture",
+        objective: "Support agricultural productivity and farmer welfare.",
+        beneficiary: "Farmers",
+        budget: "₹22,400 Cr",
+        beneficiaries: "1.2 Crore",
+        status: "Active"
+      },
+
+      "Rural Employment Support Scheme": {
+        ministry: "Ministry of Rural Development",
+        objective: "Provide employment and livelihood opportunities.",
+        beneficiary: "Rural households",
+        budget: "₹31,600 Cr",
+        beneficiaries: "92 Lakh",
+        status: "Active"
+      },
+
+      "Affordable Housing Initiative": {
+        ministry: "Ministry of Rural Development",
+        objective: "Improve access to affordable housing.",
+        beneficiary: "Eligible families",
+        budget: "₹18,700 Cr",
+        beneficiaries: "36 Lakh",
+        status: "Upcoming"
+      },
+
+      "Youth Skill Development Programme": {
+        ministry: "Ministry of Education",
+        objective: "Provide skill development and training opportunities.",
+        beneficiary: "Young people",
+        budget: "₹9,800 Cr",
+        beneficiaries: "61 Lakh",
+        status: "Active"
+      }
+
+    };
+
+
+    function filterSchemes() {
+
+      const search =
+        document.getElementById("schemeSearch")
+          .value
+          .toLowerCase();
+
+      const ministry =
+        document.getElementById("ministryFilter").value;
+
+      const category =
+        document.getElementById("categoryFilter").value;
+
+      const state =
+        document.getElementById("stateFilter").value;
+
+      const status =
+        document.getElementById("statusFilter").value;
+
+
+      const cards =
+        document.querySelectorAll(".scheme-card");
+
+      let visible = 0;
+
+
+      cards.forEach(card => {
+
+        const name =
+          card.dataset.name.toLowerCase();
+
+        const matchesSearch =
+          !search || name.includes(search);
+
+        const matchesMinistry =
+          !ministry ||
+          card.dataset.ministry === ministry;
+
+        const matchesCategory =
+          !category ||
+          card.dataset.category === category;
+
+        const matchesState =
+          !state ||
+          card.dataset.state === state;
+
+        const matchesStatus =
+          !status ||
+          card.dataset.status === status;
+
+
+        if (
+          matchesSearch &&
+          matchesMinistry &&
+          matchesCategory &&
+          matchesState &&
+          matchesStatus
+        ) {
+
+          card.style.display = "";
+
+          visible++;
+
+        } else {
+
+          card.style.display = "none";
+
+        }
+
+      });
+
+
+      document.getElementById(
+        "schemeResultCount"
+      ).textContent =
+        visible + (visible === 1 ? " scheme" : " schemes");
+
+
+      document.getElementById(
+        "noResults"
+      ).style.display =
+        visible === 0 ? "block" : "none";
+
+    }
+
+
+    function showSchemeDetails(name) {
+
+      const data = schemeDetails[name];
+
+      if (!data) return;
+
+
+      document.getElementById("detailName")
+        .textContent = name;
+
+      document.getElementById("detailMinistry")
+        .textContent = data.ministry;
+
+      document.getElementById("detailObjective")
+        .textContent = data.objective;
+
+      document.getElementById("detailBeneficiary")
+        .textContent = data.beneficiary;
+
+      document.getElementById("detailBudget")
+        .textContent = data.budget;
+
+      document.getElementById("detailBeneficiaries")
+        .textContent = data.beneficiaries;
+
+      document.getElementById("detailStatus")
+        .textContent = data.status;
+
+
+      document.getElementById(
+        "schemeDetails"
+      ).style.display = "block";
+
+
+      document.getElementById(
+        "schemeDetails"
+      ).scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+
+    }
+
+
+    function closeSchemeDetails() {
+
+      document.getElementById(
+        "schemeDetails"
+      ).style.display = "none";
+
+    }
+
+
+    /* 
+       If a state was selected on map.html,
+       automatically apply that state filter.
+    */
+
+    const selectedState =
+      localStorage.getItem("selectedState");
+
+    if (selectedState) {
+
+      const stateSelect =
+        document.getElementById("stateFilter");
+
+      const option =
+        [...stateSelect.options]
+          .find(option => option.value === selectedState);
+
+      if (option) {
+
+        stateSelect.value = selectedState;
+
+        filterSchemes();
+
+      }
+
+      localStorage.removeItem("selectedState");
+
+    }
+
+  </script>
+
+</body>
+</html>

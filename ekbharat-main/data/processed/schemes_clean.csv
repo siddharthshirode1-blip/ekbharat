@@ -1,0 +1,8 @@
+scheme_id,scheme_name,scheme_code,department_id,scheme_type,description,start_date,end_date,source_id
+SCH-001,Pradhan Mantri Awas Yojana - Gramin,PMAY-G,1,Centrally Sponsored Scheme,Provides financial assistance to rural BPL families for the construction of pucca houses with basic amenities.,2016-11-20,2026-03-31,SRC-9928
+SCH-002,National Highways Development Project,NHDP,2,Central Sector Scheme,"Upgrades, rehabilitates, and widens major highway corridors across India for seamless inter-state connectivity.",1998-12-01,Ongoing,SRC-6881
+SCH-003,PM-KISAN,PMK,3,Central Sector Scheme,"Provides direct income support of Rs. 6,000 per year in three equal installments to all landholding farmer families.",2018-12-01,Ongoing,SRC-1750
+SCH-004,Poshan Abhiyaan,POSHAN,4,Centrally Sponsored Scheme,"Improves nutritional outcomes for children, pregnant women, and lactating mothers using tech-driven monitoring.",2018-03-08,Ongoing,SRC-9751
+SCH-005,Jal Jeevan Mission,JJM,5,Centrally Sponsored Scheme,Aims to provide safe and adequate drinking water through individual household tap connections to all rural households.,2019-08-15,2026-03-31,SRC-6930
+SCH-006,PM-POSHAN,PM-POSHAN,6,Centrally Sponsored Scheme,Provides cooked nutritional meals to school children in government and government-aided schools.,1995-08-15,Ongoing,SRC-4946
+SCH-007,Ayushman Bharat,PM-JAY,7,Centrally Sponsored Scheme,Offers health insurance coverage up to Rs. 5 lakh per family per year for secondary and tertiary care hospitalization.,2018-09-23,Ongoing,SRC-1936

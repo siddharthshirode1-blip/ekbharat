@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fund Utilization & Beneficiary Integrity (DBT) | EkBhaarat | भारत सरकार</title>
+<link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body data-page="beneficiaries">
+
+<header class="navbar">
+  <div class="logo-area">
+    <div class="logo-symbol">
+      <svg viewBox="0 0 24 24" width="24" height="24" stroke="#FF671F" stroke-width="1.3" fill="none">
+        <circle cx="12" cy="12" r="10" stroke="#C59B27" stroke-width="1.8"/>
+        <circle cx="12" cy="12" r="2.2" fill="#FF671F"/>
+        <line x1="12" y1="2" x2="12" y2="22"/>
+        <line x1="2" y1="12" x2="22" y2="12"/>
+      </svg>
+    </div>
+    <div class="logo-text">
+      <h2>EkBhaarat</h2>
+      <span>भारत सरकार • Direct Benefit Transfer & Fund Integrity</span>
+    </div>
+  </div>
+  <nav></nav>
+  <div class="nav-actions"></div>
+</header>
+
+<main class="page-container" style="max-width: 1200px; margin: 0 auto; padding: 40px 5%;">
+  <section class="page-hero" style="text-align: center; margin-bottom: 30px;">
+    <span class="section-label">NATIONAL DBT AUDIT & FUND UTILIZATION</span>
+    <h1 style="font-size: 32px; font-weight: 800; color: var(--gov-navy-dark); margin-top: 8px;">
+      Fund Utilization & <span>Beneficiary Integrity.</span>
+    </h1>
+    <p style="max-width: 750px; margin: 10px auto 0; font-size: 15px; color: var(--gov-text-secondary);">
+      Ensuring public money reaches the rightful beneficiary with zero middlemen, biometric Aadhaar authentication, real-time unspent balance detection, and expenditure tracking.
+    </p>
+  </section>
+
+  <!-- KEY INTEGRITY STATS -->
+  <section class="beneficiary-stats" style="margin-bottom: 30px;">
+    <div class="beneficiary-stat-card">
+      <div class="stat-icon">💳</div>
+      <small>Direct Bank Transfer Success</small>
+      <strong>99.4%</strong>
+      <p>Direct to Jan Dhan beneficiary accounts</p>
+    </div>
+    <div class="beneficiary-stat-card">
+      <div class="stat-icon">🆔</div>
+      <small>Aadhaar-Seeded Beneficiaries</small>
+      <strong>98.6% Saturation</strong>
+      <p>Biometrically deduplicated records</p>
+    </div>
+    <div class="beneficiary-stat-card">
+      <div class="stat-icon">🛡️</div>
+      <small>Fiscal Leakage Prevented</small>
+      <strong>₹28,450 Cr</strong>
+      <p>By purging 14.2 Lakh ghost entities</p>
+    </div>
+    <div class="beneficiary-stat-card">
+      <div class="stat-icon">📊</div>
+      <small>Overall Fund Utilization</small>
+      <strong>80.0%</strong>
+      <p>Allocated ₹14.8L Cr • Spent ₹11.8L Cr</p>
+    </div>
+  </section>
+
+  <!-- DEPARTMENT-WISE EXPENDITURE & UNSPENT BALANCES -->
+  <section style="background: #FFFFFF; border: 1px solid var(--gov-border-light); border-radius: 12px; padding: 26px; box-shadow: var(--gov-shadow-md); margin-bottom: 30px;">
+    <div class="section-heading" style="margin-bottom: 20px;">
+      <div>
+        <span class="section-label">MINISTRY EXPENDITURE AUDIT</span>
+        <h2 style="font-size: 20px; font-weight: 800; color: var(--gov-navy-dark);">Department-Wise Budget Utilization</h2>
+      </div>
+      <button class="outline-btn" onclick="window.location.href='ai.html?q=' + encodeURIComponent('Show state wise budget allocation and fund utilization rate')">Run Deep Financial AI Query →</button>
+    </div>
+
+    <div id="deptUtilizationList" style="display: flex; flex-direction: column; gap: 16px;">
+      <!-- Populated dynamically -->
+      <div class="bar-row" style="display: grid; grid-template-columns: 200px 1fr 100px; gap: 15px; align-items: center;">
+        <strong style="font-size: 13px; color: var(--gov-navy-dark);">Dept. of Agriculture</strong>
+        <div class="bar-track" style="background: #E2E8F0; height: 16px; border-radius: 8px; overflow: hidden;">
+          <div class="bar-fill" style="width: 89%; background: var(--gov-green); height: 100%;"></div>
+        </div>
+        <span style="font-weight: 800; font-size: 13px; color: var(--gov-green-dark);">89.2%</span>
+      </div>
+
+      <div class="bar-row" style="display: grid; grid-template-columns: 200px 1fr 100px; gap: 15px; align-items: center;">
+        <strong style="font-size: 13px; color: var(--gov-navy-dark);">Dept. of Health & FW</strong>
+        <div class="bar-track" style="background: #E2E8F0; height: 16px; border-radius: 8px; overflow: hidden;">
+          <div class="bar-fill" style="width: 84%; background: var(--gov-green); height: 100%;"></div>
+        </div>
+        <span style="font-weight: 800; font-size: 13px; color: var(--gov-green-dark);">84.5%</span>
+      </div>
+
+      <div class="bar-row" style="display: grid; grid-template-columns: 200px 1fr 100px; gap: 15px; align-items: center;">
+        <strong style="font-size: 13px; color: var(--gov-navy-dark);">Dept. of School Education</strong>
+        <div class="bar-track" style="background: #E2E8F0; height: 16px; border-radius: 8px; overflow: hidden;">
+          <div class="bar-fill" style="width: 79%; background: var(--gov-navy); height: 100%;"></div>
+        </div>
+        <span style="font-weight: 800; font-size: 13px; color: var(--gov-navy);">79.1%</span>
+      </div>
+
+      <div class="bar-row" style="display: grid; grid-template-columns: 200px 1fr 100px; gap: 15px; align-items: center;">
+        <strong style="font-size: 13px; color: var(--gov-navy-dark);">Dept. of Drinking Water</strong>
+        <div class="bar-track" style="background: #E2E8F0; height: 16px; border-radius: 8px; overflow: hidden;">
+          <div class="bar-fill" style="width: 68%; background: var(--gov-saffron); height: 100%;"></div>
+        </div>
+        <span style="font-weight: 800; font-size: 13px; color: var(--gov-saffron-dark);">68.4%</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRACEABILITY & CITATION ACCORDION -->
+  <section style="background: #FEF9E7; border: 1px solid #FEF08A; border-radius: 12px; padding: 22px;">
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <div style="font-size: 28px;">🛡️</div>
+      <div>
+        <h3 style="font-size: 16px; color: #854D0E; font-weight: 800;">Cryptographic Public Financial Traceability</h3>
+        <p style="font-size: 13px; color: #713F12; margin-top: 2px;">
+          All financial data points are reconciled with Public Financial Management System (PFMS) and State Treasury single-nodal accounts (SNA).
+        </p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-gov-info">
+    <div class="footer-nic-text">
+      Direct Benefit Transfer (DBT) Mission, Cabinet Secretariat, Government of India. Compliant with <strong>GIGW 3.0</strong>.
+    </div>
+    <div class="copyright">© 2026 EkBhaarat. All Rights Reserved.</div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", async function() {
+    try {
+        const res = await fetch("/api/dbt/fund-utilization");
+        const data = await res.json();
+        if (data && data.department_utilization) {
+            const list = document.getElementById("deptUtilizationList");
+            if (list && data.department_utilization.length > 0) {
+                list.innerHTML = data.department_utilization.map(d => `
+                    <div class="bar-row" style="display: grid; grid-template-columns: 220px 1fr 140px; gap: 15px; align-items: center;">
+                        <div>
+                            <strong style="font-size: 13px; color: var(--gov-navy-dark); display: block;">${d.department_name}</strong>
+                            <small style="font-size: 10px; color: var(--gov-text-muted);">Allocated: ₹${d.total_allocated_cr} Cr</small>
+                        </div>
+                        <div class="bar-track" style="background: #E2E8F0; height: 16px; border-radius: 8px; overflow: hidden;">
+                            <div class="bar-fill" style="width: ${Math.min(d.utilization_pct, 100)}%; background: ${d.utilization_pct >= 80 ? 'var(--gov-green)' : (d.utilization_pct >= 65 ? 'var(--gov-navy)' : 'var(--gov-saffron)')}; height: 100%;"></div>
+                        </div>
+                        <span style="font-weight: 800; font-size: 13px; color: ${d.utilization_pct >= 80 ? 'var(--gov-green-dark)' : 'var(--gov-navy-dark)'};">${d.utilization_pct}% (₹${d.total_spent_cr} Cr)</span>
+                    </div>
+                `).join('');
+            }
+        }
+    } catch(e) {
+        console.warn("Using default DBT stats");
+    }
+});
+</script>
+</body>
+</html>

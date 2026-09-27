@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nodal Officer Command Center | EkBhaarat | भारत सरकार</title>
+<link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body data-page="admin">
+
+<header class="navbar">
+  <div class="logo-area">
+    <div class="logo-symbol">
+      <svg viewBox="0 0 24 24" width="24" height="24" stroke="#FF671F" stroke-width="1.3" fill="none">
+        <circle cx="12" cy="12" r="10" stroke="#C59B27" stroke-width="1.8"/>
+        <circle cx="12" cy="12" r="2.2" fill="#FF671F"/>
+        <line x1="12" y1="2" x2="12" y2="22"/>
+        <line x1="2" y1="12" x2="22" y2="12"/>
+      </svg>
+    </div>
+    <div class="logo-text">
+      <h2>EkBhaarat</h2>
+      <span>भारत सरकार • Nodal Officer Command Center</span>
+    </div>
+  </div>
+  <nav></nav>
+  <div class="nav-actions"></div>
+</header>
+
+<main class="page-container" style="max-width: 1200px; margin: 0 auto; padding: 40px 5%;">
+  <!-- ADMIN HEADER -->
+  <section class="admin-header" style="background: linear-gradient(135deg, #06233D 0%, #0B3B60 100%); color: #FFFFFF; padding: 30px; border-radius: 14px; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; border-bottom: 4px solid var(--gov-saffron);">
+    <div>
+      <span class="section-label" style="color: #FFB380;">CENTRAL NODAL OFFICER WORKSPACE</span>
+      <h1 style="font-size: 26px; font-weight: 800; margin-top: 6px; color: #FFFFFF;">Welcome, Dr. Rajesh Varma</h1>
+      <p style="font-size: 13px; color: #CBD5E1; margin-top: 4px;">Joint Secretary & Nodal Officer • NITI Aayog & Ministry of Panchayati Raj</p>
+    </div>
+    <div style="display: flex; gap: 10px;">
+      <button class="primary-btn" onclick="openPublishModal()" style="padding: 10px 18px; font-size: 13px;">+ Publish Gazette</button>
+      <button class="secondary-btn" style="background: rgba(255,255,255,0.15); color: #FFF; border-color: rgba(255,255,255,0.3); padding: 10px 18px; font-size: 13px;" onclick="logout()">Logout</button>
+    </div>
+  </section>
+
+  <!-- QUICK EXECUTIVE KPI COUNTERS -->
+  <section class="beneficiary-stats" style="margin-bottom: 30px;">
+    <div class="beneficiary-stat-card">
+      <div class="stat-icon">🏛️</div>
+      <small>Central Welfare Outlay</small>
+      <strong>₹14.8 Lakh Cr</strong>
+      <p>Active across 7 key ministries</p>
+    </div>
+    <div class="beneficiary-stat-card">
+      <div class="stat-icon">🔎</div>
+      <small>Scheme Overlaps Detected</small>
+      <strong>4 Clusters (₹6,480 Cr)</strong>
+      <p>Convergence pipeline ready</p>
+    </div>
+    <div class="beneficiary-stat-card">
+      <div class="stat-icon">📷</div>
+      <small>Grievance Proofs Verified</small>
+      <strong>94.8%</strong>
+      <p>Before & After on-ground resolutions</p>
+    </div>
+    <div class="beneficiary-stat-card">
+      <div class="stat-icon">🛡️</div>
+      <small>Data Provenance Standard</small>
+      <strong>SHA-256 Verified</strong>
+      <p>MeitY NDSAP compliant audit</p>
+    </div>
+  </section>
+
+  <!-- ADMIN TOOLS GRID -->
+  <div class="section-heading" style="margin-bottom: 20px;">
+    <div>
+      <span class="section-label">INTER-MINISTERIAL COMMAND SUITE</span>
+      <h2 style="font-size: 22px; font-weight: 800; color: var(--gov-navy-dark);">Administrative Tools & Modules</h2>
+    </div>
+  </div>
+
+  <div class="admin-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+    
+    <!-- 1. Scheme Overlap -->
+    <div class="admin-card" style="background:#FFF; padding:24px; border-radius:12px; border:1px solid var(--gov-border-light); box-shadow:var(--gov-shadow-sm);">
+      <div class="admin-icon" style="font-size:28px;">🔎</div>
+      <h3 style="font-size:17px; font-weight:800; color:var(--gov-navy-dark); margin-top:8px;">Scheme Overlap Detector</h3>
+      <p style="font-size:13px; color:var(--gov-text-secondary); margin:8px 0 16px;">Detect overlapping mandates, duplicate beneficiaries, and potential budget redundancies across ministries.</p>
+      <button class="primary-btn" style="width:100%; padding:9px;" onclick="window.location.href='overlap.html'">Open Overlap Engine →</button>
+    </div>
+
+    <!-- 2. Proof Resolution Hub -->
+    <div class="admin-card" style="background:#FFF; padding:24px; border-radius:12px; border:1px solid var(--gov-border-light); box-shadow:var(--gov-shadow-sm);">
+      <div class="admin-icon" style="font-size:28px;">📷</div>
+      <h3 style="font-size:17px; font-weight:800; color:var(--gov-navy-dark); margin-top:8px;">Proof of Work Resolution</h3>
+      <p style="font-size:13px; color:var(--gov-text-secondary); margin:8px 0 16px;">Review citizen "Before" grievance photos, dispatch project funds, and upload verified "After" repair proof photos.</p>
+      <button class="primary-btn" style="width:100%; padding:9px;" onclick="window.location.href='complaints.html'">Review & Resolve Proofs →</button>
+    </div>
+
+    <!-- 3. AI Natural Language SQL Studio -->
+    <div class="admin-card" style="background:#FFF; padding:24px; border-radius:12px; border:1px solid var(--gov-border-light); box-shadow:var(--gov-shadow-sm);">
+      <div class="admin-icon" style="font-size:28px;">🧠</div>
+      <h3 style="font-size:17px; font-weight:800; color:var(--gov-navy-dark); margin-top:8px;">AI Governance Intelligence</h3>
+      <p style="font-size:13px; color:var(--gov-text-secondary); margin:8px 0 16px;">Query heterogeneous government datasets in plain English with instant verified SQL generation and charts.</p>
+      <button class="primary-btn" style="width:100%; padding:9px;" onclick="window.location.href='ai.html'">Open AI Studio →</button>
+    </div>
+
+    <!-- 4. HeatMap & Aspirational Districts -->
+    <div class="admin-card" style="background:#FFF; padding:24px; border-radius:12px; border:1px solid var(--gov-border-light); box-shadow:var(--gov-shadow-sm);">
+      <div class="admin-icon" style="font-size:28px;">🗺️</div>
+      <h3 style="font-size:17px; font-weight:800; color:var(--gov-navy-dark); margin-top:8px;">Aspirational Districts HeatMap</h3>
+      <p style="font-size:13px; color:var(--gov-text-secondary); margin:8px 0 16px;">Inspect low-saturation pockets, poverty indices, and village-level infrastructure gaps on the live India map.</p>
+      <button class="primary-btn" style="width:100%; padding:9px;" onclick="window.location.href='map.html'">Explore HeatMap →</button>
+    </div>
+
+    <!-- 5. Fund Utilization & DBT Audit -->
+    <div class="admin-card" style="background:#FFF; padding:24px; border-radius:12px; border:1px solid var(--gov-border-light); box-shadow:var(--gov-shadow-sm);">
+      <div class="admin-icon" style="font-size:28px;">💳</div>
+      <h3 style="font-size:17px; font-weight:800; color:var(--gov-navy-dark); margin-top:8px;">Fund & DBT Integrity Audit</h3>
+      <p style="font-size:13px; color:var(--gov-text-secondary); margin:8px 0 16px;">Audit department expenditure, unspent treasury balances, ghost beneficiary purges, and Aadhaar saturation.</p>
+      <button class="primary-btn" style="width:100%; padding:9px;" onclick="window.location.href='beneficiaries.html'">Audit Fund Flow →</button>
+    </div>
+
+    <!-- 6. Gazette Publisher -->
+    <div class="admin-card" style="background:#FFF; padding:24px; border-radius:12px; border:1px solid var(--gov-border-light); box-shadow:var(--gov-shadow-sm);">
+      <div class="admin-icon" style="font-size:28px;">📢</div>
+      <h3 style="font-size:17px; font-weight:800; color:var(--gov-navy-dark); margin-top:8px;">Future Policy & Gazette Publisher</h3>
+      <p style="font-size:13px; color:var(--gov-text-secondary); margin:8px 0 16px;">Draft, schedule, and publish official public notifications regarding upcoming schemes and budget sanctions.</p>
+      <button class="primary-btn" style="width:100%; padding:9px;" onclick="window.location.href='updates.html'">Manage Gazette →</button>
+    </div>
+
+    <!-- 7. Open Data Master Downloads Hub -->
+    <div class="admin-card" style="background:#FFF; padding:24px; border-radius:12px; border:1px solid var(--gov-border-light); box-shadow:var(--gov-shadow-sm);">
+      <div class="admin-icon" style="font-size:28px;">📥</div>
+      <h3 style="font-size:17px; font-weight:800; color:var(--gov-navy-dark); margin-top:8px;">Open Data Master Directory</h3>
+      <p style="font-size:13px; color:var(--gov-text-secondary); margin:8px 0 16px;">Download all 7 official Master Excel & CSV spreadsheets (Projects, Schemes, Beneficiaries, Financials).</p>
+      <button class="secondary-btn" style="width:100%; padding:9px;" onclick="window.location.href='data.html'">Open Downloads Hub →</button>
+    </div>
+
+  </div>
+
+  <!-- ADMIN-ONLY DATA INGESTION SUITE (APPEND-ONLY INTEGRITY) -->
+  <section style="margin-top: 35px; background: #FFFFFF; border: 1px solid var(--gov-border-light); border-radius: 14px; padding: 30px; box-shadow: var(--gov-shadow-md);">
+    <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 15px; margin-bottom: 20px;">
+      <div>
+        <span class="section-label" style="color: var(--gov-saffron);">OFFICIAL MASTER DATA INGESTION (ADMIN ONLY)</span>
+        <h2 style="font-size: 22px; font-weight: 800; color: var(--gov-navy-dark); margin-top: 4px;">Sanction & Register Master Data</h2>
+        <p style="font-size: 13px; color: var(--gov-text-secondary); margin-top: 4px;">
+          🛡️ <strong>Append-Only Integrity:</strong> Authorized Nodal Officers can add new vetted schemes and project records to expand the master registry. Historical records cannot be altered or overwritten.
+        </p>
+      </div>
+      <div style="display: flex; gap: 8px;">
+        <button type="button" class="btn btn-sm btn-primary" id="tabSchemeBtn" onclick="switchAdminDataTab('scheme')">+ Add New Scheme</button>
+        <button type="button" class="btn btn-sm btn-secondary" id="tabProjectBtn" onclick="switchAdminDataTab('project')">+ Register New Project</button>
+      </div>
+    </div>
+
+    <!-- FORM 1: ADD NEW SCHEME -->
+    <form id="adminAddSchemeForm" onsubmit="event.preventDefault(); submitAdminNewScheme();" style="display: block;">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px;">
+        <div class="form-group">
+          <label style="font-size: 12px; font-weight: 700; color: var(--gov-navy-dark);">Scheme Official Name *</label>
+          <input type="text" id="newSchemeName" required placeholder="e.g. National PM Solar Rooftop Mission" style="width: 100%; padding: 10px; border: 1px solid var(--gov-border); border-radius: 6px; font-size: 13px;">
+        </div>
+        <div class="form-group">
+          <label style="font-size: 12px; font-weight: 700; color: var(--gov-navy-dark);">Line Department / Ministry *</label>
+          <select id="newSchemeDept" required style="width: 100%; padding: 10px; border: 1px solid var(--gov-border); border-radius: 6px; font-size: 13px;">
+            <option value="1">Department of School Education and Literacy</option>
+            <option value="2">Department of Health and Family Welfare</option>
+            <option value="3">Department of Rural Development</option>
+            <option value="4">Department of Agriculture and Farmers Welfare</option>
+            <option value="5">Department of Drinking Water and Sanitation</option>
+            <option value="6">Ministry of Road Transport and Highways</option>
+            <option value="7">Ministry of Women and Child Development</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label style="font-size: 12px; font-weight: 700; color: var(--gov-navy-dark);">Annual Budget Outlay (₹ Crores) *</label>
+          <input type="number" id="newSchemeOutlay" required placeholder="e.g. 15000" min="1" style="width: 100%; padding: 10px; border: 1px solid var(--gov-border); border-radius: 6px; font-size: 13px;">
+        </div>
+        <div class="form-group">
+          <label style="font-size: 12px; font-weight: 700; color: var(--gov-navy-dark);">Scheme Type</label>
+          <select id="newSchemeType" style="width: 100%; padding: 10px; border: 1px solid var(--gov-border); border-radius: 6px; font-size: 13px;">
+            <option value="Centrally Sponsored Scheme">Centrally Sponsored Scheme (CSS)</option>
+            <option value="Central Sector Scheme">Central Sector Scheme (CS)</option>
+            <option value="State Special Assistance">State Special Assistance</option>
+          </select>
+        </div>
+      </div>
+
+      <div style="margin-top: 14px;">
+        <label style="font-size: 12px; font-weight: 700; color: var(--gov-navy-dark);">Target Beneficiary Segment & Description</label>
+        <textarea id="newSchemeDesc" rows="3" placeholder="Provide strategic objective, target citizen segments (e.g. Rural Households, Marginal Farmers), and DBT execution guidelines..." style="width: 100%; padding: 10px; border: 1px solid var(--gov-border); border-radius: 6px; font-size: 13px; margin-top: 4px;"></textarea>
+      </div>
+
+      <div style="margin-top: 16px; display: flex; justify-content: flex-end; gap: 10px;">
+        <button type="submit" class="primary-btn" style="padding: 10px 22px;">🏛️ Sanction & Append Scheme to Registry</button>
+      </div>
+    </form>
+
+    <!-- FORM 2: ADD NEW PROJECT -->
+    <form id="adminAddProjectForm" onsubmit="event.preventDefault(); submitAdminNewProject();" style="display: none;">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px;">
+        <div class="form-group">
+          <label style="font-size: 12px; font-weight: 700; color: var(--gov-navy-dark);">Project / Initiative Name *</label>
+          <input type="text" id="newProjectName" required placeholder="e.g. Model Composite School Construction" style="width: 100%; padding: 10px; border: 1px solid var(--gov-border); border-radius: 6px; font-size: 13px;">
+        </div>
+        <div class="form-group">
+          <label style="font-size: 12px; font-weight: 700; color: var(--gov-navy-dark);">Department</label>
+          <select id="newProjectDept" required style="width: 100%; padding: 10px; border: 1px solid var(--gov-border); border-radius: 6px; font-size: 13px;">
+            <option value="1">Department of School Education and Literacy</option>
+            <option value="2">Department of Health and Family Welfare</option>
+            <option value="3">Department of Rural Development</option>
+            <option value="4">Department of Agriculture and Farmers Welfare</option>
+            <option value="5">Department of Drinking Water and Sanitation</option>
+            <option value="6">Ministry of Road Transport and Highways</option>
+            <option value="7">Ministry of Women and Child Development</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label style="font-size: 12px; font-weight: 700; color: var(--gov-navy-dark);">Target State / District</label>
+          <select id="newProjectLocation" style="width: 100%; padding: 10px; border: 1px solid var(--gov-border); border-radius: 6px; font-size: 13px;">
+            <option value="1">Uttar Pradesh - Varanasi (Aspirational Block)</option>
+            <option value="2">Madhya Pradesh - Vidisha</option>
+            <option value="3">Bihar - Muzaffarpur</option>
+            <option value="4">Rajasthan - Barmer</option>
+            <option value="5">Odisha - Koraput</option>
+            <option value="6">Assam - Baksa</option>
+            <option value="7">Maharashtra - Gadchiroli</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label style="font-size: 12px; font-weight: 700; color: var(--gov-navy-dark);">Budget Allocation (₹ Total)</label>
+          <input type="number" id="newProjectBudget" required placeholder="e.g. 50000000" min="1000" style="width: 100%; padding: 10px; border: 1px solid var(--gov-border); border-radius: 6px; font-size: 13px;">
+        </div>
+      </div>
+
+      <div style="margin-top: 16px; display: flex; justify-content: flex-end; gap: 10px;">
+        <button type="submit" class="primary-btn" style="padding: 10px 22px;">📍 Register New Project Initiative</button>
+      </div>
+    </form>
+  </section>
+
+  <!-- TRACEDATA PROVENANCE INSPECTOR -->
+  <section style="margin-top: 35px; background: #FFFFFF; border: 1px solid var(--gov-border-light); border-radius: 12px; padding: 26px; box-shadow: var(--gov-shadow-md);">
+    <div class="section-heading" style="margin-bottom: 16px;">
+      <div>
+        <span class="section-label">DATA PROVENANCE & HARMONIZATION LINEAGE</span>
+        <h2 style="font-size: 20px; font-weight: 800; color: var(--gov-navy-dark);">TraceData Ingestion Engine</h2>
+      </div>
+    </div>
+    <p style="font-size: 13px; color: var(--gov-text-secondary); margin-bottom: 16px;">
+      Every public KPI, chart, and AI answer is cryptographically linked to official upstream data sources:
+    </p>
+
+    <div style="overflow-x: auto;">
+      <table class="scheme-table" style="width: 100%; font-size: 13px;">
+        <thead>
+          <tr>
+            <th>Source ID</th>
+            <th>Dataset Name</th>
+            <th>Ministry</th>
+            <th>Data Period</th>
+            <th>Last Sync</th>
+            <th>Cryptographic Hash</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>SRC-9928</code></td>
+            <td>Pradhan Mantri Awas Yojana Master</td>
+            <td>Ministry of Rural Development</td>
+            <td>2021-2026</td>
+            <td>2026-09-20</td>
+            <td><code>SHA256:7f8a9b1c</code></td>
+          </tr>
+          <tr>
+            <td><code>SRC-6930</code></td>
+            <td>Jal Jeevan Mission Tap Coverage</td>
+            <td>Ministry of Jal Shakti</td>
+            <td>2019-2026</td>
+            <td>2026-09-22</td>
+            <td><code>SHA256:4d2e1a8b</code></td>
+          </tr>
+          <tr>
+            <td><code>SRC-1936</code></td>
+            <td>Ayushman Bharat Hospitalization Registry</td>
+            <td>Ministry of Health and Family Welfare</td>
+            <td>2022-2026</td>
+            <td>2026-09-25</td>
+            <td><code>SHA256:3c8d9e0f</code></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-gov-info">
+    <div class="footer-nic-text">
+      Administrative Console for Authorized Nodal Officers. Compliant with <strong>GIGW 3.0</strong>.
+    </div>
+    <div class="copyright">© 2026 EkBhaarat. All Rights Reserved.</div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

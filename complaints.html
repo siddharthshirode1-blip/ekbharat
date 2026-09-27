@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Citizen Grievance & Proof Verification Hub | EkBhaarat | भारत सरकार</title>
+<link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body data-page="complaints">
+
+<header class="navbar">
+  <div class="logo-area">
+    <div class="logo-symbol">
+      <svg viewBox="0 0 24 24" width="24" height="24" stroke="#FF671F" stroke-width="1.3" fill="none">
+        <circle cx="12" cy="12" r="10" stroke="#C59B27" stroke-width="1.8"/>
+        <circle cx="12" cy="12" r="2.2" fill="#FF671F"/>
+        <line x1="12" y1="2" x2="12" y2="22"/>
+        <line x1="2" y1="12" x2="22" y2="12"/>
+      </svg>
+    </div>
+    <div class="logo-text">
+      <h2>EkBhaarat</h2>
+      <span>भारत सरकार • Public Grievance & Proof Hub</span>
+    </div>
+  </div>
+  <nav></nav>
+  <div class="nav-actions"></div>
+</header>
+
+<main class="page-container" style="max-width: 1200px; margin: 0 auto; padding: 40px 5%;">
+  <!-- PAGE HEADER -->
+  <section class="page-hero" style="text-align: center; margin-bottom: 30px;">
+    <span class="section-label">CPGRAMS COMPLIANT CITIZEN REDRESSAL & PROOF SYSTEM</span>
+    <h1 style="font-size: 32px; font-weight: 800; color: var(--gov-navy-dark); margin-top: 8px;">
+      "Show Me The Proof" <span>Grievance Verification.</span>
+    </h1>
+    <p style="max-width: 750px; margin: 10px auto 0; font-size: 15px; color: var(--gov-text-secondary);">
+      Report damaged roads, dry taps, broken school infrastructure, or public issues with photo evidence. When government agencies repair the site, officers publish the verified "After" resolution proof.
+    </p>
+  </section>
+
+  <div class="complaints-layout" style="display: grid; grid-template-columns: 1fr 1.3fr; gap: 30px; align-items: start;">
+    
+    <!-- LEFT: CITIZEN REPORT FORM WITH DRAG & DROP PHOTO -->
+    <section class="complaint-form-card" style="background: #FFFFFF; border: 1px solid var(--gov-border-light); border-radius: 12px; padding: 28px; box-shadow: var(--gov-shadow-md);">
+      <div class="form-heading" style="margin-bottom: 20px;">
+        <span class="section-label">CITIZEN GRIEVANCE REGISTRATION</span>
+        <h2 style="font-size: 20px; font-weight: 800; color: var(--gov-navy-dark); margin-top: 5px;">Report Public Issue</h2>
+        <p style="font-size: 13px; color: var(--gov-text-secondary); margin-top: 4px;">Upload or drag-and-drop Before Photo evidence for direct inspection.</p>
+      </div>
+
+      <form id="complaintForm">
+        <div class="form-group" style="margin-bottom: 14px;">
+          <label for="issueCategory" style="display: block; font-weight: 700; font-size: 12px; margin-bottom: 5px;">Issue Category</label>
+          <select id="issueCategory" required style="width: 100%; padding: 10px; border: 1px solid var(--gov-border); border-radius: 6px; font-size: 13px;">
+            <option value="">Select Category</option>
+            <option value="Road / Pothole">Road / Pothole / Bridge</option>
+            <option value="Water Supply">Drinking Water Supply / Pipeline</option>
+            <option value="Government School / Facility">Government School / Hospital Building</option>
+            <option value="Unclean Area / Garbage">Sanitation / Unclean Public Area</option>
+            <option value="Electricity / Streetlight">Electricity / Streetlight Failure</option>
+            <option value="Agriculture / Canal">Irrigation Canal / Agriculture Support</option>
+          </select>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px;">
+          <div class="form-group">
+            <label for="issueState" style="display: block; font-weight: 700; font-size: 12px; margin-bottom: 5px;">State</label>
+            <select id="issueState" required style="width: 100%; padding: 10px; border: 1px solid var(--gov-border); border-radius: 6px; font-size: 13px;">
+              <option value="Uttar Pradesh">Uttar Pradesh</option>
+              <option value="Gujarat">Gujarat</option>
+              <option value="Maharashtra">Maharashtra</option>
+              <option value="Bihar">Bihar</option>
+              <option value="Andhra Pradesh">Andhra Pradesh</option>
+              <option value="Karnataka">Karnataka</option>
+              <option value="Madhya Pradesh">Madhya Pradesh</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="issueDistrict" style="display: block; font-weight: 700; font-size: 12px; margin-bottom: 5px;">District</label>
+            <input type="text" id="issueDistrict" placeholder="e.g. Varanasi" value="Varanasi" required style="width: 100%; padding: 10px; border: 1px solid var(--gov-border); border-radius: 6px; font-size: 13px;">
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 14px;">
+          <label for="issueArea" style="display: block; font-weight: 700; font-size: 12px; margin-bottom: 5px;">Exact Village / Area / Locality</label>
+          <input type="text" id="issueArea" placeholder="e.g. Shivpur Village Link Road, KM 4" required style="width: 100%; padding: 10px; border: 1px solid var(--gov-border); border-radius: 6px; font-size: 13px;">
+        </div>
+
+        <div class="form-group" style="margin-bottom: 14px;">
+          <label for="issueDescription" style="display: block; font-weight: 700; font-size: 12px; margin-bottom: 5px;">Describe the Problem</label>
+          <textarea id="issueDescription" rows="3" placeholder="Explain the severity, impact on citizens, and required intervention..." required style="width: 100%; padding: 10px; border: 1px solid var(--gov-border); border-radius: 6px; font-size: 13px;"></textarea>
+        </div>
+
+        <!-- DRAG & DROP PHOTO EVIDENCE BOX -->
+        <div class="form-group" style="margin-bottom: 16px;">
+          <label style="display: block; font-weight: 700; font-size: 12px; margin-bottom: 5px;">Upload / Drag & Drop "Before" Photo Evidence</label>
+          
+          <input type="file" id="issuePhotos" accept="image/*" style="display: none;">
+          
+          <div id="photoDropZone" style="border: 2px dashed var(--gov-border); border-radius: 8px; padding: 22px; text-align: center; background: #F8FAFC; cursor: pointer; transition: all 0.2s ease;">
+            <div style="font-size: 32px;">📷</div>
+            <strong style="display: block; font-size: 13px; color: var(--gov-navy-dark); margin-top: 6px;">Click or Drag & Drop Photo Here</strong>
+            <span style="font-size: 11px; color: var(--gov-text-muted); display: block; margin-top: 2px;">Supports PNG, JPG, JPEG • Geo-tag auto-stamped</span>
+          </div>
+
+          <!-- PREVIEW THUMBNAIL CONTAINER -->
+          <div id="photoPreviewContainer" style="display: none; margin-top: 10px; position: relative; border-radius: 8px; overflow: hidden; border: 1px solid var(--gov-border);">
+            <img id="photoPreviewImg" src="" alt="Uploaded preview" style="width: 100%; height: 160px; object-fit: cover; display: block;">
+            <button type="button" onclick="removeUploadedPhoto()" style="position: absolute; top: 8px; right: 8px; background: rgba(220,38,38,0.9); color: #FFF; border: none; border-radius: 50%; width: 26px; height: 26px; cursor: pointer; font-weight: 800; font-size: 12px;">✕</button>
+            <div style="background: rgba(6,35,61,0.85); color: #FFF; padding: 4px 10px; font-size: 11px; position: absolute; bottom: 0; left: 0; right: 0;">
+              ✓ Photo Attached • Ready to submit
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" class="primary-btn" style="width: 100%; padding: 12px; font-size: 14px;">Submit Grievance & Generate ID →</button>
+      </form>
+    </section>
+
+    <!-- RIGHT: VERIFIED PROOF FEED (BEFORE VS AFTER) -->
+    <section>
+      <div class="section-heading" style="margin-bottom: 20px;">
+        <div>
+          <span class="section-label">TRANSPARENCY & PROOF STREAM</span>
+          <h2 style="font-size: 20px; font-weight: 800; color: var(--gov-navy-dark);">Verified On-Ground Resolutions</h2>
+        </div>
+      </div>
+
+      <div id="proofComplaintsList">
+        <!-- Dynamically rendered by script.js with real Before vs After pairs -->
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer>
+  <div class="footer-gov-info">
+    <div class="footer-nic-text">
+      CPGRAMS Citizen Grievance Redressal System. Integrated under Central Public Grievance Guidelines. Compliant with <strong>GIGW 3.0</strong>.
+    </div>
+    <div class="copyright">© 2026 EkBhaarat. All Rights Reserved.</div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
