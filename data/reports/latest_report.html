@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EkBharat Gov AI - Query Result</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
+    min-height: 100vh;
+    color: #e2e8f0;
+    padding: 24px;
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  /* Header */
+  .header {
+    background: linear-gradient(90deg, rgba(99,102,241,0.2), rgba(168,85,247,0.2));
+    border: 1px solid rgba(99,102,241,0.4);
+    border-radius: 16px;
+    padding: 28px 32px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .header-logo { font-size: 2.4rem; }
+  .header-text h1 { font-size: 1.5rem; font-weight: 700; color: #a5b4fc; }
+  .header-text p  { font-size: 0.85rem; color: #64748b; margin-top: 2px; }
+
+  /* Question box */
+  .question-box {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(99,102,241,0.3);
+    border-left: 4px solid #818cf8;
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 20px;
+  }
+  .question-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: #6366f1; font-weight: 600; margin-bottom: 8px; }
+  .question-text  { font-size: 1.25rem; font-weight: 600; color: #f1f5f9; }
+
+  /* Summary */
+  .summary-box {
+    background: rgba(34,197,94,0.08);
+    border: 1px solid rgba(34,197,94,0.25);
+    border-radius: 12px;
+    padding: 18px 24px;
+    margin-bottom: 20px;
+  }
+  .summary-text { font-size: 1rem; color: #86efac; line-height: 1.7; }
+
+  /* KPI Cards */
+  .kpi-row { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+  .kpi-card {
+    flex: 1; min-width: 180px;
+    background: linear-gradient(135deg, rgba(99,102,241,0.15), rgba(168,85,247,0.1));
+    border: 1px solid rgba(99,102,241,0.3);
+    border-radius: 14px;
+    padding: 22px 20px;
+    text-align: center;
+  }
+  .kpi-icon  { font-size: 2rem; margin-bottom: 8px; }
+  .kpi-label { font-size: 0.75rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 6px; }
+  .kpi-value { font-size: 1.6rem; font-weight: 700; color: #a5b4fc; }
+
+  /* Chart */
+  .chart-section {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 14px;
+    padding: 24px;
+    margin-bottom: 24px;
+  }
+
+  /* Table */
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+  }
+  .section-title { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; color: #6366f1; font-weight: 600; }
+  .badge {
+    background: rgba(99,102,241,0.25);
+    border: 1px solid rgba(99,102,241,0.4);
+    color: #a5b4fc;
+    border-radius: 99px;
+    padding: 3px 12px;
+    font-size: 0.78rem;
+    font-weight: 600;
+  }
+
+  .table-wrap {
+    overflow-x: auto;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.07);
+  }
+  .data-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+  .data-table thead tr {
+    background: linear-gradient(90deg, rgba(99,102,241,0.25), rgba(168,85,247,0.15));
+  }
+  .data-table th {
+    padding: 13px 16px;
+    text-align: left;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: #94a3b8;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .data-table td {
+    padding: 12px 16px;
+    color: #cbd5e1;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    vertical-align: middle;
+  }
+  .alt-row td   { background: rgba(255,255,255,0.02); }
+  .money-cell   { font-variant-numeric: tabular-nums; color: #6ee7b7; font-weight: 500; }
+
+  /* Progress bar in table */
+  .pct-cell    { display: flex; align-items: center; gap: 10px; }
+  .pct-bar-wrap { flex: 1; background: rgba(255,255,255,0.07); border-radius: 99px; height: 8px; min-width: 80px; }
+  .pct-bar     { height: 8px; border-radius: 99px; transition: width 0.5s ease; }
+  .pct-label   { font-weight: 600; min-width: 44px; color: #e2e8f0; font-size: 0.88rem; }
+
+  /* Error */
+  .error-box {
+    background: rgba(239,68,68,0.1);
+    border: 1px solid rgba(239,68,68,0.3);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 20px;
+  }
+  .error-box h3 { color: #f87171; margin-bottom: 8px; }
+  .error-box p  { color: #fca5a5; }
+
+  /* SQL disclosure */
+  details { margin-top: 20px; }
+  summary {
+    cursor: pointer;
+    font-size: 0.78rem;
+    color: #475569;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 8px 0;
+    user-select: none;
+  }
+  summary:hover { color: #6366f1; }
+  .sql-box {
+    background: #0f172a;
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 10px;
+    padding: 16px;
+    margin-top: 10px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.82rem;
+    color: #7dd3fc;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    word-break: break-all;
+  }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    margin-top: 32px;
+    font-size: 0.75rem;
+    color: #334155;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-logo">🇮🇳</div>
+    <div class="header-text">
+      <h1>EkBharat Government AI Intelligence Platform</h1>
+      <p>Data-driven insights for governance &mdash; Generated on 27 September 2026, 09:11 PM</p>
+    </div>
+  </div>
+
+  <!-- Question -->
+  <div class="question-box">
+    <div class="question-label">Your Question</div>
+    <div class="question-text">"Finance of each department"</div>
+  </div>
+
+  
+  <div class="summary-box"><p class="summary-text">💡 Identified 7 matching records for 'Finance of each department'. Leading entries include: Department of Rural Development (57); Department of School Education and Literacy (56); Department of Women and Child Development (56).</p></div>
+
+  <!-- KPI Cards (single-row results) -->
+  
+
+  <!-- Chart -->
+  <div class="chart-section"><canvas id="mainChart" style="max-height:420px"></canvas></div>
+
+  <!-- Data Table -->
+  <div class="section-header"><span class="section-title">Data Results</span><span class="badge">7 records</span></div>
+        <div class="table-wrap">
+            <table class="data-table">
+                <thead><tr><th>Department Name</th><th>Total Projects</th><th>Total Budget</th></tr></thead>
+                <tbody><tr class="alt-row"><td>Department of Rural Development</td><td>57</td><td class="money-cell">Rs. 14.07 Cr</td></tr><tr class=""><td>Department of School Education and Literacy</td><td>56</td><td class="money-cell">Rs. 15.31 Cr</td></tr><tr class="alt-row"><td>Department of Women and Child Development</td><td>56</td><td class="money-cell">Rs. 14.04 Cr</td></tr><tr class=""><td>Department of Health and Family Welfare</td><td>50</td><td class="money-cell">Rs. 12.57 Cr</td></tr><tr class="alt-row"><td>Department of Agriculture</td><td>49</td><td class="money-cell">Rs. 12.14 Cr</td></tr><tr class=""><td>Department of Road Transport and Highways</td><td>48</td><td class="money-cell">Rs. 12.05 Cr</td></tr><tr class="alt-row"><td>Department of Drinking Water and Sanitation</td><td>45</td><td class="money-cell">Rs. 10.57 Cr</td></tr></tbody>
+            </table>
+        </div>
+
+  <!-- SQL query (collapsed) -->
+  <details>
+    <summary>View Generated SQL Query</summary>
+    <div class="sql-box">SELECT d.department_name, COUNT(p.project_id) AS total_projects, SUM(f.budget_allocated) AS total_budget FROM departments d LEFT JOIN projects p ON d.department_id = p.department_id LEFT JOIN financials f ON p.project_id = f.project_id GROUP BY d.department_name ORDER BY total_projects DESC;</div>
+  </details>
+
+  <div class="footer">EkBharat Gov AI &bull; Official Administrative Data &bull; For Internal Use Only</div>
+</div>
+
+<script>
+
+            const ctx = document.getElementById('mainChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ["Department of Rural Developmen", "Department of School Education", "Department of Women and Child ", "Department of Health and Famil", "Department of Agriculture", "Department of Road Transport a", "Department of Drinking Water a"],
+                    datasets: [{
+                        label: 'Total Projects',
+                        data: [57.0, 56.0, 56.0, 50.0, 49.0, 48.0, 45.0],
+                        backgroundColor: ["rgba(99,102,241,0.85)", "rgba(99,102,241,0.85)", "rgba(99,102,241,0.85)", "rgba(99,102,241,0.85)", "rgba(99,102,241,0.85)", "rgba(99,102,241,0.85)", "rgba(99,102,241,0.85)"],
+                        borderColor: ["rgba(99,102,241,0.85)", "rgba(99,102,241,0.85)", "rgba(99,102,241,0.85)", "rgba(99,102,241,0.85)", "rgba(99,102,241,0.85)", "rgba(99,102,241,0.85)", "rgba(99,102,241,0.85)"],
+                        borderWidth: 2,
+                        borderRadius: 8,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { labels: { color: '#e2e8f0', font: { size: 13, family: 'Inter' } } },
+                        tooltip: {
+                            backgroundColor: '#1e293b',
+                            titleColor: '#94a3b8',
+                            bodyColor: '#e2e8f0',
+                            callbacks: {
+                                label: function(ctx) {
+                                    let v = ctx.parsed.y;
+                                    return "Rs. " + (v >= 1e7 ? (v/1e7).toFixed(2) + " Cr" : (v/1e5).toFixed(2) + " L");
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: { ticks: { color: '#94a3b8', maxRotation: 35 }, grid: { color: 'rgba(255,255,255,0.05)' } },
+                        y: { ticks: { color: '#94a3b8' },             grid: { color: 'rgba(255,255,255,0.05)' } }
+                    }
+                }
+            });
+            
+</script>
+</body>
+</html>

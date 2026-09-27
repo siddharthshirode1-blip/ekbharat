@@ -37,8 +37,8 @@ Desktop.ini
 *.log
 scratch/
 
-# Generated HTML reports (auto-created at runtime, not source code)
-data/reports/
+# Generated HTML reports (sample report included in repo)
+# data/reports/*.html
 
 # Internal patch/migration scripts
 scripts/_patch_*.py
