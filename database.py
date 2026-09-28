@@ -5,16 +5,37 @@ with full relational schema, indices, demo accounts, complaint proofs, and trace
 """
 
 import os
+import shutil
 import sqlite3
 import pandas as pd
 from datetime import datetime
 
-DB_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), "ekbharat.db"))
-DATA_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "ekbharat-main", "data", "processed"))
-RAW_DATA_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "ekbharat-main", "data", "raw"))
+BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+ORIGINAL_DB_PATH = os.path.join(BASE_DIR, "ekbharat.db")
+DATA_DIR = os.path.abspath(os.path.join(BASE_DIR, "ekbharat-main", "data", "processed"))
+RAW_DATA_DIR = os.path.abspath(os.path.join(BASE_DIR, "ekbharat-main", "data", "raw"))
+
+# Serverless platforms like Vercel and AWS Lambda have a read-only filesystem except /tmp
+IS_SERVERLESS = bool(os.environ.get("VERCEL") or os.environ.get("AWS_LAMBDA_FUNCTION_NAME"))
+
+if IS_SERVERLESS:
+    DB_PATH = "/tmp/ekbharat.db"
+else:
+    DB_PATH = ORIGINAL_DB_PATH
+
+def ensure_db_ready():
+    """Ensures database is ready and writable in serverless environments."""
+    if IS_SERVERLESS:
+        if not os.path.exists(DB_PATH) and os.path.exists(ORIGINAL_DB_PATH):
+            try:
+                shutil.copy2(ORIGINAL_DB_PATH, DB_PATH)
+            except Exception as e:
+                pass
 
 def get_connection():
-    conn = sqlite3.connect(DB_PATH)
+    ensure_db_ready()
+    target_path = DB_PATH if os.path.exists(DB_PATH) else ORIGINAL_DB_PATH
+    conn = sqlite3.connect(target_path, timeout=30.0)
     conn.row_factory = sqlite3.Row
     return conn
 

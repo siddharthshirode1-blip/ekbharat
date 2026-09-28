@@ -1,187 +1,133 @@
-# 🏛️ Government AI Data Intelligence Platform
+# 🇮🇳 EkBhaarat - Unified Government AI & Data Intelligence Platform
 
-Autonomous Data Intelligence & Natural Language Query Engine for cross-departmental government datasets. Bridges non-technical government officials with relational MySQL data via AI Text-to-SQL translation, SQL security auditing, provenance citation, and frontend visualization routing.
+An open and intelligent platform that connects data across multiple government ministries (Education, Healthcare, Rural Development, Water & Sanitation, Infrastructure, and more) into a single unified system.
 
----
-
-## 📌 Architecture Overview
-
-```
-┌─────────────────────────────────────────────────────────────────────────┐
-│                        1. DATA ETL & STORAGE LAYER                      │
-│  • Parse Excel files in data/raw/                                       │
-│  • Clean duplicate source/department records                            │
-│  • Dynamically extract unique location combinations                     │
-│  • Map text fields to Foreign Keys (department_id, scheme_id, location) │
-│  • Populate local MySQL (government_ai)                                 │
-└────────────────────────────────────┬────────────────────────────────────┘
-                                     │
-                                     ▼
-┌─────────────────────────────────────────────────────────────────────────┐
-│                        2. SECURITY & VALIDATION LAYER                   │
-│  • Parse LLM-generated SQL statements                                   │
-│  • Enforce strictly READ-ONLY restrictions (reject INSERT, UPDATE, DROP)│
-│  • Block multi-statement chained injections                             │
-└────────────────────────────────────┬────────────────────────────────────┘
-                                     │
-                                     ▼
-┌─────────────────────────────────────────────────────────────────────────┐
-│                     3. REASONING & RESPONSE LAYER                       │
-│  • Injects full schema metadata into LLM system prompts                 │
-│  • Converts questions into optimized MySQL SELECT queries               │
-│  • Executes verified queries & aggregates data payloads                 │
-│  • Synthesizes human explanation with dataset provenance citations     │
-│  • Routes structured JSON with recommended visualization types          │
-└─────────────────────────────────────────────────────────────────────────┘
-```
+With **EkBhaarat**, officials and citizens can ask questions in plain English or Hindi, see interactive charts and maps, find overlapping government schemes, track fund utilization, and download open datasets in Excel or CSV.
 
 ---
 
-## 🗂️ Project Structure
+## 🌟 Key Features
 
-```
-government-ai/
-├── data/
-│   ├── raw/                 # Contains raw Excel files: projects.xlsx, departments.xlsx, etc.
-│   ├── processed/           # Sanitized, deduplicated CSV exports
-│   └── validation/          # Automated ETL audit logs and summary metrics
-├── scripts/
-│   ├── setup_db.sql         # Production MySQL DDL schema for government_ai
-│   ├── etl_pipeline.py      # Automated deduplication, FK mapping, and population script
-│   └── verify_db.py         # Integrity audit & cross-department intelligence discovery
-├── ai_engine/
-│   ├── __init__.py          # Package interface
-│   ├── db_connector.py      # Connection manager (UNIX socket with TCP fallback)
-│   ├── sql_validator.py     # Strict SQL security parser (READ-ONLY SELECT enforcement)
-│   └── query_engine.py      # Natural Language -> Verified SQL -> Response & Viz router
-├── test_query.py            # CLI test runner for natural language queries
-├── test_sql_validator.py    # Unit tests for security validator
-├── requirements.txt         # Python library dependencies
-├── .env.example             # Template for database & AI credentials
-├── .gitignore               # Protects .env credentials and caches
-└── README.md                # Comprehensive documentation
-```
+* 💬 **AI Query Studio:** Ask questions like *"Which districts have maximum funds spent on healthcare?"* and instantly get charts, tables, and AI explanations.
+* 🗺️ **Interactive India Geospatial Map:** Live map showing state and district development indices, active schemes, and regional performance.
+* 🔍 **Scheme Overlap Detector:** Identifies duplicate or overlapping initiatives across different ministries to prevent wasted funds.
+* 💰 **Funds & DBT Tracking:** Real-time visibility into budget allocations, fund releases, and beneficiary reach across India.
+* 📸 **Citizen Grievance & Proof Verification:** Citizens can submit complaints with photos of issues (e.g. broken roads or water supply). Admins can inspect and upload proof of resolution.
+* 📥 **National Open Data Portal:** Free download of all clean Master Excel (`.xlsx`) and CSV datasets for citizens, researchers, and administrators.
+* 🔒 **Role-Based Access (Admin & Citizen):**
+  * **Citizens:** Explore data, query the AI, view maps, submit complaints, and download all datasets.
+  * **Admins:** Sanction new schemes, register new project initiatives, and verify citizen complaints (with immutable audit history).
 
 ---
 
-## 💾 Database Schema (`government_ai`)
+## 🏗️ How It Works (Architecture in Simple Terms)
 
-The relational model breaks departmental silos and connects initiatives across 7 tables:
+```
+[ Excel / CSV Master Datasets ]
+               │
+               ▼
+[ Clean SQLite / MySQL Database ]
+               │
+               ▼
+[ AI Engine (Natural Language -> Verified SQL) ]
+               │
+               ▼
+[ Interactive Web Portal: Charts, Maps, Tables & Open Data ]
+```
 
-1. **`data_sources`**: Master dataset register (`source_id` PK, `data_period`, `source_updated_date`, `official_source_url`).
-2. **`departments`**: Government ministries & departments (`department_id` INT PK, `department_name` UNIQUE, `department_code`).
-3. **`schemes`**: Government schemes (`scheme_id` INT PK, `department_id` FK, `source_id` FK).
-4. **`locations`**: Spatial hierarchy (`location_id` INT PK, `state`, `district`, `taluka`, `village`, `latitude`, `longitude`).
-5. **`projects`**: Concrete initiatives (`project_id` INT PK, `department_id` FK, `scheme_id` FK, `location_id` FK, `status`, `start_date`, `expected_completion_date`).
-6. **`beneficiaries`**: Impact records (`beneficiary_record_id` INT PK, `project_id` FK, `scheme_id` FK, `beneficiary_count`, `beneficiary_category`).
-7. **`financials`**: Fiscal allocations (`financial_id` INT PK, `project_id` FK, `scheme_id` FK, `budget_allocated`, `amount_released`, `amount_spent`).
+1. **Data Layer:** Combines data from 7+ central ministries (Schemes, Projects, Financials, Beneficiaries, Locations).
+2. **AI Engine:** Converts user questions into secure, read-only SQL queries and produces instant Chart.js visualizations and summary reports.
+3. **Web Dashboard:** A clean, accessible web interface compliant with Indian Government Web Guidelines (GIGW 3.0).
 
 ---
 
-## 🚀 Quickstart & Setup
+## 🚀 Quick Setup & Installation
 
-### 1. Prerequisites
-- Python 3.10+
-- MySQL Server 8.0+
-
-### 2. Environment Configuration
-Copy `.env.example` to `.env` and configure your credentials:
-```env
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_USER=root
-DB_PASSWORD=your_mysql_password
-DB_NAME=government_ai
-
-AI_PROVIDER=gemini
-GEMINI_API_KEY=your_gemini_api_key
+### Step 1: Clone the Repository & Open Folder
+```bash
+git clone https://github.com/<your-username>/ekbharat.git
+cd ekbharat
 ```
 
-### 3. Install Dependencies
+### Step 2: Install Dependencies
+Make sure you have **Python 3.10+** installed. Then run:
 ```bash
 pip install -r requirements.txt
 ```
 
-### 4. Initialize Database Schema
+### Step 3: (Optional) Set Up API Keys in `.env`
+Create a `.env` file from `.env.example`:
 ```bash
-mysql -u root -p < scripts/setup_db.sql
+cp .env.example .env
+```
+Inside `.env`, configure your settings:
+```env
+# Database Settings
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_USER=your_db_username
+DB_PASSWORD=your_db_password
+DB_NAME=government_ai
+
+# AI API Key (Optional: Has built-in offline smart fallback if omitted)
+AI_PROVIDER=gemini
+GEMINI_API_KEY=your_gemini_api_key_here
 ```
 
-### 5. Run Automated ETL Pipeline
-Cleans and loads all 6 raw datasets into MySQL with full foreign key resolution:
+### Step 4: Run the Application
 ```bash
-python scripts/etl_pipeline.py
+python app.py
 ```
-
-### 6. Verify Database & Cross-Department Overlaps
-Executes data audits and demonstrates automated cross-department discovery:
-```bash
-python scripts/verify_db.py
-```
+Open your browser and visit:
+👉 **`http://127.0.0.1:5000`**
 
 ---
 
-## 🤖 Running the AI Query Engine
+## 👥 Demo Accounts
 
-Run the interactive CLI query runner with natural language questions:
+| Role | Username / Email | Password | Access Rights |
+| :--- | :--- | :--- | :--- |
+| **Citizen (User)** | `rajesh.sharma@ekbharat.gov.in` | `Citizen@123` | AI Studio, Maps, Complaints, Open Data Downloads |
+| **Citizen (User)** | `priya.patel@ekbharat.gov.in` | `Citizen@123` | AI Studio, Maps, Complaints, Open Data Downloads |
+| **Administrator** | `admin@ekbharat.gov.in` | `Admin@2026` | Full Access + Master Data Ingestion & Resolution |
 
-```bash
-python test_query.py "Which villages have multiple departments active simultaneously?"
-```
-
-### Sample Output Payload:
-```json
-{
-  "status": "success",
-  "user_question": "Which villages have multiple departments active simultaneously?",
-  "generated_sql": "SELECT l.village, COUNT(DISTINCT p.department_id) AS department_count, GROUP_CONCAT(DISTINCT d.department_name SEPARATOR ', ') AS active_departments FROM projects p JOIN locations l ON p.location_id = l.location_id JOIN departments d ON p.department_id = d.department_id GROUP BY l.village HAVING COUNT(DISTINCT p.department_id) > 1 ORDER BY department_count DESC LIMIT 20;",
-  "data": [
-    {
-      "village": "Village-49",
-      "department_count": 5,
-      "active_departments": "Department of Agriculture, Department of Health and Family Welfare, Department of Rural Development, Department of School Education and Literacy, Department of Women and Child Development"
-    },
-    {
-      "village": "Village-119",
-      "department_count": 4,
-      "active_departments": "Department of Drinking Water and Sanitation, Department of Health and Family Welfare, Department of Rural Development, Department of Women and Child Development"
-    }
-  ],
-  "summary_text": "Identified 20 matching records for 'Which villages have multiple departments active simultaneously?'. Leading entries include: Village-49 (5); Village-119 (4); Village-135 (4).",
-  "recommended_viz": "bar_chart"
-}
-```
-
-### Supported Visualization Types:
-- `kpi_card`: Single-value or headline aggregate metrics.
-- `bar_chart`: Categorical rankings and department comparisons.
-- `line_chart`: Time-series trends and financial year tracking.
-- `map`: Geographic location points (`latitude`, `longitude`).
-- `table`: Multi-attribute tabular data.
+*(You can also click **Create Account** on the login page to register your own account).*
 
 ---
 
-## 🔒 Security & Validation
+## 📊 Available Open Datasets
 
-Every query generated by an AI model must pass through `ai_engine/sql_validator.py`:
-- **Read-Only Enforcement**: Queries must begin with `SELECT` or `WITH`.
-- **Prohibited Keywords**: Rejects `INSERT`, `UPDATE`, `DELETE`, `DROP`, `ALTER`, `TRUNCATE`, `GRANT`, `EXEC`, etc.
-- **Injection Prevention**: Semicolon-chained multi-statements are strictly blocked.
+All datasets can be downloaded directly from the **Open Data Portal** (`data.html`):
 
-Run unit tests:
-```bash
-python test_sql_validator.py
-```
+| Dataset Name | Formats | Description |
+| :--- | :--- | :--- |
+| **National Infrastructure Projects** | `.xlsx`, `.csv` | 360+ road, railway, energy, and urban development projects |
+| **Central Government Schemes** | `.xlsx`, `.csv` | 100+ welfare schemes across 7 ministries |
+| **Direct Benefit Transfers (DBT)** | `.xlsx`, `.csv` | Beneficiary counts and categories across all states |
+| **Ministry Financial Allocations** | `.xlsx`, `.csv` | Budgets allocated, funds released, and amounts spent |
+| **Ministry & Department Master** | `.xlsx`, `.csv` | Central ministries and nodal departments |
+| **Geospatial & District Directory**| `.csv` | State, district, taluka, and village coordinates |
 
 ---
 
-## 📦 Ready to Push to GitHub
+## 🛡️ Security & Privacy
 
-```bash
-git init
-git add .
-git commit -m "feat: complete government AI data intelligence platform backend"
-git branch -M main
-git remote add origin https://github.com/<your-username>/<your-repo-name>.git
-git push -u origin main
-```
+* **No Sensitive Data Stored:** Passwords and keys are never hard-coded in source files.
+* **SQL Injection Protection:** The AI engine uses a strict read-only SQL validator (`ai_engine/sql_validator.py`) that blocks destructive operations like `DROP`, `DELETE`, `UPDATE`, or `INSERT`.
+* **Append-Only Master Data:** Only authorized administrators can sanction new data entries, ensuring historic records remain tamper-proof.
+
+---
+
+## 💻 Tech Stack
+
+* **Backend:** Python (Flask, SQLite3 / MySQL connector)
+* **AI Engine:** Google Gemini API / Local Smart NLP Engine
+* **Frontend:** HTML5, CSS3, JavaScript (Vanilla ES6+)
+* **Mapping & Charts:** Leaflet.js, Chart.js, GeoJSON
+* **Design:** High-contrast accessibility standards (GIGW 3.0), Dynamic text resizing (`A-`, `A`, `A+`)
+
+---
+
+## 📄 License
+
+This project is created for public demonstration and open governance research. Distributed under the **MIT License**.
