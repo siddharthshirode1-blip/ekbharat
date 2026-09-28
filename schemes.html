@@ -120,16 +120,24 @@
 
 
     <!-- RESULTS HEADER -->
-    <div class="scheme-results-header">
+    <div class="scheme-results-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
 
       <div>
         <span class="section-label">SCHEMES</span>
         <h2>Available Government Schemes</h2>
       </div>
 
-      <span id="schemeResultCount">
-        6 schemes
-      </span>
+      <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+        <span id="schemeResultCount" style="font-weight: 700; color: var(--gov-navy); background: #EBF3FA; padding: 4px 10px; border-radius: 20px; font-size: 13px;">
+          6 schemes
+        </span>
+        <a href="downloads/schemes.xlsx" onclick="downloadDatasetFile('schemes.xlsx', 'excel', 'Central Schemes Master Data')" download="schemes.xlsx" class="primary-btn" style="text-decoration: none; padding: 8px 14px; font-size: 12px; display: inline-flex; align-items: center; gap: 6px;">
+          📊 Export Excel (.xlsx)
+        </a>
+        <a href="downloads/schemes_clean.csv" onclick="downloadDatasetFile('schemes_clean.csv', 'csv', 'Central Schemes Register')" download="schemes_clean.csv" class="secondary-btn" style="text-decoration: none; padding: 8px 14px; font-size: 12px; display: inline-flex; align-items: center; gap: 6px;">
+          📄 CSV Format
+        </a>
+      </div>
 
     </div>
 

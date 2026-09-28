@@ -1989,7 +1989,7 @@ footer {
     width: min(1140px, 86%);
     margin: 20px auto;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 16px;
 }
 
@@ -3569,4 +3569,281 @@ button:focus-visible {
     cursor: pointer;
     line-height: 1;
 }
+
+/* =========================================================
+   AUTHENTIC GOVERNMENT OF INDIA MASTER FOOTER (GIGW 3.0)
+   ========================================================= */
+.gov-master-footer {
+    background: #000000;
+    color: #FFFFFF;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    margin-top: 60px;
+    border-top: 1px solid #1F2937;
+    position: relative;
+    z-index: 100;
+}
+
+/* 1. TOP OFFICIAL INITIATIVES & PARTNER LOGOS BANNER */
+.gov-partner-banner {
+    background: #0B111C;
+    border-bottom: 1px solid #1E293B;
+    padding: 18px 5%;
+}
+
+.gov-partner-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px 30px;
+}
+
+.gov-partner-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: #FFFFFF;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+    opacity: 0.92;
+}
+
+.gov-partner-item:hover {
+    opacity: 1;
+    transform: translateY(-2px);
+}
+
+.gov-partner-badge-box {
+    border: 1.5px solid #FFFFFF;
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-weight: 800;
+    font-size: 15px;
+    letter-spacing: 0.5px;
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+/* 2. MAIN FOOTER LINKS & DIRECTORY */
+.gov-main-footer {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 44px 5% 36px;
+}
+
+.gov-footer-grid {
+    display: grid;
+    grid-template-columns: 2.2fr 1.1fr 1.1fr 1fr 1.1fr 1.2fr;
+    gap: 32px 24px;
+}
+
+@media (max-width: 1200px) {
+    .gov-footer-grid {
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+    }
+    .gov-col-mobile-social {
+        grid-column: 1 / -1;
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        border-top: 1px solid #1E293B;
+        padding-top: 24px;
+        margin-top: 10px;
+    }
+}
+
+@media (max-width: 900px) {
+    .gov-footer-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+    .gov-col-categories {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (max-width: 600px) {
+    .gov-footer-grid {
+        grid-template-columns: 1fr;
+        gap: 28px;
+    }
+    .gov-category-subcols {
+        grid-template-columns: 1fr !important;
+    }
+    .gov-col-mobile-social {
+        flex-direction: column;
+        gap: 20px;
+    }
+}
+
+.gov-footer-col {
+    display: flex;
+    flex-direction: column;
+}
+
+.gov-footer-heading {
+    color: #FFFFFF;
+    font-size: 15px;
+    font-weight: 800;
+    margin-bottom: 14px;
+    letter-spacing: 0.2px;
+    text-transform: none;
+    position: relative;
+    padding-bottom: 6px;
+}
+
+.gov-footer-heading::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 24px;
+    height: 2px;
+    background: #FF671F;
+    border-radius: 2px;
+}
+
+.gov-category-subcols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.gov-footer-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.gov-footer-list li a {
+    color: #D1D5DB;
+    font-size: 12.5px;
+    line-height: 1.45;
+    text-decoration: none;
+    transition: color 0.15s ease, transform 0.15s ease;
+    display: inline-block;
+}
+
+.gov-footer-list li a:hover {
+    color: #FF9933;
+    transform: translateX(2px);
+    text-decoration: underline;
+}
+
+/* QR Code & Mobile Box */
+.gov-qr-card {
+    background: #FFFFFF;
+    border-radius: 10px;
+    padding: 10px;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+    max-width: 140px;
+    margin-bottom: 10px;
+}
+
+.gov-qr-card svg {
+    display: block;
+}
+
+.gov-qr-caption {
+    font-size: 10px;
+    font-weight: 700;
+    color: #06233D;
+    margin-top: 6px;
+    text-align: center;
+    line-height: 1.2;
+}
+
+/* Social Buttons */
+.gov-social-links {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.gov-social-btn {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: #1F2937;
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 800;
+    transition: all 0.2s ease;
+    border: 1px solid #374151;
+}
+
+.gov-social-btn:hover {
+    background: #FF671F;
+    color: #FFFFFF;
+    border-color: #FF671F;
+    transform: translateY(-2px);
+}
+
+/* 3. BOTTOM COMPLIANCE & NIC ATTRIBUTION */
+.gov-bottom-bar {
+    background: #050B14;
+    border-top: 1px solid #1E293B;
+    position: relative;
+}
+
+.gov-bottom-tricolor {
+    height: 3px;
+    width: 100%;
+    background: linear-gradient(90deg, #FF9933 33.33%, #FFFFFF 33.33%, #FFFFFF 66.66%, #138808 66.66%);
+}
+
+.gov-bottom-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 20px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 14px 24px;
+}
+
+.gov-bottom-text p {
+    font-size: 11.5px;
+    color: #9CA3AF;
+    margin: 0;
+    line-height: 1.5;
+}
+
+.gov-bottom-text strong {
+    color: #F3F4F6;
+}
+
+.gov-bottom-sub {
+    margin-top: 3px !important;
+    color: #6B7280 !important;
+}
+
+.gov-bottom-meta {
+    font-size: 11.5px;
+    color: #9CA3AF;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.gov-dot-sep {
+    color: #4B5563;
+}
+
 

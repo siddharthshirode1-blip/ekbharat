@@ -331,6 +331,288 @@ function updateNavbar() {
 }
 
 // =========================================================
+// AUTHENTIC GOVERNMENT OF INDIA MASTER FOOTER INJECTOR
+// =========================================================
+function injectGovFooter() {
+    let footer = document.querySelector("footer");
+    if (!footer) {
+        footer = document.createElement("footer");
+        document.body.appendChild(footer);
+    }
+    footer.className = "gov-master-footer";
+    footer.innerHTML = `
+        <!-- 1. OFFICIAL GOVT PORTALS & INITIATIVES BANNER -->
+        <div class="gov-partner-banner">
+            <div class="gov-partner-container">
+                <!-- Right To Information -->
+                <a href="https://rti.gov.in" target="_blank" rel="noopener" class="gov-partner-item" title="Right to Information Portal (RTI)">
+                    <svg width="130" height="38" viewBox="0 0 130 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="18" cy="19" r="15" fill="#1E293B" stroke="#64748B" stroke-width="1.2"/>
+                        <circle cx="18" cy="13" r="4" fill="#FFFFFF"/>
+                        <path d="M10 26 C10 21, 26 21, 26 26" fill="#FFFFFF"/>
+                        <rect x="20" y="14" width="8" height="11" rx="1" fill="#FF671F" stroke="#FFFFFF" stroke-width="0.8"/>
+                        <line x1="22" y1="17" x2="26" y2="17" stroke="#FFFFFF" stroke-width="1"/>
+                        <line x1="22" y1="20" x2="26" y2="20" stroke="#FFFFFF" stroke-width="1"/>
+                        <text x="38" y="17" fill="#FFFFFF" font-family="'Plus Jakarta Sans', sans-serif" font-weight="800" font-size="9" letter-spacing="0.4">RIGHT TO</text>
+                        <text x="38" y="27" fill="#FFFFFF" font-family="'Plus Jakarta Sans', sans-serif" font-weight="800" font-size="9" letter-spacing="0.4">INFORMATION</text>
+                    </svg>
+                </a>
+
+                <!-- CPGRAMS -->
+                <a href="https://pgportal.gov.in" target="_blank" rel="noopener" class="gov-partner-item" title="Centralized Public Grievance Redress and Monitoring System (CPGRAMS)">
+                    <div class="gov-partner-badge-box" style="border: 1.5px solid #60A5FA; background: #1E3A8A; color: #FFFFFF; border-radius: 6px; padding: 4px 10px; font-weight: 800; font-size: 13px; letter-spacing: 0.8px;">
+                        CPGRAMS
+                    </div>
+                </a>
+
+                <!-- data.gov.in -->
+                <a href="https://data.gov.in" target="_blank" rel="noopener" class="gov-partner-item" title="Open Government Data Platform India (data.gov.in)">
+                    <svg width="145" height="36" viewBox="0 0 145 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M6 18 Q11 10 16 10 Q21 10 26 18 Q21 26 16 26 Q11 26 6 18 Z" stroke="#FF671F" stroke-width="1.8" fill="none"/>
+                        <circle cx="16" cy="18" r="3" fill="#FF671F"/>
+                        <text x="32" y="19" fill="#FFFFFF" font-family="'Plus Jakarta Sans', sans-serif" font-weight="800" font-size="15">data.<tspan fill="#FF671F">gov</tspan>.<tspan fill="#FFFFFF">in</tspan></text>
+                        <text x="32" y="29" fill="#94A3B8" font-family="'Plus Jakarta Sans', sans-serif" font-weight="600" font-size="7" letter-spacing="0.2">open government data (OGD) platform india</text>
+                    </svg>
+                </a>
+
+                <!-- PM INDIA -->
+                <a href="https://pmindia.gov.in" target="_blank" rel="noopener" class="gov-partner-item" title="Prime Minister of India Official Portal">
+                    <svg width="118" height="36" viewBox="0 0 118 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="18" r="10" stroke="#E2E8F0" stroke-width="1.2" fill="none"/>
+                        <circle cx="12" cy="18" r="2.5" fill="#C59B27"/>
+                        <rect x="26" y="8" width="14" height="2.8" fill="#FF9933"/>
+                        <rect x="26" y="10.8" width="14" height="2.8" fill="#FFFFFF"/>
+                        <circle cx="33" cy="12.2" r="1" fill="#000080"/>
+                        <rect x="26" y="13.6" width="14" height="2.8" fill="#138808"/>
+                        <text x="44" y="20" fill="#FFFFFF" font-family="'Plus Jakarta Sans', sans-serif" font-weight="800" font-size="12" letter-spacing="0.4">PM INDIA</text>
+                    </svg>
+                </a>
+
+                <!-- Digital India -->
+                <a href="https://digitalindia.gov.in" target="_blank" rel="noopener" class="gov-partner-item" title="Digital India - Power To Empower">
+                    <svg width="135" height="36" viewBox="0 0 135 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10 8 C4 14 4 23 10 29 C13 32 18 30 20 26 C22 22 18 17 14 15 C10 13 14 8 18 6" stroke="#06B6D4" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+                        <circle cx="19" cy="6" r="2.5" fill="#FF671F"/>
+                        <text x="30" y="18" fill="#FFFFFF" font-family="'Plus Jakarta Sans', sans-serif" font-weight="800" font-size="13">Digital India</text>
+                        <text x="30" y="28" fill="#38BDF8" font-family="'Plus Jakarta Sans', sans-serif" font-weight="600" font-size="7.5" font-style="italic">Power To Empower</text>
+                    </svg>
+                </a>
+
+                <!-- my GOV -->
+                <a href="https://mygov.in" target="_blank" rel="noopener" class="gov-partner-item" title="MyGov - Meri Sarkar">
+                    <svg width="115" height="36" viewBox="0 0 115 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="14" cy="17" r="9" stroke="#C59B27" stroke-width="1.4" fill="none"/>
+                        <circle cx="14" cy="17" r="2.5" fill="#FF671F"/>
+                        <text x="28" y="18" fill="#FFFFFF" font-family="'Plus Jakarta Sans', sans-serif" font-weight="800" font-size="13.5">my <tspan fill="#FF9933">GOV</tspan></text>
+                        <text x="28" y="28" fill="#CBD5E1" font-family="'Plus Jakarta Sans', sans-serif" font-weight="700" font-size="8.5">मेरी सरकार</text>
+                    </svg>
+                </a>
+
+                <!-- UMANG -->
+                <a href="https://web.umang.gov.in" target="_blank" rel="noopener" class="gov-partner-item" title="UMANG - The Spirit of New India">
+                    <div style="display: inline-flex; align-items: center; gap: 7px; background: #FFFFFF; border-radius: 5px; padding: 4px 8px; color: #0284C7; font-weight: 800;">
+                        <svg width="15" height="18" viewBox="0 0 15 18" fill="none">
+                            <rect x="1" y="1" width="13" height="16" rx="2" stroke="#FF671F" stroke-width="1.6" fill="none"/>
+                            <circle cx="7.5" cy="13.5" r="1.2" fill="#FF671F"/>
+                            <line x1="4.5" y1="3.5" x2="10.5" y2="3.5" stroke="#FF671F" stroke-width="1.3"/>
+                        </svg>
+                        <div style="line-height: 1;">
+                            <span style="color: #0369A1; font-size: 13px; font-weight: 900; letter-spacing: 0.5px;">UMANG</span>
+                            <div style="color: #64748B; font-size: 5.5px; font-weight: 700; text-transform: uppercase; margin-top: 1px;">THE SPIRIT OF NEW INDIA</div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- 2. MAIN DIRECTORY & LINKS SECTION -->
+        <div class="gov-main-footer">
+            <div class="gov-footer-grid">
+                <!-- Col 1: Categories (Double subcolumns) -->
+                <div class="gov-footer-col gov-col-categories">
+                    <h4 class="gov-footer-heading">Category</h4>
+                    <div class="gov-category-subcols">
+                        <ul class="gov-footer-list">
+                            <li><a href="schemes.html?search=agriculture">Agriculture, Rural & Environment</a></li>
+                            <li><a href="beneficiaries.html">Benefits & Social development</a></li>
+                            <li><a href="schemes.html?search=msme">Business & Self-employed</a></li>
+                            <li><a href="schemes.html">Citizenship, Visa & Passports</a></li>
+                            <li><a href="schemes.html">Defence & Foreign affairs</a></li>
+                            <li><a href="schemes.html?search=transport">Driving & Transport</a></li>
+                            <li><a href="schemes.html?search=education">Education & Learning</a></li>
+                            <li><a href="dashboard.html">Governance & Planning</a></li>
+                            <li><a href="schemes.html?search=health">Health & Wellness</a></li>
+                        </ul>
+                        <ul class="gov-footer-list">
+                            <li><a href="schemes.html?search=housing">Housing & Local services</a></li>
+                            <li><a href="map.html">Infrastructure & Industries</a></li>
+                            <li><a href="schemes.html?search=skill">Jobs & Skill Development</a></li>
+                            <li><a href="complaints.html">Justice, Law & Grievances</a></li>
+                            <li><a href="beneficiaries.html">Money & Taxes</a></li>
+                            <li><a href="data.html">Science, IT & Communication</a></li>
+                            <li><a href="map.html">Travel & Tourism</a></li>
+                            <li><a href="schemes.html?search=women">Welfare of Families</a></li>
+                            <li><a href="schemes.html?search=youth">Youth sports & Culture</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Col 2: My-Government & Directory -->
+                <div class="gov-footer-col">
+                    <h4 class="gov-footer-heading">My-Government</h4>
+                    <ul class="gov-footer-list">
+                        <li><a href="updates.html">Acts & Rules</a></li>
+                        <li><a href="schemes.html">Schemes</a></li>
+                        <li><a href="updates.html">Constitution of India</a></li>
+                        <li><a href="data.html">Documents</a></li>
+                    </ul>
+
+                    <h4 class="gov-footer-heading" style="margin-top: 22px;">Directory</h4>
+                    <ul class="gov-footer-list">
+                        <li><a href="admin.html">Who's Who</a></li>
+                        <li><a href="complaints.html">Contact Directory</a></li>
+                        <li><a href="data.html">Web Directory</a></li>
+                        <li><a href="map.html">Public Utilities</a></li>
+                        <li><a href="tel:1800110001">Helpline</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 3: Explore India & Services -->
+                <div class="gov-footer-col">
+                    <h4 class="gov-footer-heading">Explore India</h4>
+                    <ul class="gov-footer-list">
+                        <li><a href="map.html">Travel & Tourism</a></li>
+                        <li><a href="map.html">Culinary Delights</a></li>
+                        <li><a href="schemes.html">One District One Product</a></li>
+                        <li><a href="dashboard.html">Facts of India</a></li>
+                    </ul>
+
+                    <h4 class="gov-footer-heading" style="margin-top: 22px;">News Hub</h4>
+                    <ul class="gov-footer-list">
+                        <li><a href="updates.html">Gazette Updates</a></li>
+                    </ul>
+
+                    <h4 class="gov-footer-heading" style="margin-top: 16px;">Services</h4>
+                    <ul class="gov-footer-list">
+                        <li><a href="data.html">Open Data Portal</a></li>
+                        <li><a href="ai.html">AI Studio</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 4: Quick Links / About Us -->
+                <div class="gov-footer-col">
+                    <h4 class="gov-footer-heading">About Us</h4>
+                    <ul class="gov-footer-list">
+                        <li><a href="features.html">About Portal</a></li>
+                        <li><a href="complaints.html">Contact Us</a></li>
+                        <li><a href="complaints.html">Feedback</a></li>
+                        <li><a href="features.html">FAQs</a></li>
+                        <li><a href="features.html">Help</a></li>
+                        <li><a href="data.html">Link to Us</a></li>
+                        <li><a href="updates.html">Newsletter</a></li>
+                        <li><a href="dashboard.html">Site Map</a></li>
+                        <li><a href="updates.html">Calendar</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 5: Spotlights & Legal -->
+                <div class="gov-footer-col">
+                    <h4 class="gov-footer-heading">Spotlights</h4>
+                    <ul class="gov-footer-list">
+                        <li><a href="dashboard.html">Visitor Summary</a></li>
+                        <li><a href="features.html">Disclaimer</a></li>
+                        <li><a href="features.html">Website Policy</a></li>
+                        <li><a href="updates.html">Subscribe to Newsletter</a></li>
+                        <li><a href="features.html">App Privacy Policy</a></li>
+                        <li><a href="data.html">Content Sources</a></li>
+                        <li><a href="data.html">India Portal 2.0 Brochure</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 6: View on Mobile & Socials -->
+                <div class="gov-footer-col gov-col-mobile-social">
+                    <h4 class="gov-footer-heading">View on Mobile</h4>
+                    <div class="gov-qr-card">
+                        <svg class="gov-qr-code" viewBox="0 0 100 100" width="84" height="84" fill="#06233D">
+                            <rect width="100" height="100" fill="#FFFFFF"/>
+                            <rect x="8" y="8" width="24" height="24" rx="2" fill="#06233D"/>
+                            <rect x="12" y="12" width="16" height="16" fill="#FFFFFF"/>
+                            <rect x="16" y="16" width="8" height="8" rx="1" fill="#FF671F"/>
+                            <rect x="68" y="8" width="24" height="24" rx="2" fill="#06233D"/>
+                            <rect x="72" y="12" width="16" height="16" fill="#FFFFFF"/>
+                            <rect x="76" y="16" width="8" height="8" rx="1" fill="#FF671F"/>
+                            <rect x="8" y="68" width="24" height="24" rx="2" fill="#06233D"/>
+                            <rect x="12" y="72" width="16" height="16" fill="#FFFFFF"/>
+                            <rect x="16" y="76" width="8" height="8" rx="1" fill="#FF671F"/>
+                            <rect x="38" y="12" width="4" height="4" fill="#06233D"/>
+                            <rect x="46" y="12" width="6" height="4" fill="#06233D"/>
+                            <rect x="56" y="12" width="4" height="4" fill="#06233D"/>
+                            <rect x="42" y="20" width="8" height="4" fill="#06233D"/>
+                            <rect x="38" y="28" width="4" height="8" fill="#06233D"/>
+                            <rect x="50" y="28" width="8" height="4" fill="#06233D"/>
+                            <rect x="12" y="40" width="6" height="4" fill="#06233D"/>
+                            <rect x="22" y="40" width="8" height="4" fill="#06233D"/>
+                            <rect x="34" y="40" width="4" height="6" fill="#06233D"/>
+                            <rect x="42" y="40" width="12" height="4" fill="#06233D"/>
+                            <rect x="58" y="40" width="6" height="4" fill="#06233D"/>
+                            <rect x="68" y="40" width="8" height="4" fill="#06233D"/>
+                            <rect x="80" y="40" width="6" height="4" fill="#06233D"/>
+                            <rect x="12" y="50" width="4" height="6" fill="#06233D"/>
+                            <rect x="20" y="50" width="6" height="4" fill="#06233D"/>
+                            <rect x="32" y="48" width="6" height="6" fill="#06233D"/>
+                            <rect x="42" y="50" width="4" height="8" fill="#06233D"/>
+                            <rect x="52" y="48" width="8" height="4" fill="#06233D"/>
+                            <rect x="64" y="50" width="4" height="6" fill="#06233D"/>
+                            <rect x="72" y="48" width="14" height="4" fill="#06233D"/>
+                            <rect x="38" y="64" width="6" height="4" fill="#06233D"/>
+                            <rect x="48" y="64" width="10" height="4" fill="#06233D"/>
+                            <rect x="62" y="64" width="6" height="6" fill="#06233D"/>
+                            <rect x="72" y="64" width="8" height="4" fill="#06233D"/>
+                            <rect x="84" y="64" width="4" height="6" fill="#06233D"/>
+                            <rect x="38" y="74" width="14" height="4" fill="#06233D"/>
+                            <rect x="56" y="72" width="4" height="8" fill="#06233D"/>
+                            <rect x="64" y="74" width="8" height="4" fill="#06233D"/>
+                            <rect x="76" y="72" width="12" height="4" fill="#06233D"/>
+                            <rect x="42" y="82" width="4" height="6" fill="#06233D"/>
+                            <rect x="50" y="82" width="8" height="4" fill="#06233D"/>
+                            <rect x="62" y="82" width="12" height="4" fill="#06233D"/>
+                            <rect x="78" y="80" width="8" height="6" fill="#06233D"/>
+                        </svg>
+                        <span class="gov-qr-caption">Scan to access on Mobile</span>
+                    </div>
+
+                    <h4 class="gov-footer-heading" style="margin-top: 18px;">Follow Us</h4>
+                    <div class="gov-social-links">
+                        <a href="https://facebook.com" target="_blank" rel="noopener" class="gov-social-btn" title="Facebook">f</a>
+                        <a href="https://x.com" target="_blank" rel="noopener" class="gov-social-btn" title="X (Twitter)">𝕏</a>
+                        <a href="https://youtube.com" target="_blank" rel="noopener" class="gov-social-btn" title="YouTube">▶</a>
+                        <a href="https://linkedin.com" target="_blank" rel="noopener" class="gov-social-btn" title="LinkedIn">in</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. BOTTOM NIC & COMPLIANCE BAR -->
+        <div class="gov-bottom-bar">
+            <div class="gov-bottom-tricolor" aria-hidden="true"></div>
+            <div class="gov-bottom-container">
+                <div class="gov-bottom-text">
+                    <p>Portal designed, developed and hosted by <strong>National Informatics Centre (NIC)</strong> for Ministry of Electronics and Information Technology, Government of India.</p>
+                    <p class="gov-bottom-sub">Compliant with <strong>GIGW 3.0</strong> (Guidelines for Indian Government Websites) • <strong>WCAG 2.1 AA</strong> • <strong>NDSAP Open Data Policy</strong></p>
+                </div>
+                <div class="gov-bottom-meta">
+                    <span>Last Updated: <strong>28 Sep 2026</strong></span>
+                    <span class="gov-dot-sep">•</span>
+                    <span>Total Visitors: <strong>14,892,430</strong></span>
+                    <span class="gov-dot-sep">•</span>
+                    <span>© 2026 <strong>EkBhaarat</strong></span>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+// =========================================================
 // AI ASSISTANT QUERY ENGINE (NATURAL LANGUAGE -> SQL -> VIZ)
 // =========================================================
 async function executeAIQuery(customQuestion) {
@@ -1612,6 +1894,7 @@ document.addEventListener("DOMContentLoaded", function() {
     injectTopBars();
     applyGovAccessibilitySettings();
     updateNavbar();
+    injectGovFooter();
 
     // 1. Complaint form & photo upload
     const complaintForm = document.getElementById("complaintForm");
@@ -1748,9 +2031,48 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 // =========================================================
-// NATIONAL OPEN DATA REPOSITORY & DATASET DOWNLOADS
+// NATIONAL OPEN DATA REPOSITORY & UNIVERSAL DATASET DOWNLOADS
 // =========================================================
 let _allPublicDatasets = [];
+
+// Universal Dataset File Downloader (Static, API, and Offline Fallback)
+function downloadDatasetFile(filename, format, title) {
+    if (!filename) return;
+    const cleanFilename = filename.trim();
+    showToast(`Downloading: ${title || cleanFilename}...`);
+    
+    // Direct link to downloads directory (works statically and with server)
+    const staticPath = `downloads/${cleanFilename}`;
+    const a = document.createElement("a");
+    a.style.display = "none";
+    a.href = staticPath;
+    a.setAttribute("download", cleanFilename);
+    document.body.appendChild(a);
+    a.click();
+    
+    setTimeout(() => {
+        document.body.removeChild(a);
+    }, 200);
+}
+
+// Universal 1-Click Complete Datasets ZIP Downloader
+function downloadAllDatasetsZip(e) {
+    if (e && e.preventDefault) e.preventDefault();
+    showToast("Starting download of complete National Master Datasets archive (.ZIP)...");
+    
+    const zipPath = "downloads/EkBhaarat_National_Master_Datasets_2026.zip";
+    const a = document.createElement("a");
+    a.style.display = "none";
+    a.href = zipPath;
+    a.setAttribute("download", "EkBhaarat_National_Master_Datasets_2026.zip");
+    document.body.appendChild(a);
+    a.click();
+    
+    setTimeout(() => {
+        document.body.removeChild(a);
+        showToast("National Master Datasets Archive (.ZIP) downloaded successfully!");
+    }, 250);
+}
 
 async function loadPublicDatasets() {
     const container = document.getElementById("datasetsContainer");
@@ -1760,9 +2082,10 @@ async function loadPublicDatasets() {
         const res = await fetch("/api/datasets");
         const data = await res.json();
         _allPublicDatasets = data.datasets || [];
+        if (!_allPublicDatasets || _allPublicDatasets.length === 0) throw new Error("Empty API response");
         renderDatasets(_allPublicDatasets);
     } catch (e) {
-        console.warn("Using offline datasets fallback:", e);
+        console.warn("Using offline master datasets fallback:", e);
         _allPublicDatasets = [
             {
                 id: "projects",
@@ -1829,6 +2152,17 @@ async function loadPublicDatasets() {
                 csv_file: "locations_clean.csv",
                 size_kb: 25.7,
                 provenance: "Geospatial Data Policy 2022"
+            },
+            {
+                id: "sources",
+                title: "Data Provenance & Source Metadata Register",
+                ministry: "MeitY Open Government Data Division",
+                description: "Official dataset origin URLs, update cadences, download timestamps, and cryptographic hashes.",
+                record_count: "Master Register",
+                excel_file: "Gov_Projects_Source_Metadata.xlsx",
+                csv_file: "data_sources_clean.csv",
+                size_kb: 33.3,
+                provenance: "NIC Data Quality Framework"
             }
         ];
         renderDatasets(_allPublicDatasets);
@@ -1869,10 +2203,10 @@ function renderDatasets(list) {
                     🛡️ ${ds.provenance}
                 </div>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                    <a href="/api/download/${ds.excel_file}" class="primary-btn" style="text-align: center; text-decoration: none; padding: 8px 12px; font-size: 12px; display: inline-flex; align-items: center; justify-content: center; gap: 6px;" download>
+                    <a href="downloads/${encodeURIComponent(ds.excel_file)}" onclick="downloadDatasetFile('${ds.excel_file}', 'excel', '${ds.title}')" class="primary-btn" style="text-align: center; text-decoration: none; padding: 8px 12px; font-size: 12px; display: inline-flex; align-items: center; justify-content: center; gap: 6px;" download="${ds.excel_file}">
                         📊 Excel (.xlsx)
                     </a>
-                    <a href="/api/download/${ds.csv_file}" class="secondary-btn" style="text-align: center; text-decoration: none; padding: 8px 12px; font-size: 12px; display: inline-flex; align-items: center; justify-content: center; gap: 6px;" download>
+                    <a href="downloads/${encodeURIComponent(ds.csv_file)}" onclick="downloadDatasetFile('${ds.csv_file}', 'csv', '${ds.title}')" class="secondary-btn" style="text-align: center; text-decoration: none; padding: 8px 12px; font-size: 12px; display: inline-flex; align-items: center; justify-content: center; gap: 6px;" download="${ds.csv_file}">
                         📄 CSV Format
                     </a>
                 </div>

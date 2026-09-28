@@ -398,6 +398,7 @@ def list_open_datasets():
         "datasets": datasets
     })
 
+@app.route("/downloads/<path:filename>")
 @app.route("/download/<path:filename>")
 @app.route("/api/download/<path:filename>")
 def download_dataset_file(filename):
