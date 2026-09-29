@@ -44,7 +44,9 @@
           <p id="accDesignation" style="font-size: 13px; color: var(--gov-text-muted);">Farmer & Citizen Beneficiary • Varanasi, Uttar Pradesh</p>
         </div>
       </div>
-      <div style="display: flex; gap: 10px;">
+      <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
+        <button class="outline-btn" style="padding: 6px 10px; font-size: 11.5px;" onclick="switchDemoAccount('citizen1')">👨‍🌾 Switch to Rahul</button>
+        <button class="outline-btn" style="padding: 6px 10px; font-size: 11.5px;" onclick="switchDemoAccount('citizen2')">👩‍⚕️ Switch to Priya</button>
         <button class="primary-btn" onclick="window.location.href='complaints.html'">+ Report Issue with Photo</button>
         <button class="secondary-btn" onclick="logout()">Logout</button>
       </div>
@@ -130,12 +132,20 @@
 <script src="script.js"></script>
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-    const user = getCurrentUser() || DEMO_ACCOUNTS.citizen1;
-    document.getElementById("accAvatar").textContent = user.avatar || "👤";
-    document.getElementById("accFullName").textContent = user.full_name;
-    document.getElementById("accDesignation").textContent = `${user.designation || 'Citizen'} • ${user.district || 'Varanasi'}, ${user.state || 'Uttar Pradesh'}`;
-    document.getElementById("accPhone").textContent = user.phone || "+91 98765 43210";
-    document.getElementById("accRoleBadge").textContent = user.role === "admin" ? "★ CENTRAL NODAL OFFICER" : "✓ VERIFIED CITIZEN";
+    const user = getCurrentUser();
+    if (!user) {
+        window.location.href = "login.html";
+        return;
+    }
+    if (document.getElementById("accAvatar")) document.getElementById("accAvatar").textContent = user.avatar || "👤";
+    if (document.getElementById("accFullName")) document.getElementById("accFullName").textContent = user.full_name;
+    if (document.getElementById("accDesignation")) document.getElementById("accDesignation").textContent = `${user.designation || 'Citizen'} • ${user.district || 'Varanasi'}, ${user.state || 'Uttar Pradesh'}`;
+    if (document.getElementById("accPhone")) document.getElementById("accPhone").textContent = user.phone || "+91 98765 43210";
+    if (document.getElementById("accRoleBadge")) document.getElementById("accRoleBadge").textContent = user.role === "admin" ? "★ CENTRAL NODAL OFFICER" : "✓ VERIFIED CITIZEN";
+    
+    if (typeof loadProofComplaints === "function") {
+        loadProofComplaints();
+    }
 });
 </script>
 </body>

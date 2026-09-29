@@ -40,16 +40,47 @@
     <p style="max-width: 750px; margin: 10px auto 0; font-size: 15px; color: var(--gov-text-secondary);">
       Report damaged roads, dry taps, broken school infrastructure, or public issues with photo evidence. When government agencies repair the site, officers publish the verified "After" resolution proof.
     </p>
+
+    <!-- QUICK LIVE TRACKER SEARCH BAR WITH PRIVACY CHECK -->
+    <div style="max-width: 620px; margin: 20px auto 0; display: flex; gap: 10px; background: #FFFFFF; padding: 6px 8px; border-radius: 30px; border: 1.5px solid var(--gov-border); box-shadow: var(--gov-shadow-sm);">
+      <input type="text" id="quickTrackId" placeholder="Enter Grievance Tracking ID (e.g. EKB-2026-GRV-88219)..." style="flex: 1; border: none; outline: none; padding: 8px 16px; font-size: 13.5px; border-radius: 30px;">
+      <button type="button" class="live-track-btn" onclick="const id = document.getElementById('quickTrackId').value.trim(); if(id){ openLiveTracker(id); } else { openLiveTracker('EKB-2026-GRV-88219'); }" style="border-radius: 24px; padding: 8px 20px;">
+        <span class="tracker-eta-pulse" style="width: 8px; height: 8px; margin: 0;"></span>
+        🚀 Track My Grievance
+      </button>
+    </div>
+
+    <!-- 1-CLICK PRIVACY & ROLE SIMULATOR -->
+    <div style="margin-top: 18px; display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap;">
+      <span style="font-size: 11.5px; color: var(--gov-text-muted); font-weight: 700;">Switch Active Account to Test Privacy Isolation:</span>
+      <button type="button" class="outline-btn" style="padding: 4px 10px; font-size: 11.5px; border-radius: 6px;" onclick="switchDemoAccount('citizen1')">👨‍🌾 Citizen 1: Rahul Sharma</button>
+      <button type="button" class="outline-btn" style="padding: 4px 10px; font-size: 11.5px; border-radius: 6px;" onclick="switchDemoAccount('citizen2')">👩‍⚕️ Citizen 2: Priya Patel</button>
+      <button type="button" class="primary-btn" style="padding: 4px 10px; font-size: 11.5px; border-radius: 6px; background: var(--gov-navy-dark);" onclick="switchDemoAccount('admin')">🏛️ Admin: Dr. Rajesh Varma</button>
+    </div>
   </section>
+
+  <!-- ACTIVE CITIZEN PRIVACY STATUS BAR -->
+  <div id="citizenActivePrivacyBanner" class="citizen-privacy-banner">
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <span style="font-size: 20px;">🛡️</span>
+      <div>
+        <strong id="activeCitizenText" style="font-size: 13px; color: var(--gov-navy-dark);">Active Citizen Profile: Rahul Sharma</strong>
+        <p style="font-size: 11.5px; color: var(--gov-text-muted); margin: 0;">
+          CPGRAMS Multi-Tenant Isolation Active • You can only view and track complaints lodged under your account.
+        </p>
+      </div>
+    </div>
+    <span class="citizen-privacy-badge">🔒 100% PRIVATE ENCRYPTED</span>
+  </div>
 
   <div class="complaints-layout" style="display: grid; grid-template-columns: 1fr 1.3fr; gap: 30px; align-items: start;">
     
     <!-- LEFT: CITIZEN REPORT FORM WITH DRAG & DROP PHOTO -->
     <section class="complaint-form-card" style="background: #FFFFFF; border: 1px solid var(--gov-border-light); border-radius: 12px; padding: 28px; box-shadow: var(--gov-shadow-md);">
       <div class="form-heading" style="margin-bottom: 20px;">
-        <span class="section-label">CITIZEN GRIEVANCE REGISTRATION</span>
+        <span class="section-label">CPGRAMS CITIZEN REGISTRATION</span>
         <h2 style="font-size: 20px; font-weight: 800; color: var(--gov-navy-dark); margin-top: 5px;">Report Public Issue</h2>
-        <p style="font-size: 13px; color: var(--gov-text-secondary); margin-top: 4px;">Upload or drag-and-drop Before Photo evidence for direct inspection.</p>
+        <p style="font-size: 13px; color: var(--gov-text-secondary); margin-top: 4px;">Upload Before Photo evidence for direct district inspection.</p>
       </div>
 
       <form id="complaintForm">
@@ -123,10 +154,10 @@
 
     <!-- RIGHT: VERIFIED PROOF FEED (BEFORE VS AFTER) -->
     <section>
-      <div class="section-heading" style="margin-bottom: 20px;">
+      <div class="section-heading" style="margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
         <div>
-          <span class="section-label">TRANSPARENCY & PROOF STREAM</span>
-          <h2 style="font-size: 20px; font-weight: 800; color: var(--gov-navy-dark);">Verified On-Ground Resolutions</h2>
+          <span class="section-label">CPGRAMS PRIVATE GRIEVANCE STREAM</span>
+          <h2 style="font-size: 20px; font-weight: 800; color: var(--gov-navy-dark);">My Registered Grievance Status</h2>
         </div>
       </div>
 

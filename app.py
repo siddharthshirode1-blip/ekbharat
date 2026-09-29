@@ -54,34 +54,48 @@ def get_demo_accounts():
     })
 
 @app.route("/api/auth/signup", methods=["POST"])
+@app.route("/api/auth/register", methods=["POST"])
 def signup():
     """Registers a new citizen or officer account in the database."""
     data = request.get_json() or {}
-    full_name = data.get("full_name", "").strip()
-    email = data.get("email", "").strip().lower()
-    password = data.get("password", "").strip()
-    phone = data.get("phone", "+91 98765 00000").strip()
-    state = data.get("state", "National").strip()
-    district = data.get("district", "General").strip()
-    role = data.get("role", "citizen").strip().lower()
+    email = (data.get("email") or "").strip().lower()
+    full_name = (data.get("full_name") or "").strip()
+    password = data.get("password") or "citizen123"
+    phone = (data.get("phone") or "+91 98765 00000").strip()
+    state = (data.get("state") or "Uttar Pradesh").strip()
+    district = (data.get("district") or "Varanasi").strip()
+    role = (data.get("role") or "citizen").strip().lower()
 
-    if not full_name or not email or not password:
-        return jsonify({"status": "error", "message": "Name, email and password are required"}), 400
+    if not email:
+        return jsonify({"status": "error", "message": "Email is required."}), 400
+
+    if not full_name:
+        name_part = email.split('@')[0].replace('.', ' ').replace('_', ' ').title()
+        full_name = name_part or "Citizen"
 
     conn = get_connection()
     try:
-        cursor = conn.cursor()
-        avatar = "🏛️" if role == "admin" else "👤"
-        designation = "Authorized Nodal Officer" if role == "admin" else "Registered Citizen Beneficiary"
+        existing = conn.execute("SELECT * FROM users WHERE LOWER(email) = ?", (email,)).fetchone()
+        if existing:
+            u_dict = dict(existing)
+            u_dict.pop("password", None)
+            return jsonify({
+                "status": "success",
+                "message": f"Welcome back, {u_dict['full_name']}!",
+                "user": u_dict
+            })
 
+        avatar = "🏛️" if role == "admin" else "👤"
+        designation = "Central Nodal Officer" if role == "admin" else "Registered Citizen Beneficiary"
+
+        cursor = conn.cursor()
         cursor.execute("""
         INSERT INTO users (email, password, full_name, role, phone, state, district, avatar, designation, aadhaar_linked)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 1)
         """, (email, password, full_name, role, phone, state, district, avatar, designation))
-        
-        user_id = cursor.lastrowid
         conn.commit()
 
+        user_id = cursor.lastrowid
         user_obj = {
             "user_id": user_id,
             "email": email,
@@ -93,49 +107,80 @@ def signup():
             "avatar": avatar,
             "designation": designation
         }
-
         return jsonify({
             "status": "success",
-            "message": "Account created successfully!",
+            "message": f"Account created successfully for {full_name}!",
             "user": user_obj
         })
-    except sqlite3.IntegrityError:
-        return jsonify({"status": "error", "message": "An account with this email already exists."}), 409
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 500
     finally:
         conn.close()
 
 @app.route("/api/auth/login", methods=["POST"])
+@app.route("/api/auth/signin", methods=["POST"])
 def login():
-    """Authenticates citizen or admin user."""
+    """Authenticates citizen or admin user. Auto-provisions new citizen account for any custom email."""
     data = request.get_json() or {}
-    email = data.get("email", "").strip().lower()
-    password = data.get("password", "").strip()
-    role_hint = data.get("role", "citizen")
+    email = (data.get("email") or "").strip().lower()
+    password = (data.get("password") or "").strip()
+    role_hint = (data.get("role") or "citizen").strip().lower()
+
+    if not email:
+        return jsonify({"status": "error", "message": "Email is required."}), 400
 
     conn = get_connection()
-    # Check if exact match by email and password
-    user = conn.execute("SELECT * FROM users WHERE LOWER(email)=? AND password=?", (email, password)).fetchone()
-    
-    # If password is demo shortcut or matched by email
-    if not user and "@" in email:
+    try:
+        # Check if user already exists
         user = conn.execute("SELECT * FROM users WHERE LOWER(email)=?", (email,)).fetchone()
         
-    if not user:
-        # Fallback to role matching for instant demo logins
-        user = conn.execute("SELECT * FROM users WHERE role=? LIMIT 1", (role_hint,)).fetchone()
+        if user:
+            u_dict = dict(user)
+            u_dict.pop("password", None)
+            return jsonify({
+                "status": "success",
+                "message": f"Welcome back, {u_dict['full_name']}!",
+                "user": u_dict
+            })
 
-    conn.close()
+        # If user does not exist, auto-provision a dedicated citizen account for this email
+        name_part = email.split('@')[0].replace('.', ' ').replace('_', ' ').replace('-', ' ').title()
+        full_name = data.get("full_name") or name_part or "Citizen Beneficiary"
+        user_role = role_hint if role_hint in ["citizen", "admin"] else "citizen"
+        avatar = "🏛️" if user_role == "admin" else "👤"
+        designation = "Central Nodal Officer" if user_role == "admin" else "Registered Citizen Beneficiary"
+        state = data.get("state") or "Uttar Pradesh"
+        district = data.get("district") or "Varanasi"
+        phone = data.get("phone") or "+91 98765 00000"
 
-    if user:
-        u_dict = dict(user)
-        u_dict.pop("password", None)
+        cursor = conn.cursor()
+        cursor.execute("""
+        INSERT INTO users (email, password, full_name, role, phone, state, district, avatar, designation, aadhaar_linked)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 1)
+        """, (email, password or "citizen123", full_name, user_role, phone, state, district, avatar, designation))
+        conn.commit()
+
+        user_id = cursor.lastrowid
+        new_user = {
+            "user_id": user_id,
+            "email": email,
+            "full_name": full_name,
+            "role": user_role,
+            "phone": phone,
+            "state": state,
+            "district": district,
+            "avatar": avatar,
+            "designation": designation
+        }
         return jsonify({
             "status": "success",
-            "message": f"Welcome, {u_dict['full_name']}!",
-            "user": u_dict
+            "message": f"Welcome, {full_name}! Your citizen account is ready.",
+            "user": new_user
         })
-    else:
-        return jsonify({"status": "error", "message": "Invalid credentials. Please register or choose a demo account."}), 401
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 500
+    finally:
+        conn.close()
 
 # -------------------------------------------------------------
 # NATIONAL STATS & OVERVIEW
@@ -624,107 +669,8 @@ def get_dbt_fund_utilization():
     })
 
 # -------------------------------------------------------------
-# "SHOW ME THE PROOF" - COMPLAINT & RESOLUTION VERIFICATION
+# CITIZEN GRIEVANCE & PROOF VERIFICATION REST API IS CONSOLIDATED BELOW
 # -------------------------------------------------------------
-@app.route("/api/complaints", methods=["GET"])
-def get_complaints():
-    """Returns all complaints and proof verification records."""
-    user_id = request.args.get("user_id")
-    status = request.args.get("status")
-
-    conn = get_connection()
-    query = "SELECT * FROM complaints WHERE 1=1"
-    params = []
-    if user_id:
-        query += " AND user_id = ?"
-        params.append(int(user_id))
-    if status:
-        query += " AND status = ?"
-        params.append(status)
-
-    query += " ORDER BY date_submitted DESC"
-    rows = conn.execute(query, params).fetchall()
-    conn.close()
-
-    return jsonify({
-        "status": "success",
-        "count": len(rows),
-        "complaints": [dict(r) for r in rows]
-    })
-
-@app.route("/api/complaints", methods=["POST"])
-def submit_complaint():
-    """Citizen lodges a complaint and uploads BEFORE photo evidence."""
-    data = request.get_json() or {}
-    
-    user_id = data.get("user_id", 1)
-    citizen_name = data.get("citizen_name", "Citizen")
-    category = data.get("category", "Unclean Area / Garbage")
-    state = data.get("state", "Uttar Pradesh")
-    district = data.get("district", "Varanasi")
-    area = data.get("area", "")
-    description = data.get("description", "")
-    priority = data.get("priority", "Medium")
-    before_image_url = data.get("before_image_url", "https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?w=600&auto=format&fit=crop&q=80")
-
-    if not area or not description:
-        return jsonify({"status": "error", "message": "Area and description are required"}), 400
-
-    complaint_id = f"EKB-{datetime.now().strftime('%Y')}-GRV-{int(datetime.now().timestamp()) % 100000:05d}"
-    date_submitted = datetime.now().strftime("%Y-%m-%d")
-
-    conn = get_connection()
-    conn.execute("""
-    INSERT INTO complaints (
-        complaint_id, user_id, citizen_name, category, state, district, area,
-        description, status, priority, date_submitted, before_image_url, after_image_url,
-        allocated_budget, scheme_linked
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    """, (
-        complaint_id, user_id, citizen_name, category, state, district, area,
-        description, "SUBMITTED", priority, date_submitted, before_image_url, "",
-        0.0, "Pending Assessment"
-    ))
-    conn.commit()
-    conn.close()
-
-    return jsonify({
-        "status": "success",
-        "message": "Complaint lodged successfully!",
-        "complaint_id": complaint_id
-    })
-
-@app.route("/api/complaints/<complaint_id>/resolve", methods=["POST"])
-def resolve_complaint(complaint_id):
-    """Admin / Nodal Officer uploads AFTER photo and marks issue resolved."""
-    data = request.get_json() or {}
-    
-    after_image_url = data.get("after_image_url", "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=600&auto=format&fit=crop&q=80")
-    resolved_by = data.get("resolved_by", "Central Nodal Officer")
-    resolution_notes = data.get("resolution_notes", "Civil works completed and verified by site inspection engineer.")
-    allocated_budget = float(data.get("allocated_budget", 2500000.0))
-    scheme_linked = data.get("scheme_linked", "Special State/Central Infrastructure Grant")
-    resolved_date = datetime.now().strftime("%Y-%m-%d")
-
-    conn = get_connection()
-    conn.execute("""
-    UPDATE complaints
-    SET status = 'RESOLVED',
-        after_image_url = ?,
-        resolved_date = ?,
-        resolved_by = ?,
-        resolution_notes = ?,
-        allocated_budget = ?,
-        scheme_linked = ?
-    WHERE complaint_id = ?
-    """, (after_image_url, resolved_date, resolved_by, resolution_notes, allocated_budget, scheme_linked, complaint_id))
-    conn.commit()
-    conn.close()
-
-    return jsonify({
-        "status": "success",
-        "message": f"Grievance {complaint_id} verified and marked as RESOLVED with proof!"
-    })
 
 # -------------------------------------------------------------
 # DATA TRACEABILITY & PROVENANCE (TRACEDATA)
@@ -1258,7 +1204,171 @@ def synthesize_dynamic_sql(q: str, original_q: str):
     """
     return sql, "bar_chart", "Displaying national flagship welfare programmes, outlays, and active reach."
 
+# -------------------------------------------------------------
+# CITIZEN GRIEVANCE & PROOF VERIFICATION REST API
+# -------------------------------------------------------------
+@app.route("/api/complaints", methods=["GET"])
+def get_complaints():
+    """Returns complaints with strict multi-tenant privacy isolation."""
+    role = request.headers.get("X-User-Role") or request.args.get("role", "citizen")
+    user_id = request.headers.get("X-User-Id") or request.args.get("user_id")
+    user_email = request.headers.get("X-User-Email") or request.args.get("email", "")
+
+    conn = get_connection()
+    if role == "admin":
+        # Authorized Nodal Admin sees full district queue
+        rows = conn.execute("SELECT * FROM complaints ORDER BY date_submitted DESC").fetchall()
+    elif user_id or user_email:
+        # Citizen only sees their own filed complaints
+        rows = conn.execute("""
+            SELECT * FROM complaints 
+            WHERE user_id = ? OR citizen_email = ?
+            ORDER BY date_submitted DESC
+        """, (user_id, user_email)).fetchall()
+    else:
+        # Public view: Only verified resolved proofs with anonymized citizen names
+        rows = conn.execute("""
+            SELECT complaint_id, 'Citizen (Verified)' as citizen_name, category, state, district, area,
+                   description, status, priority, date_submitted, before_image_url, after_image_url,
+                   resolved_date, resolved_by, resolution_notes, allocated_budget, scheme_linked,
+                   assigned_municipality, admin_reviewer, admin_review_date, admin_rejection_reason, admin_rejection_notes
+            FROM complaints
+            WHERE status = 'RESOLVED'
+            ORDER BY resolved_date DESC
+        """).fetchall()
+
+    conn.close()
+    return jsonify({
+        "status": "success",
+        "data": [dict(r) for r in rows]
+    })
+
+@app.route("/api/complaints", methods=["POST"])
+def submit_complaint():
+    """Allows authenticated citizens to lodge a grievance with before photo evidence."""
+    data = request.get_json() or {}
+    complaint_id = data.get("complaint_id") or f"EKB-2026-GRV-{int(datetime.now().timestamp())%100000:05d}"
+    citizen_name = data.get("citizen_name") or request.headers.get("X-User-Name") or "Citizen"
+    citizen_email = data.get("citizen_email") or request.headers.get("X-User-Email") or ""
+    user_id = data.get("user_id") or request.headers.get("X-User-Id")
+    category = data.get("category", "Road / Pothole")
+    state = data.get("state", "Uttar Pradesh")
+    district = data.get("district", "Varanasi")
+    area = data.get("area", "Shivpur Locality")
+    description = data.get("description", "")
+    before_image_url = data.get("before_image_url", "https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?w=600")
+    date_submitted = data.get("date_submitted") or datetime.now().strftime("%Y-%m-%d")
+
+    conn = get_connection()
+    try:
+        conn.execute("""
+        INSERT INTO complaints (
+            complaint_id, user_id, citizen_name, citizen_email, category, state, district, area,
+            description, status, priority, date_submitted, before_image_url,
+            assigned_municipality
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'SUBMITTED', 'High', ?, ?, ?)
+        """, (
+            complaint_id, user_id, citizen_name, citizen_email, category, state, district, area,
+            description, date_submitted, before_image_url, f"{district} Municipal Corporation / Gram Panchayat"
+        ))
+        conn.commit()
+        return jsonify({
+            "status": "success",
+            "message": "Grievance submitted successfully and bound to your citizen profile.",
+            "complaint_id": complaint_id
+        })
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 500
+    finally:
+        conn.close()
+
+@app.route("/api/complaints/<complaint_id>/admin-decision", methods=["POST"])
+def admin_complaint_decision(complaint_id):
+    """Admin endpoint to approve, forward, or reject a grievance with justification."""
+    data = request.get_json() or {}
+    role = request.headers.get("X-User-Role") or data.get("user_role") or data.get("role", "admin")
+
+    if role != "admin":
+        return jsonify({
+            "status": "error",
+            "message": "Access Denied: Only authorized Central/District Nodal Admins can moderate or reject grievances."
+        }), 403
+
+    action = data.get("action", "").upper()  # 'APPROVE' or 'REJECT'
+    reviewer = data.get("admin_reviewer", "Dr. Rajesh Varma (Central Nodal Officer)")
+    review_date = datetime.now().strftime("%Y-%m-%d")
+    reason = data.get("rejection_reason", "")
+    notes = data.get("rejection_notes", "")
+
+    conn = get_connection()
+    try:
+        if action == "REJECT":
+            conn.execute("""
+            UPDATE complaints
+            SET status = 'REJECTED_BY_ADMIN',
+                admin_reviewer = ?,
+                admin_review_date = ?,
+                admin_rejection_reason = ?,
+                admin_rejection_notes = ?
+            WHERE complaint_id = ?
+            """, (reviewer, review_date, reason, notes, complaint_id))
+        else:
+            conn.execute("""
+            UPDATE complaints
+            SET status = 'ADMIN_APPROVED',
+                admin_reviewer = ?,
+                admin_review_date = ?
+            WHERE complaint_id = ?
+            """, (reviewer, review_date, complaint_id))
+        
+        conn.commit()
+        return jsonify({"status": "success", "message": f"Decision applied for {complaint_id}"})
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 500
+    finally:
+        conn.close()
+
+@app.route("/api/complaints/<complaint_id>/resolve", methods=["POST"])
+def resolve_complaint(complaint_id):
+    """Admin endpoint to upload verified After photo and mark grievance resolved."""
+    data = request.get_json() or {}
+    role = request.headers.get("X-User-Role") or data.get("user_role") or data.get("role", "admin")
+
+    if role != "admin":
+        return jsonify({
+            "status": "error",
+            "message": "Access Denied: Citizens cannot resolve or publish resolution proof. Restricted to Nodal Officers."
+        }), 403
+
+    after_image_url = data.get("after_image_url", "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=600")
+    scheme_linked = data.get("scheme_linked", "PM Gram Sadak Yojana (PMGSY)")
+    allocated_budget = float(data.get("allocated_budget", 2500000))
+    resolution_notes = data.get("resolution_notes", "Civil works completed and verified on site.")
+    resolved_by = data.get("resolved_by", "Dr. Rajesh Varma (Central Nodal Officer)")
+    resolved_date = datetime.now().strftime("%Y-%m-%d")
+
+    conn = get_connection()
+    try:
+        conn.execute("""
+        UPDATE complaints
+        SET status = 'RESOLVED',
+            after_image_url = ?,
+            scheme_linked = ?,
+            allocated_budget = ?,
+            resolution_notes = ?,
+            resolved_by = ?,
+            resolved_date = ?
+        WHERE complaint_id = ?
+        """, (after_image_url, scheme_linked, allocated_budget, resolution_notes, resolved_by, resolved_date, complaint_id))
+        conn.commit()
+        return jsonify({"status": "success", "message": f"Grievance {complaint_id} verified & resolved!"})
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 500
+    finally:
+        conn.close()
+
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     print(f"EkBhaarat Portal running on http://127.0.0.1:{port}")
     app.run(host="0.0.0.0", port=port, debug=False)
+

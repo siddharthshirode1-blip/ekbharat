@@ -1,133 +1,197 @@
-# 🇮🇳 EkBhaarat - Unified Government AI & Data Intelligence Platform
-
-An open and intelligent platform that connects data across multiple government ministries (Education, Healthcare, Rural Development, Water & Sanitation, Infrastructure, and more) into a single unified system.
-
-With **EkBhaarat**, officials and citizens can ask questions in plain English or Hindi, see interactive charts and maps, find overlapping government schemes, track fund utilization, and download open datasets in Excel or CSV.
+# 🇮🇳 EkBhaarat - National Governance Intelligence & Citizen Welfare Platform
+> **Unified Cross-Ministry Analytics, AI Synthesis, Geospatial HeatMaps, DBT Tracking, and "Show Me The Proof" Citizen Grievance Redressal (CPGRAMS & GIGW 3.0 Compliant)**
 
 ---
 
-## 🌟 Key Features
-
-* 💬 **AI Query Studio:** Ask questions like *"Which districts have maximum funds spent on healthcare?"* and instantly get charts, tables, and AI explanations.
-* 🗺️ **Interactive India Geospatial Map:** Live map showing state and district development indices, active schemes, and regional performance.
-* 🔍 **Scheme Overlap Detector:** Identifies duplicate or overlapping initiatives across different ministries to prevent wasted funds.
-* 💰 **Funds & DBT Tracking:** Real-time visibility into budget allocations, fund releases, and beneficiary reach across India.
-* 📸 **Citizen Grievance & Proof Verification:** Citizens can submit complaints with photos of issues (e.g. broken roads or water supply). Admins can inspect and upload proof of resolution.
-* 📥 **National Open Data Portal:** Free download of all clean Master Excel (`.xlsx`) and CSV datasets for citizens, researchers, and administrators.
-* 🔒 **Role-Based Access (Admin & Citizen):**
-  * **Citizens:** Explore data, query the AI, view maps, submit complaints, and download all datasets.
-  * **Admins:** Sanction new schemes, register new project initiatives, and verify citizen complaints (with immutable audit history).
-
----
-
-## 🏗️ How It Works (Architecture in Simple Terms)
-
-```
-[ Excel / CSV Master Datasets ]
-               │
-               ▼
-[ Clean SQLite / MySQL Database ]
-               │
-               ▼
-[ AI Engine (Natural Language -> Verified SQL) ]
-               │
-               ▼
-[ Interactive Web Portal: Charts, Maps, Tables & Open Data ]
-```
-
-1. **Data Layer:** Combines data from 7+ central ministries (Schemes, Projects, Financials, Beneficiaries, Locations).
-2. **AI Engine:** Converts user questions into secure, read-only SQL queries and produces instant Chart.js visualizations and summary reports.
-3. **Web Dashboard:** A clean, accessible web interface compliant with Indian Government Web Guidelines (GIGW 3.0).
+## 📖 Table of Contents
+1. [Overview](#-overview)
+2. [What EkBhaarat Can Do (Core Features)](#-what-ekbhaarat-can-do-core-features)
+3. [Module Breakdown & Capabilities](#-module-breakdown--capabilities)
+4. [System Architecture](#-system-architecture)
+5. [Privacy & Security Architecture](#-privacy--security-architecture)
+6. [Tech Stack](#-tech-stack)
+7. [Installation & Setup](#-installation--setup)
+8. [Available User Accounts & Roles](#-available-user-accounts--roles)
+9. [Open Datasets & Downloads](#-open-datasets--downloads)
+10. [Compliance & Standards](#-compliance--standards)
 
 ---
 
-## 🚀 Quick Setup & Installation
+## 🌟 Overview
 
-### Step 1: Clone the Repository & Open Folder
-```bash
-git clone https://github.com/<your-username>/ekbharat.git
-cd ekbharat
-```
+**EkBhaarat** is a national-scale government intelligence platform designed to eliminate silos across Indian ministries (Education, Healthcare, Rural Development, Agriculture, Jal Shakti, Road Transport, and Women & Child Development). 
 
-### Step 2: Install Dependencies
-Make sure you have **Python 3.10+** installed. Then run:
-```bash
-pip install -r requirements.txt
-```
-
-### Step 3: (Optional) Set Up API Keys in `.env`
-Create a `.env` file from `.env.example`:
-```bash
-cp .env.example .env
-```
-Inside `.env`, configure your settings:
-```env
-# Database Settings
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_USER=your_db_username
-DB_PASSWORD=your_db_password
-DB_NAME=government_ai
-
-# AI API Key (Optional: Has built-in offline smart fallback if omitted)
-AI_PROVIDER=gemini
-GEMINI_API_KEY=your_gemini_api_key_here
-```
-
-### Step 4: Run the Application
-```bash
-python app.py
-```
-Open your browser and visit:
-👉 **`http://127.0.0.1:5000`**
+It bridges the gap between public administrators and citizens by providing:
+- **For Citizens:** A single-window welfare hub to discover entitlements, track DBT payouts, report civic issues with photo evidence, and track on-ground repairs live like a food-delivery app.
+- **For Administrators & Nodal Officers:** AI-driven Text-to-SQL analytics, cross-ministry budget convergence detection, GIS geospatial lag heatmaps, and evidence-verified grievance resolution tools.
 
 ---
 
-## 👥 Demo Accounts
+## 🚀 What EkBhaarat Can Do (Core Features)
 
-| Role | Username / Email | Password | Access Rights |
-| :--- | :--- | :--- | :--- |
-| **Citizen (User)** | `rajesh.sharma@ekbharat.gov.in` | `Citizen@123` | AI Studio, Maps, Complaints, Open Data Downloads |
-| **Citizen (User)** | `priya.patel@ekbharat.gov.in` | `Citizen@123` | AI Studio, Maps, Complaints, Open Data Downloads |
-| **Administrator** | `admin@ekbharat.gov.in` | `Admin@2026` | Full Access + Master Data Ingestion & Resolution |
-
-*(You can also click **Create Account** on the login page to register your own account).*
-
----
-
-## 📊 Available Open Datasets
-
-All datasets can be downloaded directly from the **Open Data Portal** (`data.html`):
-
-| Dataset Name | Formats | Description |
+| Feature | Description | Key Modules |
 | :--- | :--- | :--- |
-| **National Infrastructure Projects** | `.xlsx`, `.csv` | 360+ road, railway, energy, and urban development projects |
-| **Central Government Schemes** | `.xlsx`, `.csv` | 100+ welfare schemes across 7 ministries |
-| **Direct Benefit Transfers (DBT)** | `.xlsx`, `.csv` | Beneficiary counts and categories across all states |
-| **Ministry Financial Allocations** | `.xlsx`, `.csv` | Budgets allocated, funds released, and amounts spent |
-| **Ministry & Department Master** | `.xlsx`, `.csv` | Central ministries and nodal departments |
-| **Geospatial & District Directory**| `.csv` | State, district, taluka, and village coordinates |
+| **🧠 Natural Language AI SQL Engine** | Type questions in plain English/Hindi; generates instant Chart.js graphs, tables, and downloadable audit reports. | `ai.html`, `app.py` |
+| **🔍 Multi-Ministry Scheme Explorer** | Comprehensive details of 100+ welfare schemes across 7 ministries with village/district/city breakdown. | `schemes.html` |
+| **🗺️ Geospatial Aspirational HeatMap** | Interactive Leaflet GIS map visualizing Poverty Index, Saturation Scores, and infrastructure lag tiers. | `map.html` |
+| **⚡ Scheme Overlap & Convergence** | Identifies redundant spending across ministries and suggests NITI Aayog policy convergence to save public funds. | `overlap.html` |
+| **💰 DBT Integrity & Fund Radar** | Real-time tracking of ₹14.8 Lakh Cr budget outlays, release tranches, expenditures, and 98.6% Aadhaar seed rates. | `beneficiaries.html` |
+| **📸 "Show Me The Proof" Grievance System** | Citizens report damaged roads or water pipes with Before Photos; admins upload verified After Photos. | `complaints.html` |
+| **🚀 Food-Delivery Style Stepper Tracker** | Live 5-step visual tracking (Lodged → Admin Review → Municipality → Work In Progress → Resolved). | `complaints.html` |
+| **🏛️ Structured Admin Rejection Workflow** | Admins can formally disapprove issues with official reason codes and justification remarks visible to the citizen. | `complaints.html` |
+| **🔒 Strict Multi-Tenant Data Privacy** | Citizens can only view and track their own private grievances. Cross-user access is intercepted and blocked. | `complaints.html`, `app.py` |
+| **📰 Gazette & Upcoming Schemes** | Forward-looking gazette notices, policy roadmaps, and sanctioned project launches. | `updates.html` |
+| **📥 National Open Data Repository** | 1-Click download of 7 Master Datasets in Excel (`.xlsx`), CSV, and complete ZIP package with SHA-256 hashes. | `data.html` |
+| **👤 Dynamic Citizen & Admin Auth** | Login with any Gmail/custom email with automatic profile creation and individual database persistence. | `login.html`, `signup.html` |
 
 ---
 
-## 🛡️ Security & Privacy
+## 📂 Module Breakdown & Capabilities
 
-* **No Sensitive Data Stored:** Passwords and keys are never hard-coded in source files.
-* **SQL Injection Protection:** The AI engine uses a strict read-only SQL validator (`ai_engine/sql_validator.py`) that blocks destructive operations like `DROP`, `DELETE`, `UPDATE`, or `INSERT`.
-* **Append-Only Master Data:** Only authorized administrators can sanction new data entries, ensuring historic records remain tamper-proof.
+### 1. 🧠 AI Natural Language Governance Intelligence Studio (`ai.html`)
+- Converts conversational queries into verified read-only SQLite SQL queries.
+- Examples of queries it handles:
+  - *"Which districts have maximum funds spent on healthcare?"*
+  - *"Show delayed education projects in Uttar Pradesh"*
+  - *"Which schemes have the highest budget allocation?"*
+  - *"Find aspirational villages with high poverty index"*
+- **Graphical Visualizations:** Dynamically generates Bar, Line, and Doughnut charts.
+- **Export Capabilities:** 1-Click "Download Standalone HTML Report" with cryptographic timestamp and SHA-256 audit stamp, or "Open as New HTML Page".
+
+### 2. 🔍 National Flagship Schemes Explorer (`schemes.html`)
+- Complete repository of Central Sector and Centrally Sponsored Schemes.
+- Detailed implementation drilldown:
+  - **Village-Level:** Community tap pipelines (JJM), Gram Sadak road links (PMGSY), PMAY-G housing subsidies.
+  - **City & District-Level:** Urban drainage, secondary healthcare hospitals, school smart-classrooms.
+- Documents required, eligibility criteria, application steps, and DBT direct transfer modalities.
+
+### 3. 🗺️ Interactive Geospatial India HeatMap (`map.html`)
+- Interactive Leaflet.js map with state and district boundary polygon overlays.
+- Computes **Lag Severity Scores** using poverty indices, project delay rates, and saturation levels.
+- Classifies geographic units into:
+  - 🔴 **Critical Need Tier** (Lag Score > 55)
+  - 🟡 **Moderate Lag Tier** (Lag Score 35-55)
+  - 🟢 **Well Saturated Tier** (Lag Score < 35)
+
+### 4. ⚡ Scheme Overlap & Convergence Engine (`overlap.html`)
+- Cross-references schemes across different departments that serve similar citizen segments.
+- Detects overlaps between:
+  - *Poshan Abhiyaan* (Women & Child Dev) & *PM-POSHAN / Mid-Day Meal* (School Education).
+  - *Jal Jeevan Mission* (Jal Shakti) & *AMRUT 2.0* (Housing & Urban Affairs).
+  - *PM-KISAN* (Agriculture) & *PM-KMY* (Farmer Pension).
+- Highlights estimated duplicate beneficiaries and quantifiable budgetary savings (in ₹ Crores) upon administrative convergence.
+
+### 5. 💰 DBT Fund Utilization & Direct Transfer Integrity (`beneficiaries.html`)
+- Department-wise budget allocation, released funds, and ground expenditure metrics.
+- Direct Benefit Transfer (DBT) integrity dashboard:
+  - 98.6% Aadhaar Biometric Seeding Rate.
+  - 99.4% Direct Bank Account Transfer Success Rate.
+  - 14.2 Lakh Ghost Beneficiaries Purged.
+  - ₹28,450 Cr Public Leakage Prevented.
+
+### 6. 📸 "Show Me The Proof" Citizen Grievance & Live Tracker (`complaints.html`)
+- **Citizens:** Report damaged roads, broken water supply lines, or dilapidated schools with photo proof.
+- **Live 5-Step Status Stepper (Food-Delivery Style):**
+  1. *Step 1:* Grievance Lodged & Photo Geo-Tagged
+  2. *Step 2:* Central / District Admin Review & Verification
+  3. *Step 3:* Work Order Forwarded to Local Municipality / ULB
+  4. *Step 4:* On-Ground Municipal Field Work in Progress
+  5. *Step 5:* Resolution Verified with "After" Photo Proof
+- **Admin Disapproval with Reason Code:**
+  - If rejected, admin selects an official reason (e.g. *Private Property / Outside Public Municipal Boundary*) and enters justification remarks.
+  - The reasoning is displayed inside the citizen's tracking modal and account.
+- **Resolution Verification:**
+  - Once repaired, the Nodal Officer uploads the "After" photo and records the verified scheme fund deployed.
+
+### 7. 📰 Future Updates & Gazette Notifications (`updates.html`)
+- Track upcoming flagship policies, digital infrastructure rollouts, and renewable energy corridors.
+- Search and filter gazette notices by category (Upcoming Schemes, Digital Infra, Green Energy, Agritech).
+
+### 8. 📥 National Open Data Repository (`data.html`)
+- Download 7 Master Clean Datasets in Excel (`.xlsx`) or CSV:
+  - `projects.xlsx` / `projects_clean.csv` (362+ initiatives)
+  - `schemes.xlsx` / `schemes_clean.csv` (100+ schemes)
+  - `departments.xlsx` / `departments_clean.csv` (7 ministries)
+  - `beneficiaries.xlsx` / `beneficiaries_clean.csv` (94.2 Cr reach)
+  - `financials.xlsx` / `financials_clean.csv` (₹14.8 Lakh Cr outlay)
+  - `locations_clean.csv` (700+ districts and villages)
+  - `data_sources_clean.csv` (Provenance metadata)
+- 1-Click **"Download All Master Datasets (ZIP)"** button.
+
+---
+
+## 🔒 Privacy & Security Architecture
+
+1. **Multi-Tenant Data Isolation:**
+   - Every complaint record stores `user_id` and `citizen_email`.
+   - SQL queries on `/api/complaints` filter strictly:
+     ```sql
+     SELECT * FROM complaints WHERE user_id = ? OR citizen_email = ? ORDER BY date_submitted DESC
+     ```
+   - Regular citizens can only see and track tickets filed under their own account.
+2. **Access-Denied Interception:**
+   - If Citizen B tries to search or track Citizen A's ticket ID:
+     > 🔒 *Access Denied: Ticket is private to another citizen. For privacy protection, you can only track your own registered grievances.*
+3. **Role-Based Permissions (RBAC):**
+   - Approval, rejection, and resolution actions are restricted to Nodal Administrators (`role === 'admin'`). Unauthorized citizen requests return `403 Forbidden`.
+4. **Public Data Anonymization:**
+   - Public inspection lists display only resolved issues with citizen personal names masked as `"Citizen (Verified)"`.
 
 ---
 
 ## 💻 Tech Stack
 
-* **Backend:** Python (Flask, SQLite3 / MySQL connector)
-* **AI Engine:** Google Gemini API / Local Smart NLP Engine
-* **Frontend:** HTML5, CSS3, JavaScript (Vanilla ES6+)
-* **Mapping & Charts:** Leaflet.js, Chart.js, GeoJSON
-* **Design:** High-contrast accessibility standards (GIGW 3.0), Dynamic text resizing (`A-`, `A`, `A+`)
+- **Frontend:** Pure Vanilla HTML5, Modern CSS3 (CSS Variables, Flexbox/Grid, Glassmorphism, Micro-Animations), Vanilla JavaScript (ES6+).
+- **Backend:** Python 3.10+ with Flask REST API framework.
+- **Database:** Relational SQLite (`ekbharat.db`) with foreign keys, indexes, and full integrity constraints.
+- **Mapping & Charts:** Leaflet.js GIS map engine and Chart.js 4.4+.
+- **Typography & Standards:** Plus Jakarta Sans & Merriweather (Google Fonts), GIGW 3.0, WCAG 2.1 AA compliant.
 
 ---
 
-## 📄 License
+## ⚙️ Installation & Setup
 
-This project is created for public demonstration and open governance research. Distributed under the **MIT License**.
+### 1. Prerequisites
+- Python 3.10 or higher installed.
+
+### 2. Run the Application
+In your terminal, navigate to the project root and execute:
+
+```bash
+# Step 1: Install Python dependencies
+pip install -r requirements.txt
+
+# Step 2: Initialize Database (if needed)
+python database.py
+
+# Step 3: Start the Web Server
+python app.py
+```
+
+### 3. Open in Browser
+Visit **`http://127.0.0.1:5000`** in any web browser.
+
+---
+
+## 👥 Available User Accounts & Roles
+
+You can sign in with **any personal Gmail or custom email address** on the Login page (an individual citizen account is created automatically), or use one of the pre-configured demo profiles:
+
+| Account | Email | Password | Role | Features & Access |
+| :--- | :--- | :--- | :--- | :--- |
+| **👨‍🌾 Rahul Sharma** | `rahul.sharma@ekbharat.gov.in` | `citizen123` | Citizen | Farmer beneficiary from Varanasi, UP. Views 3 personal UP tickets. |
+| **👩‍⚕️ Priya Patel** | `priya.patel@ekbharat.gov.in` | `citizen123` | Citizen | Healthcare worker from Mehsana, GJ. Views 2 personal Gujarat tickets. |
+| **🏛️ Dr. Rajesh Varma** | `admin.nodal@ekbharat.gov.in` | `admin123` | Nodal Officer (Admin) | Central Nodal Officer (NITI Aayog). Full district queue moderation, approval/rejection forms, resolution proof upload. |
+| **👤 Your Custom Email** | `yourname@gmail.com` | *(Any)* | Citizen | Your own private profile, clean grievance queue, and personal welfare hub. |
+
+---
+
+## 📜 Compliance & Standards
+
+- **GIGW 3.0:** Compliant with *Guidelines for Indian Government Websites 3.0*.
+- **WCAG 2.1 AA:** Accessible typography resizer (`A-`, `A`, `A+`), high-contrast color palette, and full keyboard navigation.
+- **NDSAP / OGD:** Open Government Data standard compliance with cryptographic SHA-256 data lineage.
+- **CPGRAMS:** Centralized Public Grievance Redress And Monitoring System workflow compliance.
+
+---
+*© 2026 EkBhaarat. Designed & Developed for Transparent Governance & Citizen Empowerment.*

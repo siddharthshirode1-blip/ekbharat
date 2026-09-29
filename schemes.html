@@ -3,705 +3,901 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Government Schemes | EkBhaarat</title>
+  <title>Government Schemes & Projects Intelligence Hub | EkBhaarat | भारत सरकार</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
 </head>
 
-<body>
+<body data-page="schemes">
 
   <!-- NAVBAR -->
   <header class="navbar">
     <div class="logo-area">
-      <div class="logo-symbol">E</div>
-      <div>
-        <strong>EkBhaarat</strong>
-        <small>India in one view</small>
+      <div class="logo-symbol">
+        <svg viewBox="0 0 24 24" width="24" height="24" stroke="#FF671F" stroke-width="1.3" fill="none">
+          <circle cx="12" cy="12" r="10" stroke="#C59B27" stroke-width="1.8"/>
+          <circle cx="12" cy="12" r="2.2" fill="#FF671F"/>
+          <line x1="12" y1="2" x2="12" y2="22"/>
+          <line x1="2" y1="12" x2="22" y2="12"/>
+        </svg>
+      </div>
+      <div class="logo-text">
+        <h2>EkBhaarat</h2>
+        <span>भारत सरकार • National Schemes & Projects Directory</span>
       </div>
     </div>
-
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="features.html">Features</a>
-      <a href="account.html">Account</a>
-    </nav>
-
-    <div class="nav-actions">
-      <button class="login-btn" data-login-button>Login</button>
-    </div>
+    <nav></nav>
+    <div class="nav-actions"></div>
   </header>
 
-
   <!-- PAGE HEADER -->
-  <section class="page-hero">
-    <span class="section-label">GOVERNMENT SCHEME EXPLORER</span>
-
-    <h1>
-      Explore Government
-      <span>Schemes.</span>
+  <section class="page-hero" style="text-align: center; margin-bottom: 25px;">
+    <span class="section-label">CENTRAL & STATE WELFARE CONVERGENCE REPOSITORY</span>
+    <h1 style="font-size: 32px; font-weight: 800; color: var(--gov-navy-dark); margin-top: 8px;">
+      Explore Government Schemes <span>& Projects.</span>
     </h1>
-
-    <p>
-      Search and explore government schemes by ministry,
-      department, category, state and implementation status.
+    <p style="max-width: 850px; margin: 10px auto 0; font-size: 15px; color: var(--gov-text-secondary);">
+      Detailed, multi-tiered intelligence on government initiatives across <strong>Villages (Gram Panchayats)</strong>, <strong>Cities (Urban Local Bodies)</strong>, <strong>Districts</strong>, and <strong>Central Flagship Programmes</strong>. Check eligibility, required documents, DBT funding, and application steps.
     </p>
   </section>
 
+  <main class="schemes-page" style="max-width: 1240px; margin: 0 auto; padding: 0 5% 50px;">
 
-  <main class="schemes-page">
+    <!-- LEVEL SELECTOR PILLS -->
+    <div style="margin-bottom: 20px; display: flex; gap: 8px; flex-wrap: wrap; justify-content: center;" id="levelFilterTabs">
+      <button class="gazette-filter-btn active" onclick="setLevelFilter('All', this)">All Governance Levels</button>
+      <button class="gazette-filter-btn" onclick="setLevelFilter('Village', this)">🌾 Village / Gram Panchayat</button>
+      <button class="gazette-filter-btn" onclick="setLevelFilter('City', this)">🏙️ City / Urban Local Body</button>
+      <button class="gazette-filter-btn" onclick="setLevelFilter('District', this)">📍 District Level</button>
+      <button class="gazette-filter-btn" onclick="setLevelFilter('Central', this)">🏛️ Central & State Flagship</button>
+    </div>
 
-    <!-- SEARCH & FILTERS -->
-    <section class="scheme-search-card">
-
-      <div class="search-box">
-
+    <!-- SEARCH & ADVANCED FILTERS -->
+    <section class="scheme-search-card" style="background: #FFFFFF; border: 1px solid var(--gov-border-light); border-radius: 14px; padding: 22px 26px; box-shadow: var(--gov-shadow-sm); margin-bottom: 25px;">
+      
+      <div class="search-box" style="display: flex; gap: 10px; margin-bottom: 16px;">
         <input
           type="text"
           id="schemeSearch"
-          placeholder="Search schemes by name or keyword..."
+          placeholder="Search by scheme name, village, city, district, ministry, or beneficiary keyword..."
           oninput="filterSchemes()"
+          style="flex: 1; padding: 12px 16px; border: 1px solid var(--gov-border); border-radius: 8px; font-size: 14px;"
         >
-
-        <button onclick="filterSchemes()">
+        <button class="primary-btn" onclick="filterSchemes()" style="padding: 12px 24px; font-size: 14px;">
           🔍 Search
         </button>
-
       </div>
 
+      <div class="scheme-filters" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;">
+        
+        <div>
+          <label style="font-size: 11px; font-weight: 700; color: var(--gov-text-muted); display: block; margin-bottom: 4px; text-transform: uppercase;">Sector / Category</label>
+          <select id="categoryFilter" onchange="filterSchemes()" style="width: 100%; padding: 10px; border: 1px solid var(--gov-border); border-radius: 6px; font-size: 13px;">
+            <option value="">All Categories</option>
+            <option value="Agriculture & Rural">Agriculture & Rural Dev</option>
+            <option value="Urban Infrastructure">Urban Infra & Smart Cities</option>
+            <option value="Healthcare">Healthcare & Ayushman</option>
+            <option value="Education & Skilling">Education & Skilling</option>
+            <option value="Clean Energy & Water">Clean Energy & Water (JJM)</option>
+            <option value="Housing & Sanitation">Housing & Sanitation (PMAY)</option>
+            <option value="Financial Inclusion & MSME">Financial Inclusion & MSME</option>
+            <option value="Women & Child">Women & Child Welfare</option>
+          </select>
+        </div>
 
-      <div class="scheme-filters">
+        <div>
+          <label style="font-size: 11px; font-weight: 700; color: var(--gov-text-muted); display: block; margin-bottom: 4px; text-transform: uppercase;">State / Territory</label>
+          <select id="stateFilter" onchange="filterSchemes()" style="width: 100%; padding: 10px; border: 1px solid var(--gov-border); border-radius: 6px; font-size: 13px;">
+            <option value="">All States (Pan-India)</option>
+            <option value="Uttar Pradesh">Uttar Pradesh</option>
+            <option value="Maharashtra">Maharashtra</option>
+            <option value="Karnataka">Karnataka</option>
+            <option value="Gujarat">Gujarat</option>
+            <option value="Bihar">Bihar</option>
+            <option value="Madhya Pradesh">Madhya Pradesh</option>
+            <option value="Tamil Nadu">Tamil Nadu</option>
+            <option value="Rajasthan">Rajasthan</option>
+            <option value="West Bengal">West Bengal</option>
+            <option value="Odisha">Odisha</option>
+            <option value="Assam">Assam</option>
+            <option value="Andhra Pradesh">Andhra Pradesh</option>
+          </select>
+        </div>
 
-        <select id="ministryFilter" onchange="filterSchemes()">
-          <option value="">All Ministries</option>
-          <option value="Ministry of Education">
-            Ministry of Education
-          </option>
-          <option value="Ministry of Health">
-            Ministry of Health
-          </option>
-          <option value="Ministry of Agriculture">
-            Ministry of Agriculture
-          </option>
-          <option value="Ministry of Rural Development">
-            Ministry of Rural Development
-          </option>
-        </select>
+        <div>
+          <label style="font-size: 11px; font-weight: 700; color: var(--gov-text-muted); display: block; margin-bottom: 4px; text-transform: uppercase;">Ministry / Department</label>
+          <select id="ministryFilter" onchange="filterSchemes()" style="width: 100%; padding: 10px; border: 1px solid var(--gov-border); border-radius: 6px; font-size: 13px;">
+            <option value="">All Ministries</option>
+            <option value="Ministry of Agriculture">Ministry of Agriculture</option>
+            <option value="Ministry of Rural Development">Ministry of Rural Development</option>
+            <option value="Ministry of Housing and Urban Affairs">Ministry of Housing and Urban Affairs</option>
+            <option value="Ministry of Jal Shakti">Ministry of Jal Shakti</option>
+            <option value="Ministry of Health and Family Welfare">Ministry of Health and Family Welfare</option>
+            <option value="Ministry of Education">Ministry of Education</option>
+            <option value="Ministry of New and Renewable Energy">Ministry of New & Renewable Energy</option>
+            <option value="Ministry of Micro, Small and Medium Enterprises">Ministry of MSME</option>
+            <option value="Ministry of Panchayati Raj">Ministry of Panchayati Raj</option>
+          </select>
+        </div>
 
-
-        <select id="categoryFilter" onchange="filterSchemes()">
-          <option value="">All Categories</option>
-          <option value="Education">Education</option>
-          <option value="Health">Health</option>
-          <option value="Agriculture">Agriculture</option>
-          <option value="Employment">Employment</option>
-          <option value="Housing">Housing</option>
-        </select>
-
-
-        <select id="stateFilter" onchange="filterSchemes()">
-          <option value="">All States</option>
-          <option value="Maharashtra">Maharashtra</option>
-          <option value="Karnataka">Karnataka</option>
-          <option value="Tamil Nadu">Tamil Nadu</option>
-          <option value="Madhya Pradesh">Madhya Pradesh</option>
-          <option value="West Bengal">West Bengal</option>
-        </select>
-
-
-        <select id="statusFilter" onchange="filterSchemes()">
-          <option value="">All Status</option>
-          <option value="Active">Active</option>
-          <option value="Upcoming">Upcoming</option>
-          <option value="Closed">Closed</option>
-        </select>
+        <div>
+          <label style="font-size: 11px; font-weight: 700; color: var(--gov-text-muted); display: block; margin-bottom: 4px; text-transform: uppercase;">Implementation Status</label>
+          <select id="statusFilter" onchange="filterSchemes()" style="width: 100%; padding: 10px; border: 1px solid var(--gov-border); border-radius: 6px; font-size: 13px;">
+            <option value="">All Status</option>
+            <option value="Active & Enrolling">Active & Enrolling</option>
+            <option value="Ongoing Execution">Ongoing Execution</option>
+            <option value="Saturation Mode">Saturation Mode</option>
+            <option value="Upcoming Phase">Upcoming Phase</option>
+          </select>
+        </div>
 
       </div>
-
     </section>
 
-
-    <!-- RESULTS HEADER -->
-    <div class="scheme-results-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
-
+    <!-- RESULTS HEADER & EXPORT -->
+    <div class="scheme-results-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 20px;">
       <div>
-        <span class="section-label">SCHEMES</span>
-        <h2>Available Government Schemes</h2>
+        <span class="section-label">VERIFIED GOVERNMENT DIRECTORY</span>
+        <h2 style="font-size: 22px; font-weight: 800; color: var(--gov-navy-dark);">Available Government Schemes & Projects</h2>
       </div>
 
       <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
-        <span id="schemeResultCount" style="font-weight: 700; color: var(--gov-navy); background: #EBF3FA; padding: 4px 10px; border-radius: 20px; font-size: 13px;">
-          6 schemes
+        <span id="schemeResultCount" style="font-weight: 800; color: var(--gov-navy); background: #EBF3FA; padding: 6px 14px; border-radius: 20px; font-size: 13px;">
+          Loading schemes...
         </span>
         <a href="downloads/schemes.xlsx" onclick="downloadDatasetFile('schemes.xlsx', 'excel', 'Central Schemes Master Data')" download="schemes.xlsx" class="primary-btn" style="text-decoration: none; padding: 8px 14px; font-size: 12px; display: inline-flex; align-items: center; gap: 6px;">
           📊 Export Excel (.xlsx)
         </a>
-        <a href="downloads/schemes_clean.csv" onclick="downloadDatasetFile('schemes_clean.csv', 'csv', 'Central Schemes Register')" download="schemes_clean.csv" class="secondary-btn" style="text-decoration: none; padding: 8px 14px; font-size: 12px; display: inline-flex; align-items: center; gap: 6px;">
-          📄 CSV Format
-        </a>
       </div>
-
     </div>
-
 
     <!-- SCHEME GRID -->
-    <section
-      class="scheme-grid"
-      id="schemeGrid"
-    >
-
-      <!-- SCHEME 1 -->
-      <article
-        class="scheme-card"
-        data-name="Student Education Support Scheme"
-        data-ministry="Ministry of Education"
-        data-category="Education"
-        data-state="Maharashtra"
-        data-status="Active"
-      >
-
-        <div class="scheme-card-top">
-          <span class="scheme-category">Education</span>
-          <span class="scheme-status active">Active</span>
-        </div>
-
-        <h3>Student Education Support Scheme</h3>
-
-        <p>
-          Financial support programme designed to assist
-          eligible students with educational expenses.
-        </p>
-
-        <div class="scheme-meta">
-          <span>🏛 Ministry of Education</span>
-          <span>📍 Maharashtra</span>
-        </div>
-
-        <button
-          class="outline-btn"
-          onclick="showSchemeDetails('Student Education Support Scheme')"
-        >
-          View Details
-        </button>
-
-      </article>
-
-
-      <!-- SCHEME 2 -->
-      <article
-        class="scheme-card"
-        data-name="National Health Support Programme"
-        data-ministry="Ministry of Health"
-        data-category="Health"
-        data-state="Karnataka"
-        data-status="Active"
-      >
-
-        <div class="scheme-card-top">
-          <span class="scheme-category">Health</span>
-          <span class="scheme-status active">Active</span>
-        </div>
-
-        <h3>National Health Support Programme</h3>
-
-        <p>
-          Supports access to essential healthcare services
-          for eligible beneficiaries.
-        </p>
-
-        <div class="scheme-meta">
-          <span>🏛 Ministry of Health</span>
-          <span>📍 Karnataka</span>
-        </div>
-
-        <button
-          class="outline-btn"
-          onclick="showSchemeDetails('National Health Support Programme')"
-        >
-          View Details
-        </button>
-
-      </article>
-
-
-      <!-- SCHEME 3 -->
-      <article
-        class="scheme-card"
-        data-name="Farmer Development Assistance Scheme"
-        data-ministry="Ministry of Agriculture"
-        data-category="Agriculture"
-        data-state="Madhya Pradesh"
-        data-status="Active"
-      >
-
-        <div class="scheme-card-top">
-          <span class="scheme-category">Agriculture</span>
-          <span class="scheme-status active">Active</span>
-        </div>
-
-        <h3>Farmer Development Assistance Scheme</h3>
-
-        <p>
-          Provides support intended to improve agricultural
-          productivity and farmer welfare.
-        </p>
-
-        <div class="scheme-meta">
-          <span>🏛 Ministry of Agriculture</span>
-          <span>📍 Madhya Pradesh</span>
-        </div>
-
-        <button
-          class="outline-btn"
-          onclick="showSchemeDetails('Farmer Development Assistance Scheme')"
-        >
-          View Details
-        </button>
-
-      </article>
-
-
-      <!-- SCHEME 4 -->
-      <article
-        class="scheme-card"
-        data-name="Rural Employment Support Scheme"
-        data-ministry="Ministry of Rural Development"
-        data-category="Employment"
-        data-state="West Bengal"
-        data-status="Active"
-      >
-
-        <div class="scheme-card-top">
-          <span class="scheme-category">Employment</span>
-          <span class="scheme-status active">Active</span>
-        </div>
-
-        <h3>Rural Employment Support Scheme</h3>
-
-        <p>
-          Provides employment opportunities and livelihood
-          support for eligible rural communities.
-        </p>
-
-        <div class="scheme-meta">
-          <span>🏛 Ministry of Rural Development</span>
-          <span>📍 West Bengal</span>
-        </div>
-
-        <button
-          class="outline-btn"
-          onclick="showSchemeDetails('Rural Employment Support Scheme')"
-        >
-          View Details
-        </button>
-
-      </article>
-
-
-      <!-- SCHEME 5 -->
-      <article
-        class="scheme-card"
-        data-name="Affordable Housing Initiative"
-        data-ministry="Ministry of Rural Development"
-        data-category="Housing"
-        data-state="Maharashtra"
-        data-status="Upcoming"
-      >
-
-        <div class="scheme-card-top">
-          <span class="scheme-category">Housing</span>
-          <span class="scheme-status upcoming">Upcoming</span>
-        </div>
-
-        <h3>Affordable Housing Initiative</h3>
-
-        <p>
-          Programme focused on improving access to affordable
-          housing for eligible families.
-        </p>
-
-        <div class="scheme-meta">
-          <span>🏛 Ministry of Rural Development</span>
-          <span>📍 Maharashtra</span>
-        </div>
-
-        <button
-          class="outline-btn"
-          onclick="showSchemeDetails('Affordable Housing Initiative')"
-        >
-          View Details
-        </button>
-
-      </article>
-
-
-      <!-- SCHEME 6 -->
-      <article
-        class="scheme-card"
-        data-name="Youth Skill Development Programme"
-        data-ministry="Ministry of Education"
-        data-category="Employment"
-        data-state="Tamil Nadu"
-        data-status="Active"
-      >
-
-        <div class="scheme-card-top">
-          <span class="scheme-category">Employment</span>
-          <span class="scheme-status active">Active</span>
-        </div>
-
-        <h3>Youth Skill Development Programme</h3>
-
-        <p>
-          Supports skill development and training opportunities
-          for young people.
-        </p>
-
-        <div class="scheme-meta">
-          <span>🏛 Ministry of Education</span>
-          <span>📍 Tamil Nadu</span>
-        </div>
-
-        <button
-          class="outline-btn"
-          onclick="showSchemeDetails('Youth Skill Development Programme')"
-        >
-          View Details
-        </button>
-
-      </article>
-
+    <section class="scheme-grid" id="schemeGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 24px;">
+      <!-- Populated dynamically by script -->
     </section>
-
 
     <!-- NO RESULTS -->
-    <div
-      id="noResults"
-      class="no-results"
-      style="display:none;"
-    >
-      <h3>No schemes found</h3>
-      <p>
-        Try changing your search or filter options.
+    <div id="noResults" class="no-results" style="display:none; padding: 50px 20px; text-align: center; background: #FFF; border-radius: 12px; border: 1px solid var(--gov-border-light);">
+      <div style="font-size: 40px;">🔍</div>
+      <h3 style="font-size: 18px; color: var(--gov-navy-dark); margin-top: 10px;">No matching schemes found</h3>
+      <p style="font-size: 13.5px; color: var(--gov-text-muted); margin-top: 4px;">
+        Try clearing your search query or selecting "All Governance Levels" / "All States".
       </p>
+      <button class="outline-btn" onclick="resetAllFilters()" style="margin-top: 16px;">Reset All Filters</button>
     </div>
 
-
-    <!-- DETAILS PANEL -->
-    <section
-      id="schemeDetails"
-      class="scheme-details-panel"
-      style="display:none;"
-    >
-
-      <div class="details-header">
-
-        <div>
-          <span class="section-label">SCHEME DETAILS</span>
-          <h2 id="detailName">Scheme Name</h2>
+    <!-- DETAILED MODAL / DIALOG -->
+    <div id="schemeDetailModal" class="gov-modal">
+      <div class="gov-modal-dialog" style="max-width: 760px; max-height: 90vh; overflow-y: auto;">
+        
+        <div class="gov-modal-header" style="background: linear-gradient(135deg, #06233D 0%, #0B3B60 100%); padding: 22px 26px;">
+          <div>
+            <span id="modalLevelBadge" class="scheme-level-badge level-village">🌾 Village Level</span>
+            <h3 id="modalSchemeName" style="color:#FFF; font-size:20px; font-weight: 800; margin-top: 6px;">Scheme Name</h3>
+            <span id="modalMinistry" style="color:#CBD5E1; font-size:12.5px;">Ministry of Rural Development</span>
+          </div>
+          <button class="gov-modal-close" onclick="closeSchemeModal()">&times;</button>
         </div>
 
-        <button
-          class="close-btn"
-          onclick="closeSchemeDetails()"
-        >
-          ✕
-        </button>
+        <div class="gov-modal-body" style="padding: 24px 26px;">
+          
+          <!-- KEY METRICS BAR -->
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 20px; background: #F8FAFC; padding: 14px; border-radius: 10px; border: 1px solid var(--gov-border-light);">
+            <div>
+              <small style="font-size: 10.5px; font-weight: 700; color: var(--gov-text-muted); text-transform: uppercase;">Central Outlay</small>
+              <strong id="modalBudget" style="display: block; font-size: 15px; color: var(--gov-navy-dark); margin-top: 2px;">₹60,000 Cr</strong>
+            </div>
+            <div>
+              <small style="font-size: 10.5px; font-weight: 700; color: var(--gov-text-muted); text-transform: uppercase;">Beneficiaries</small>
+              <strong id="modalBeneficiaries" style="display: block; font-size: 15px; color: var(--gov-navy-dark); margin-top: 2px;">11 Crore</strong>
+            </div>
+            <div>
+              <small style="font-size: 10.5px; font-weight: 700; color: var(--gov-text-muted); text-transform: uppercase;">DBT / Benefit Value</small>
+              <strong id="modalDBT" style="display: block; font-size: 15px; color: var(--gov-green-dark); margin-top: 2px;">₹6,000 / Year</strong>
+            </div>
+            <div>
+              <small style="font-size: 10.5px; font-weight: 700; color: var(--gov-text-muted); text-transform: uppercase;">Status</small>
+              <strong id="modalStatus" style="display: block; font-size: 14px; color: var(--gov-saffron-dark); margin-top: 2px;">Active</strong>
+            </div>
+          </div>
 
+          <!-- SECTION 1: OBJECTIVE & SUMMARY -->
+          <div style="margin-bottom: 18px;">
+            <h4 style="font-size: 14px; font-weight: 800; color: var(--gov-navy-dark); display: flex; align-items: center; gap: 6px;">
+              🎯 Objective & Scope
+            </h4>
+            <p id="modalObjective" style="font-size: 13.5px; color: var(--gov-text-secondary); margin-top: 6px; line-height: 1.6;">—</p>
+          </div>
+
+          <!-- SECTION 2: TARGET GEOGRAPHY & VILLAGE/CITY COVERAGE -->
+          <div style="margin-bottom: 18px; background: #FFFDF9; border: 1px solid #FFEDD5; padding: 14px; border-radius: 8px;">
+            <h4 style="font-size: 13.5px; font-weight: 800; color: #9A3412; display: flex; align-items: center; gap: 6px;">
+              📍 Geographic & Administrative Coverage (Villages / Cities / Districts)
+            </h4>
+            <p id="modalCoverage" style="font-size: 13px; color: #7C2D12; margin-top: 5px; line-height: 1.5;">—</p>
+          </div>
+
+          <!-- SECTION 3: ELIGIBILITY & DOCUMENT CHECKLIST -->
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 18px;">
+            <div style="background: #F8FAFC; border: 1px solid var(--gov-border-light); padding: 14px; border-radius: 8px;">
+              <h4 style="font-size: 13px; font-weight: 800; color: var(--gov-navy-dark); margin-bottom: 6px;">
+                ✅ Who is Eligible?
+              </h4>
+              <ul id="modalEligibility" style="font-size: 12.5px; color: var(--gov-text-secondary); padding-left: 18px; line-height: 1.5;">
+                <!-- dynamic -->
+              </ul>
+            </div>
+            <div style="background: #F8FAFC; border: 1px solid var(--gov-border-light); padding: 14px; border-radius: 8px;">
+              <h4 style="font-size: 13px; font-weight: 800; color: var(--gov-navy-dark); margin-bottom: 6px;">
+                📑 Required Documents
+              </h4>
+              <ul id="modalDocuments" style="font-size: 12.5px; color: var(--gov-text-secondary); padding-left: 18px; line-height: 1.5;">
+                <!-- dynamic -->
+              </ul>
+            </div>
+          </div>
+
+          <!-- SECTION 4: HOW TO APPLY & LOCAL DESK -->
+          <div style="margin-bottom: 18px;">
+            <h4 style="font-size: 14px; font-weight: 800; color: var(--gov-navy-dark); margin-bottom: 6px;">
+              📝 Step-by-Step Application Process
+            </h4>
+            <div id="modalApplySteps" style="font-size: 13px; color: var(--gov-text-secondary); line-height: 1.6; background: #F1F5F9; padding: 12px 16px; border-radius: 8px;">
+              <!-- dynamic -->
+            </div>
+          </div>
+
+          <!-- SECTION 5: LOCAL NODAL AUTHORITY & HELPLINE -->
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; padding-top: 14px; border-top: 1px solid var(--gov-border-light); font-size: 12.5px;">
+            <div>
+              <span style="color: var(--gov-text-muted);">Implementing Agency:</span>
+              <strong id="modalAgency" style="color: var(--gov-navy-dark); display: block;">Gram Panchayat Sachiv / GPDO</strong>
+            </div>
+            <div style="text-align: right;">
+              <span style="color: var(--gov-text-muted);">Toll-Free Helpline:</span>
+              <strong id="modalHelpline" style="color: var(--gov-saffron-dark); display: block; font-size: 13px;">1800-115-526</strong>
+            </div>
+          </div>
+
+          <div style="margin-top: 20px; display: flex; justify-content: flex-end; gap: 10px;">
+            <button class="secondary-btn" onclick="closeSchemeModal()">Close</button>
+            <button class="primary-btn" onclick="showToast('Redirecting to official National Scheme Portal...')">🌐 Apply on Official Portal →</button>
+          </div>
+
+        </div>
       </div>
-
-
-      <div class="details-grid">
-
-        <div>
-          <strong>Ministry</strong>
-          <p id="detailMinistry">—</p>
-        </div>
-
-        <div>
-          <strong>Objective</strong>
-          <p id="detailObjective">—</p>
-        </div>
-
-        <div>
-          <strong>Beneficiary Group</strong>
-          <p id="detailBeneficiary">—</p>
-        </div>
-
-        <div>
-          <strong>Budget</strong>
-          <p id="detailBudget">—</p>
-        </div>
-
-        <div>
-          <strong>Beneficiaries</strong>
-          <p id="detailBeneficiaries">—</p>
-        </div>
-
-        <div>
-          <strong>Implementation Status</strong>
-          <p id="detailStatus">—</p>
-        </div>
-
-      </div>
-
-    </section>
+    </div>
 
   </main>
 
-
   <!-- FOOTER -->
   <footer class="footer">
-
-    <div class="footer-brand">
-      <strong>EkBhaarat</strong>
-      <p>
-        Connecting citizens with India's government information.
-      </p>
+    <div class="footer-gov-info">
+      <div class="footer-nic-text">
+        National Scheme & Project Convergence Portal. Verified against <strong>data.gov.in</strong> and <strong>MyScheme / Digital India</strong> standards. Compliant with <strong>GIGW 3.0</strong>.
+      </div>
+      <div class="copyright">
+        © 2026 EkBhaarat. All Rights Reserved.
+      </div>
     </div>
-
-    <div class="footer-links">
-      <a href="index.html">Home</a>
-      <a href="features.html">Features</a>
-      <a href="account.html">Account</a>
-    </div>
-
-    <p class="copyright">
-      © 2026 EkBhaarat. All rights reserved.
-    </p>
-
   </footer>
 
-
   <script src="script.js"></script>
-
   <script>
+    let currentLevel = "All";
 
-    const schemeDetails = {
-
-      "Student Education Support Scheme": {
-        ministry: "Ministry of Education",
-        objective: "Support eligible students with educational expenses.",
-        beneficiary: "Eligible students",
-        budget: "₹12,500 Cr",
-        beneficiaries: "48 Lakh",
-        status: "Active"
+    const COMPREHENSIVE_SCHEMES_DB = [
+      // 1. VILLAGE LEVEL SCHEMES
+      {
+        id: "SCH-VIL-01",
+        name: "Pradhan Mantri Kisan Samman Nidhi (PM-KISAN)",
+        level: "Village",
+        levelBadgeClass: "level-village",
+        levelLabel: "🌾 Village Level",
+        category: "Agriculture & Rural",
+        ministry: "Ministry of Agriculture and Farmers Welfare",
+        state: "Pan-India",
+        status: "Active & Enrolling",
+        budget: "₹60,000 Cr",
+        beneficiaries: "11.8 Crore Farmers",
+        dbt: "₹6,000 / Year (3 Installments)",
+        summary: "Direct income support of ₹6,000 per year in three equal installments of ₹2,000 directly deposited to bank accounts of landholding farmer families across all Indian villages.",
+        coverage: "All 6.6 Lakh Villages across all 28 States & 8 UTs. Integrated with Gram Panchayat land record registries.",
+        eligibility: [
+          "Small and marginal farmer families with cultivable landholding in their name.",
+          "Must have bank account seeded with Aadhaar and active NPCI DBT mapper.",
+          "Land ownership records (Khasra/Khatauni) registered in state revenue portals."
+        ],
+        documents: [
+          "Aadhaar Card (Biometric Verified)",
+          "Land Ownership Record / RoR / Khasra-Khatauni",
+          "Active Bank Account Passbook (Aadhaar Seeded)",
+          "Registered Mobile Number for OTP authentication"
+        ],
+        applySteps: "1. Visit pmkisan.gov.in or nearest Common Service Centre (CSC) / Jan Seva Kendra.<br>2. Submit Aadhaar number and land survey record.<br>3. Village Patwari / Gram Panchayat Sachiv verifies ownership on revenue portal.<br>4. Funds transferred directly into bank account via PFMS.",
+        agency: "Department of Agriculture & State Revenue / Gram Panchayat Patwari",
+        helpline: "155261 / 1800-115-526"
       },
-
-      "National Health Support Programme": {
-        ministry: "Ministry of Health",
-        objective: "Improve access to essential healthcare services.",
-        beneficiary: "Eligible citizens",
-        budget: "₹28,000 Cr",
-        beneficiaries: "1.6 Crore",
-        status: "Active"
+      {
+        id: "SCH-VIL-02",
+        name: "Jal Jeevan Mission (Har Ghar Jal)",
+        level: "Village",
+        levelBadgeClass: "level-village",
+        levelLabel: "🌾 Village Level",
+        category: "Clean Energy & Water",
+        ministry: "Ministry of Jal Shakti",
+        state: "Pan-India",
+        status: "Saturation Mode",
+        budget: "₹70,000 Cr",
+        beneficiaries: "15.2 Crore Rural Households",
+        dbt: "100% Piped Tap Connection Subsidized",
+        summary: "Providing Functional Household Tap Connections (FHTC) delivering 55 litres per capita per day (lpcd) of safe drinking water to every rural household in India.",
+        coverage: "Over 2,10,000 Habitations & Gram Panchayats. Village Water and Sanitation Committees (VWSC) manage local operation and water quality testing.",
+        eligibility: [
+          "Every rural household located in Gram Panchayat habitation without piped drinking water.",
+          "Priority focus on Scheduled Caste / Scheduled Tribe habitations, Aspirational Districts, and drought-prone villages."
+        ],
+        documents: [
+          "Aadhaar Card of Head of Household",
+          "Village Habitation / Ward Verification Certificate",
+          "Ration Card"
+        ],
+        applySteps: "1. Gram Sabha approves village water action plan (VAP).<br>2. Paani Samiti registers household for connection link.<br>3. Implementing agency installs pipeline, meter, and tap faucet at household.<br>4. Geo-tagged photo uploaded to Jal Jeevan Mission dashboard.",
+        agency: "State Water & Sanitation Mission (SWSM) / Gram Panchayat Paani Samiti",
+        helpline: "1800-180-1551"
       },
-
-      "Farmer Development Assistance Scheme": {
-        ministry: "Ministry of Agriculture",
-        objective: "Support agricultural productivity and farmer welfare.",
-        beneficiary: "Farmers",
-        budget: "₹22,400 Cr",
-        beneficiaries: "1.2 Crore",
-        status: "Active"
-      },
-
-      "Rural Employment Support Scheme": {
+      {
+        id: "SCH-VIL-03",
+        name: "Pradhan Mantri Gram Sadak Yojana (PMGSY - Phase IV)",
+        level: "Village",
+        levelBadgeClass: "level-village",
+        levelLabel: "🌾 Village Level",
+        category: "Agriculture & Rural",
         ministry: "Ministry of Rural Development",
-        objective: "Provide employment and livelihood opportunities.",
-        beneficiary: "Rural households",
-        budget: "₹31,600 Cr",
-        beneficiaries: "92 Lakh",
-        status: "Active"
+        state: "Pan-India",
+        status: "Ongoing Execution",
+        budget: "₹70,125 Cr",
+        beneficiaries: "1.7 Lakh Habitations Connected",
+        dbt: "100% Central Civil Construction Grant",
+        summary: "Constructing 62,500 KM of all-weather bituminous road connectivity to 25,000 unconnected habitations with population 500+ in plains and 250+ in tribal/hill regions.",
+        coverage: "Rural habitations, agricultural mandis, rural primary schools, and Primary Health Centres (PHCs) across all districts.",
+        eligibility: [
+          "Rural habitations with population of 500+ (plains) or 250+ (hilly/desert/tribal areas).",
+          "Unconnected revenue villages without black-topped bitumen road access."
+        ],
+        documents: [
+          "Gram Panchayat Resolution & DPR (Detailed Project Report)",
+          "District Road Network Master Plan Alignment"
+        ],
+        applySteps: "1. Gram Panchayat passes resolution proposing route alignment.<br>2. District Rural Development Agency (DRDA) conducts engineering survey.<br>3. State PWD Rural Division issues public e-tender.<br>4. Quality verified by National Quality Monitors (NQM).",
+        agency: "National Rural Infrastructure Development Agency (NRIDA) & State PWD",
+        helpline: "1800-111-555"
+      },
+      {
+        id: "SCH-VIL-04",
+        name: "SVAMITVA Scheme (Drone Land Survey & Property Cards)",
+        level: "Village",
+        levelBadgeClass: "level-village",
+        levelLabel: "🌾 Village Level",
+        category: "Agriculture & Rural",
+        ministry: "Ministry of Panchayati Raj",
+        state: "Pan-India",
+        status: "Saturation Mode",
+        budget: "₹566 Cr",
+        beneficiaries: "1.6 Crore Property Cards Issued",
+        dbt: "Free Digital Land Property Card",
+        summary: "Survey of Villages and Mapping with Improvised Technology in Village Areas (SVAMITVA) using 3D drone mapping to demarcate rural inhabited (abadi) land and issue legal 'Gharaunda' property cards.",
+        coverage: "6.6 Lakh Villages across 28 States. Provides definitive property ownership proof to eliminate village boundary disputes.",
+        eligibility: [
+          "Rural citizens owning residential houses/plots in the inhabited (Abadi) area of the village."
+        ],
+        documents: [
+          "Aadhaar Card",
+          "Family Ration Card / Parivar Pehchan Patra",
+          "Physical Possession verification by Village Chuna Marking Committee"
+        ],
+        applySteps: "1. Survey of India flies high-resolution camera drones over village.<br>2. Gram Panchayat marks property boundaries with white lime powder.<br>3. Objection window opened for 30 days at Panchayat Bhawan.<br>4. Final digital 'Property Card' generated on DigiLocker with GIS coordinates.",
+        agency: "Survey of India, State Revenue Department & Gram Panchayat",
+        helpline: "011-2338-9008"
+      },
+      {
+        id: "SCH-VIL-05",
+        name: "PM-KUSUM (Subsidized Solar Agricultural Pumps)",
+        level: "Village",
+        levelBadgeClass: "level-village",
+        levelLabel: "🌾 Village Level",
+        category: "Clean Energy & Water",
+        ministry: "Ministry of New and Renewable Energy",
+        state: "Pan-India",
+        status: "Active & Enrolling",
+        budget: "₹34,422 Cr",
+        beneficiaries: "35 Lakh Farmers",
+        dbt: "Up to 60% Solar Pump Subsidy",
+        summary: "De-dieselization of farm irrigation by providing up to 60% capital subsidy for standalone off-grid solar agriculture pumps and solarization of existing grid-connected tube wells.",
+        coverage: "Off-grid rural agricultural fields, arid and groundwater-stressed farming clusters.",
+        eligibility: [
+          "Individual farmers, water user associations, and farmer producer organizations (FPOs).",
+          "Cultivable farm land requiring irrigation without reliable 24x7 electricity grid."
+        ],
+        documents: [
+          "Aadhaar Card & Passport Photo",
+          "Land Ownership Documents (7/12 extract or Khasra-Khatauni)",
+          "Bank Account Passbook",
+          "Electricity Discom No-Objection Certificate (for off-grid component)"
+        ],
+        applySteps: "1. Apply online via State Renewable Energy Agency portal.<br>2. Pay 10% farmer share; central/state subsidy covers 60%, bank loan covers 30%.<br>3. Empanelled solar vendor installs pump and solar PV panels on site.<br>4. Field inspection verifies commissioning.",
+        agency: "State Nodal Renewable Energy Agencies & Discoms",
+        helpline: "1800-180-3333"
       },
 
-      "Affordable Housing Initiative": {
-        ministry: "Ministry of Rural Development",
-        objective: "Improve access to affordable housing.",
-        beneficiary: "Eligible families",
-        budget: "₹18,700 Cr",
-        beneficiaries: "36 Lakh",
-        status: "Upcoming"
+      // 2. CITY / URBAN LOCAL BODY SCHEMES
+      {
+        id: "SCH-CTY-01",
+        name: "PM SVANidhi (Micro-Credit for Urban Street Vendors)",
+        level: "City",
+        levelBadgeClass: "level-city",
+        levelLabel: "🏙️ City / Urban Level",
+        category: "Financial Inclusion & MSME",
+        ministry: "Ministry of Housing and Urban Affairs",
+        state: "Pan-India",
+        status: "Active & Enrolling",
+        budget: "₹8,500 Cr",
+        beneficiaries: "68 Lakh Street Vendors",
+        dbt: "₹10,000 / ₹20,000 / ₹50,000 Micro-Loans",
+        summary: "Collateral-free working capital micro-loans of ₹10,000 (1st tranche), ₹20,000 (2nd tranche), and ₹50,000 (3rd tranche) with 7% interest subsidy and cashback for digital transactions.",
+        coverage: "All Urban Local Bodies (Municipal Corporations, Municipalities, Town Panchayats) across India.",
+        eligibility: [
+          "Urban street vendors, hawkers, thelawalas, fruit/vegetable sellers operating in municipal wards.",
+          "Possessing Certificate of Vending / ID card issued by Urban Local Body (ULB) or Letter of Recommendation (LoR)."
+        ],
+        documents: [
+          "Aadhaar Card",
+          "Voter ID / Driving License",
+          "Urban Local Body Vending Certificate or Town Vending Committee (TVC) Letter",
+          "Active UPI QR Code / Bank Account"
+        ],
+        applySteps: "1. Apply on pmsvanidhi.mohua.gov.in or PM SVANidhi mobile app.<br>2. Select lending bank / microfinance institution.<br>3. Municipal ward officer verifies vending location.<br>4. Direct credit disbursed to bank account within 7 days.",
+        agency: "Urban Local Bodies (ULBs) & Scheduled Commercial Banks",
+        helpline: "1800-111-979"
+      },
+      {
+        id: "SCH-CTY-02",
+        name: "Smart Cities Mission (Integrated Urban Command & Mobility)",
+        level: "City",
+        levelBadgeClass: "level-city",
+        levelLabel: "🏙️ City / Urban Level",
+        category: "Urban Infrastructure",
+        ministry: "Ministry of Housing and Urban Affairs",
+        state: "Pan-India",
+        status: "Ongoing Execution",
+        budget: "₹1,60,000 Cr",
+        beneficiaries: "100 Smart Cities",
+        dbt: "Urban Infrastructure Grants",
+        summary: "Transforming 100 designated cities with Integrated Command and Control Centers (ICCC), smart traffic surveillance, automated solid waste logistics, 24x7 water supply, and placemaking.",
+        coverage: "100 Smart Cities including Varanasi, Ahmedabad, Pune, Bengaluru, Indore, Bhubaneswar, Bhopal, Surat, Jaipur.",
+        eligibility: [
+          "Designated 100 Smart Cities selected under Challenge Competition.",
+          "Projects executed via municipal Special Purpose Vehicles (SPVs)."
+        ],
+        documents: [
+          "Smart City Proposal (SCP) & City Master Plan Approval",
+          "Special Purpose Vehicle Board Resolution"
+        ],
+        applySteps: "1. Municipal Smart City SPV executes tendering on GeM portal.<br>2. Integrated Command and Control Center (ICCC) monitors city utilities 24x7.<br>3. Citizens access municipal services via unified Smart City citizen mobile app.",
+        agency: "Smart City Special Purpose Vehicle (SPV) & Municipal Corporation",
+        helpline: "011-2306-1601"
+      },
+      {
+        id: "SCH-CTY-03",
+        name: "PM-eBus Sewa (City Green Electric Transit)",
+        level: "City",
+        levelBadgeClass: "level-city",
+        levelLabel: "🏙️ City / Urban Level",
+        category: "Urban Infrastructure",
+        ministry: "Ministry of Housing and Urban Affairs",
+        state: "Pan-India",
+        status: "Active & Enrolling",
+        budget: "₹57,613 Cr",
+        beneficiaries: "169 Cities",
+        dbt: "₹20,000 Cr Central Bus Operational Support",
+        summary: "Deployment of 10,000 electric city buses on Public-Private Partnership (PPP) model to augment public bus operations across tier-2 and tier-3 cities with zero tailpipe emissions.",
+        coverage: "169 Cities with population between 3 Lakh to 40 Lakh across 24 States and UTs.",
+        eligibility: [
+          "Cities with population of 300,000 to 4,000,000 lacking organized public transit networks.",
+          "State Government committed to creating depot infrastructure and dedicated bus lanes."
+        ],
+        documents: [
+          "City Mobility Plan (CMP)",
+          "Depot Land Allocation & 33kV Power Grid Substation Feasibility"
+        ],
+        applySteps: "1. State Transport Department submits city transit proposal.<br>2. Central sanctioning committee approves electric bus quota.<br>3. Operator selected via gross cost contract bidding.<br>4. Intelligent Transit Management System (ITMS) rolled out.",
+        agency: "State Transport Undertakings (STUs) & Municipal Corporations",
+        helpline: "011-2306-2580"
+      },
+      {
+        id: "SCH-CTY-04",
+        name: "AMRUT 2.0 (Atal Mission for Urban Rejuvenation)",
+        level: "City",
+        levelBadgeClass: "level-city",
+        levelLabel: "🏙️ City / Urban Level",
+        category: "Clean Energy & Water",
+        ministry: "Ministry of Housing and Urban Affairs",
+        state: "Pan-India",
+        status: "Ongoing Execution",
+        budget: "₹2,99,000 Cr",
+        beneficiaries: "4,800 Urban Local Bodies",
+        dbt: "Universal Urban Piped Water & Sewerage",
+        summary: "Universal coverage of water supply through functional taps to all households in all 4,800 statutory towns and 100% sewage management in 500 major cities.",
+        coverage: "All 4,800 Statutory Towns across India. Includes rejuvenation of urban water bodies and green open spaces.",
+        eligibility: [
+          "All statutory towns in India.",
+          "City Water Balance Plan approved by Urban Local Body council."
+        ],
+        documents: [
+          "City Water Balance Plan (CWBP)",
+          "Detailed Project Report (DPR) for Water Treatment Plants (WTP) & Sewerage Treatment Plants (STP)"
+        ],
+        applySteps: "1. Municipality prepares GIS water supply master plan.<br>2. State High Powered Steering Committee approves funding.<br>3. Automated smart water meters and dual-piped recycling commissioned on site.",
+        agency: "Urban Local Bodies (ULBs) & State Urban Development Agencies (SUDA)",
+        helpline: "011-2306-2180"
+      },
+      {
+        id: "SCH-CTY-05",
+        name: "Pradhan Mantri Awas Yojana - Urban (PMAY-U 2.0)",
+        level: "City",
+        levelBadgeClass: "level-city",
+        levelLabel: "🏙️ City / Urban Level",
+        category: "Housing & Sanitation",
+        ministry: "Ministry of Housing and Urban Affairs",
+        state: "Pan-India",
+        status: "Active & Enrolling",
+        budget: "₹2,30,000 Cr",
+        beneficiaries: "1 Crore Urban Families",
+        dbt: "Up to ₹2.5 Lakh Interest & Construction Subsidy",
+        summary: "Assisting urban poor, EWS, LIG, and middle-class families in constructing or purchasing pucca houses through Interest Subsidy Scheme (ISS), In-situ Slum Redevelopment, and Affordable Housing in Partnership.",
+        coverage: "All statutory urban towns and notified planning areas.",
+        eligibility: [
+          "Economically Weaker Section (EWS - annual income up to ₹3 Lakh) or Lower Income Group (LIG - up to ₹6 Lakh).",
+          "Beneficiary family should not own a pucca house anywhere in India."
+        ],
+        documents: [
+          "Aadhaar Card of all family members",
+          "Income Certificate / ITR / Form 16",
+          "Municipal Ward Domicile & No-House Affidavit",
+          "Land ownership or builder allotment papers"
+        ],
+        applySteps: "1. Apply online at pmaymis.gov.in or through Urban Local Body civic centre.<br>2. Municipal survey conducts physical verification.<br>3. Subsidy credited directly into home loan account via National Housing Bank (NHB).",
+        agency: "State Housing Boards & Municipal Corporations",
+        helpline: "1800-11-6163"
       },
 
-      "Youth Skill Development Programme": {
-        ministry: "Ministry of Education",
-        objective: "Provide skill development and training opportunities.",
-        beneficiary: "Young people",
-        budget: "₹9,800 Cr",
-        beneficiaries: "61 Lakh",
-        status: "Active"
+      // 3. DISTRICT LEVEL SCHEMES
+      {
+        id: "SCH-DST-01",
+        name: "Aspirational Districts Programme (ADP)",
+        level: "District",
+        levelBadgeClass: "level-district",
+        levelLabel: "📍 District Level",
+        category: "Healthcare",
+        ministry: "NITI Aayog & Ministry of Home Affairs",
+        state: "Pan-India",
+        status: "Saturation Mode",
+        budget: "₹18,500 Cr",
+        beneficiaries: "112 Aspirational Districts",
+        dbt: "Performance Challenge Innovation Grants",
+        summary: "Transforming 112 of the most developmentally challenged districts in India through real-time Delta Ranking monitoring across Health, Nutrition, Education, Agriculture, Water, and Skill Development.",
+        coverage: "112 Districts across 28 States (e.g. Varanasi, Vidisha, Muzaffarpur, Barmer, Koraput, Gadchiroli, Baksa, Wayanad).",
+        eligibility: [
+          "Designated 112 Aspirational Districts selected by NITI Aayog.",
+          "Districts achieving top Delta ranks receive additional untied development funds of ₹5-10 Crore."
+        ],
+        documents: [
+          "District Action Plan & Monthly KPI Submission on Champions of Change portal"
+        ],
+        applySteps: "1. District Collector / Magistrate leads convergence meetings across line departments.<br>2. Field workers input real-time metrics on health and nutrition.<br>3. Monthly national rankings published by NITI Aayog.",
+        agency: "NITI Aayog & District Collectorate / DM Office",
+        helpline: "011-2309-6620"
+      },
+      {
+        id: "SCH-DST-02",
+        name: "PM-MITRA Mega Integrated Textile Regions & Apparel Parks",
+        level: "District",
+        levelBadgeClass: "level-district",
+        levelLabel: "📍 District Level",
+        category: "Financial Inclusion & MSME",
+        ministry: "Ministry of Textiles",
+        state: "Pan-India",
+        status: "Ongoing Execution",
+        budget: "₹4,445 Cr",
+        beneficiaries: "7 District Hubs (20 Lakh Jobs)",
+        dbt: "₹500 Cr Infrastructure Support per Park",
+        summary: "Developing 7 integrated textile parks in selected districts offering plug-and-play factory sheds, zero liquid discharge effluent treatment, 24x7 power, and multimodal rail logistics.",
+        coverage: "7 Districts: Virudhunagar (TN), Warangal (TS), Navsari (GJ), Kalaburagi (KA), Dhar (MP), Lucknow (UP), and Amravati (MH).",
+        eligibility: [
+          "Textile manufacturing units, garment exporters, weaving/spinning clusters.",
+          "Large anchor investors and MSME textile auxiliary suppliers."
+        ],
+        documents: [
+          "Company Registration / Udyam Certificate",
+          "Detailed Project Feasibility Report (PFR)",
+          "Industrial Power & Water Requirement Schedule"
+        ],
+        applySteps: "1. Apply through National Single Window System (NSWS).<br>2. State Industrial Development Corporation allocates industrial plot.<br>3. Avail capital support incentive of up to ₹300 Cr per park.",
+        agency: "Special Purpose Vehicle (SPV) formed by Ministry of Textiles & State Govt",
+        helpline: "011-2306-1330"
+      },
+      {
+        id: "SCH-DST-03",
+        name: "PM-ABHIM (Ayushman Bharat Health Infrastructure Mission)",
+        level: "District",
+        levelBadgeClass: "level-district",
+        levelLabel: "📍 District Level",
+        category: "Healthcare",
+        ministry: "Ministry of Health and Family Welfare",
+        state: "Pan-India",
+        status: "Ongoing Execution",
+        budget: "₹64,180 Cr",
+        beneficiaries: "730 Districts",
+        dbt: "District Critical Care Hospital Blocks",
+        summary: "Setting up 50/100-bedded Critical Care Hospital Blocks in all 730 districts, Integrated District Public Health Labs (IPHLs), and BSL-3 biocontainment laboratories for pandemic preparedness.",
+        coverage: "All 730 District Headquarters across India.",
+        eligibility: [
+          "District Headquarters Government Hospitals, Sub-Divisional Hospitals, and Government Medical Colleges."
+        ],
+        documents: [
+          "State Health Infrastructure DPR Approval & Land Handover Certificate"
+        ],
+        applySteps: "1. District Chief Medical Officer (CMO) identifies hospital wing plot.<br>2. Central Public Works Department (CPWD) or State PWD constructs multi-storey critical care block.<br>3. Advanced ICU ventilators, oxygen plants, and diagnostic equipment installed.",
+        agency: "National Health Mission (NHM) & District Health Society",
+        helpline: "1800-180-1104"
+      },
+
+      // 4. CENTRAL & STATE FLAGSHIP SCHEMES
+      {
+        id: "SCH-CEN-01",
+        name: "Ayushman Bharat PM-JAY (Senior 70+ Universal Cover)",
+        level: "Central",
+        levelBadgeClass: "level-central",
+        levelLabel: "🏛️ Central Flagship",
+        category: "Healthcare",
+        ministry: "Ministry of Health and Family Welfare",
+        state: "Pan-India",
+        status: "Active & Enrolling",
+        budget: "₹28,500 Cr",
+        beneficiaries: "55 Crore Citizens + All 70+ Seniors",
+        dbt: "₹5,00,000 / Year Cashless Treatment",
+        summary: "World's largest government-funded health assurance scheme providing cashless secondary and tertiary hospitalization coverage of ₹5 Lakh per family per year across 29,000 empannelled hospitals.",
+        coverage: "Pan-India. Covers all socio-economic poor families plus universal coverage for ALL citizens aged 70+ irrespective of income.",
+        eligibility: [
+          "Families identified under SECC 2011 database or NFSA Ration Card.",
+          "ALL Indian citizens aged 70 years and above (Universal non-income restricted)."
+        ],
+        documents: [
+          "Aadhaar Card (Mandatory for Biometric e-KYC)",
+          "Ration Card / PM-JAY Letter / Age Proof (for 70+)",
+          "Mobile Number linked to Aadhaar"
+        ],
+        applySteps: "1. Check eligibility at beneficiary.nha.gov.in or Ayushman App.<br>2. Perform self e-KYC using Aadhaar OTP or visit nearest Empanelled Hospital Ayushman Mitra.<br>3. Download digital Ayushman PVC Card instantly.<br>4. Present card at hospital desk for 100% cashless treatment.",
+        agency: "National Health Authority (NHA) & State Health Agencies (SHA)",
+        helpline: "14555 / 1800-111-565"
+      },
+      {
+        id: "SCH-CEN-02",
+        name: "PM Surya Ghar: Muft Bijli Yojana (Rooftop Solar)",
+        level: "Central",
+        levelBadgeClass: "level-central",
+        levelLabel: "🏛️ Central Flagship",
+        category: "Clean Energy & Water",
+        ministry: "Ministry of Power & MNRE",
+        state: "Pan-India",
+        status: "Active & Enrolling",
+        budget: "₹75,021 Cr",
+        beneficiaries: "1 Crore Households",
+        dbt: "₹78,000 Direct Subsidy + 300 Free Units",
+        summary: "Direct central capital subsidy of ₹30,000 for 1kW, ₹60,000 for 2kW, and ₹78,000 for 3kW rooftop solar installations, providing up to 300 units of free clean electricity every month.",
+        coverage: "Residential households across all Indian states and Union Territories.",
+        eligibility: [
+          "Residential electricity consumer with active domestic power connection in their name.",
+          "Adequate unshaded rooftop area (approx 100 sq.ft per kW)."
+        ],
+        documents: [
+          "Recent Electricity Bill (Consumer Account Number)",
+          "Aadhaar Card of Consumer",
+          "Cancelled Cheque / Bank Passbook for direct subsidy credit",
+          "Rooftop Ownership Document / Electricity Connection Proof"
+        ],
+        applySteps: "1. Register on pmsuryaghar.gov.in with Consumer ID.<br>2. Select registered local solar vendor.<br>3. Vendor installs solar panels, inverter, and net-meter.<br>4. Discom inspects and commissions net-meter; ₹78,000 subsidy credited within 30 days.",
+        agency: "Rural Electrification Corporation (REC) & State Power Discoms",
+        helpline: "15555"
+      },
+      {
+        id: "SCH-CEN-03",
+        name: "National Green Hydrogen Mission",
+        level: "Central",
+        levelBadgeClass: "level-central",
+        levelLabel: "🏛️ Central Flagship",
+        category: "Clean Energy & Water",
+        ministry: "Ministry of New and Renewable Energy",
+        state: "Pan-India",
+        status: "Ongoing Execution",
+        budget: "₹19,744 Cr",
+        beneficiaries: "National Infrastructure Ecosystem",
+        dbt: "Strategic Interventions for Green Hydrogen (SIGHT)",
+        summary: "Strategic mission to achieve 5 Million Metric Tonnes (MMT) of green hydrogen production annually by 2030, establishing India as a global green energy export hub.",
+        coverage: "Industrial clusters, refineries, steel plants, green ports, and heavy freight transport corridors.",
+        eligibility: [
+          "Electrolyser manufacturers, renewable energy developers, and industrial chemical consortia."
+        ],
+        documents: [
+          "SECI Bidding Tender Documents & Grid Interconnection Agreement"
+        ],
+        applySteps: "1. SECI issues competitive tenders under SIGHT programme.<br>2. Bidders submit technical and financial bids on Bharat-e-Marketplace.<br>3. Performance-linked production subsidies disbursed based on verified green output.",
+        agency: "Solar Energy Corporation of India (SECI) & MNRE",
+        helpline: "011-2436-0707"
+      }
+    ];
+
+    function renderSchemes(schemes) {
+      const grid = document.getElementById("schemeGrid");
+      const countElem = document.getElementById("schemeResultCount");
+      const noResults = document.getElementById("noResults");
+      if (!grid) return;
+
+      if (!schemes || schemes.length === 0) {
+        grid.innerHTML = "";
+        if (countElem) countElem.textContent = "0 schemes found";
+        if (noResults) noResults.style.display = "block";
+        return;
       }
 
-    };
+      if (noResults) noResults.style.display = "none";
+      if (countElem) countElem.textContent = `${schemes.length} ${schemes.length === 1 ? 'Scheme' : 'Schemes'} Available`;
 
+      grid.innerHTML = schemes.map(s => `
+        <article class="scheme-card" style="background: #FFFFFF; border: 1px solid var(--gov-border-light); border-radius: 14px; padding: 24px; box-shadow: var(--gov-shadow-sm); display: flex; flex-direction: column; justify-content: space-between; transition: all 0.25s ease;">
+          <div>
+            <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 12px; flex-wrap: wrap;">
+              <span class="scheme-level-badge ${s.levelBadgeClass}">${s.levelLabel}</span>
+              <span class="trend-badge" style="background: ${s.status.includes('Active') ? 'var(--gov-green-light)' : 'var(--gov-navy-light)'}; color: ${s.status.includes('Active') ? 'var(--gov-green)' : 'var(--gov-navy)'}; font-size: 11px;">
+                ● ${s.status}
+              </span>
+            </div>
+
+            <h3 style="font-size: 17px; font-weight: 800; color: var(--gov-navy-dark); line-height: 1.4; margin-bottom: 8px;">
+              ${s.name}
+            </h3>
+
+            <span style="font-size: 12px; color: var(--gov-text-muted); font-weight: 600; display: block; margin-bottom: 10px;">
+              🏛️ ${s.ministry}
+            </span>
+
+            <p style="font-size: 13px; color: var(--gov-text-secondary); line-height: 1.5; margin-bottom: 16px;">
+              ${s.summary}
+            </p>
+          </div>
+
+          <div>
+            <!-- QUICK STATS PILLS -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; background: #F8FAFC; padding: 10px; border-radius: 8px; border: 1px solid var(--gov-border-light); margin-bottom: 16px; font-size: 11.5px;">
+              <div>
+                <span style="color: var(--gov-text-muted); display: block;">Central Outlay:</span>
+                <strong style="color: var(--gov-navy-dark); font-size: 12.5px;">${s.budget}</strong>
+              </div>
+              <div>
+                <span style="color: var(--gov-text-muted); display: block;">DBT / Benefit:</span>
+                <strong style="color: var(--gov-green-dark); font-size: 12.5px;">${s.dbt}</strong>
+              </div>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; gap: 10px;">
+              <span style="font-size: 11.5px; color: var(--gov-text-muted);">
+                📍 ${s.state}
+              </span>
+              <button class="primary-btn" onclick="openSchemeModal('${s.id}')" style="padding: 8px 16px; font-size: 12px;">
+                View Full Details →
+              </button>
+            </div>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    function setLevelFilter(level, btn) {
+      currentLevel = level;
+      document.querySelectorAll("#levelFilterTabs .gazette-filter-btn").forEach(b => b.classList.remove("active"));
+      if (btn) btn.classList.add("active");
+      filterSchemes();
+    }
 
     function filterSchemes() {
+      const search = document.getElementById("schemeSearch")?.value.toLowerCase().trim() || "";
+      const category = document.getElementById("categoryFilter")?.value || "";
+      const state = document.getElementById("stateFilter")?.value || "";
+      const ministry = document.getElementById("ministryFilter")?.value || "";
+      const status = document.getElementById("statusFilter")?.value || "";
 
-      const search =
-        document.getElementById("schemeSearch")
-          .value
-          .toLowerCase();
+      let filtered = COMPREHENSIVE_SCHEMES_DB.filter(s => {
+        const matchesLevel = currentLevel === "All" || s.level.toLowerCase() === currentLevel.toLowerCase();
+        
+        const matchesSearch = !search || 
+          s.name.toLowerCase().includes(search) || 
+          s.summary.toLowerCase().includes(search) || 
+          s.ministry.toLowerCase().includes(search) ||
+          s.coverage.toLowerCase().includes(search) ||
+          s.category.toLowerCase().includes(search);
 
-      const ministry =
-        document.getElementById("ministryFilter").value;
+        const matchesCategory = !category || s.category === category;
+        const matchesState = !state || s.state === "Pan-India" || s.state.includes(state) || s.coverage.includes(state);
+        const matchesMinistry = !ministry || s.ministry.includes(ministry);
+        const matchesStatus = !status || s.status.includes(status);
 
-      const category =
-        document.getElementById("categoryFilter").value;
+        return matchesLevel && matchesSearch && matchesCategory && matchesState && matchesMinistry && matchesStatus;
+      });
 
-      const state =
-        document.getElementById("stateFilter").value;
+      renderSchemes(filtered);
+    }
 
-      const status =
-        document.getElementById("statusFilter").value;
+    function resetAllFilters() {
+      if (document.getElementById("schemeSearch")) document.getElementById("schemeSearch").value = "";
+      if (document.getElementById("categoryFilter")) document.getElementById("categoryFilter").value = "";
+      if (document.getElementById("stateFilter")) document.getElementById("stateFilter").value = "";
+      if (document.getElementById("ministryFilter")) document.getElementById("ministryFilter").value = "";
+      if (document.getElementById("statusFilter")) document.getElementById("statusFilter").value = "";
+      setLevelFilter('All', document.querySelector("#levelFilterTabs button"));
+    }
 
+    function openSchemeModal(schemeId) {
+      const s = COMPREHENSIVE_SCHEMES_DB.find(item => item.id === schemeId);
+      if (!s) return;
 
-      const cards =
-        document.querySelectorAll(".scheme-card");
+      const modal = document.getElementById("schemeDetailModal");
+      if (!modal) return;
 
-      let visible = 0;
+      document.getElementById("modalSchemeName").textContent = s.name;
+      document.getElementById("modalMinistry").textContent = `🏛️ ${s.ministry}`;
+      
+      const badge = document.getElementById("modalLevelBadge");
+      badge.className = `scheme-level-badge ${s.levelBadgeClass}`;
+      badge.textContent = s.levelLabel;
 
+      document.getElementById("modalBudget").textContent = s.budget;
+      document.getElementById("modalBeneficiaries").textContent = s.beneficiaries;
+      document.getElementById("modalDBT").textContent = s.dbt;
+      document.getElementById("modalStatus").textContent = s.status;
+      document.getElementById("modalObjective").textContent = s.summary;
+      document.getElementById("modalCoverage").textContent = s.coverage;
 
-      cards.forEach(card => {
+      document.getElementById("modalEligibility").innerHTML = s.eligibility.map(e => `<li>${e}</li>`).join('');
+      document.getElementById("modalDocuments").innerHTML = s.documents.map(d => `<li>${d}</li>`).join('');
+      document.getElementById("modalApplySteps").innerHTML = s.applySteps;
 
-        const name =
-          card.dataset.name.toLowerCase();
+      document.getElementById("modalAgency").textContent = s.agency;
+      document.getElementById("modalHelpline").textContent = s.helpline;
 
-        const matchesSearch =
-          !search || name.includes(search);
+      modal.classList.add("open");
+    }
 
-        const matchesMinistry =
-          !ministry ||
-          card.dataset.ministry === ministry;
+    function closeSchemeModal() {
+      const modal = document.getElementById("schemeDetailModal");
+      if (modal) modal.classList.remove("open");
+    }
 
-        const matchesCategory =
-          !category ||
-          card.dataset.category === category;
+    document.addEventListener("DOMContentLoaded", function() {
+      renderSchemes(COMPREHENSIVE_SCHEMES_DB);
 
-        const matchesState =
-          !state ||
-          card.dataset.state === state;
-
-        const matchesStatus =
-          !status ||
-          card.dataset.status === status;
-
-
-        if (
-          matchesSearch &&
-          matchesMinistry &&
-          matchesCategory &&
-          matchesState &&
-          matchesStatus
-        ) {
-
-          card.style.display = "";
-
-          visible++;
-
-        } else {
-
-          card.style.display = "none";
-
+      // Auto-filter if state was stored
+      const selectedState = localStorage.getItem("selectedState");
+      if (selectedState) {
+        const stateSelect = document.getElementById("stateFilter");
+        if (stateSelect) {
+          stateSelect.value = selectedState;
+          filterSchemes();
         }
-
-      });
-
-
-      document.getElementById(
-        "schemeResultCount"
-      ).textContent =
-        visible + (visible === 1 ? " scheme" : " schemes");
-
-
-      document.getElementById(
-        "noResults"
-      ).style.display =
-        visible === 0 ? "block" : "none";
-
-    }
-
-
-    function showSchemeDetails(name) {
-
-      const data = schemeDetails[name];
-
-      if (!data) return;
-
-
-      document.getElementById("detailName")
-        .textContent = name;
-
-      document.getElementById("detailMinistry")
-        .textContent = data.ministry;
-
-      document.getElementById("detailObjective")
-        .textContent = data.objective;
-
-      document.getElementById("detailBeneficiary")
-        .textContent = data.beneficiary;
-
-      document.getElementById("detailBudget")
-        .textContent = data.budget;
-
-      document.getElementById("detailBeneficiaries")
-        .textContent = data.beneficiaries;
-
-      document.getElementById("detailStatus")
-        .textContent = data.status;
-
-
-      document.getElementById(
-        "schemeDetails"
-      ).style.display = "block";
-
-
-      document.getElementById(
-        "schemeDetails"
-      ).scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-      });
-
-    }
-
-
-    function closeSchemeDetails() {
-
-      document.getElementById(
-        "schemeDetails"
-      ).style.display = "none";
-
-    }
-
-
-    /* 
-       If a state was selected on map.html,
-       automatically apply that state filter.
-    */
-
-    const selectedState =
-      localStorage.getItem("selectedState");
-
-    if (selectedState) {
-
-      const stateSelect =
-        document.getElementById("stateFilter");
-
-      const option =
-        [...stateSelect.options]
-          .find(option => option.value === selectedState);
-
-      if (option) {
-
-        stateSelect.value = selectedState;
-
-        filterSchemes();
-
+        localStorage.removeItem("selectedState");
       }
-
-      localStorage.removeItem("selectedState");
-
-    }
-
+    });
   </script>
 
 </body>

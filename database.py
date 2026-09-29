@@ -185,16 +185,18 @@ def init_database():
     );
 
     -- Complaints and "Show Me The Proof" Verification Hub
+    DROP TABLE IF EXISTS complaints;
     CREATE TABLE IF NOT EXISTS complaints (
         complaint_id TEXT PRIMARY KEY,
         user_id INTEGER,
         citizen_name TEXT,
+        citizen_email TEXT,
         category TEXT,
         state TEXT,
         district TEXT,
         area TEXT,
         description TEXT,
-        status TEXT, -- 'SUBMITTED', 'UNDER_REVIEW', 'IN_PROGRESS', 'RESOLVED'
+        status TEXT, -- 'SUBMITTED', 'ADMIN_APPROVED', 'FORWARDED_TO_MUNICIPALITY', 'IN_PROGRESS', 'RESOLVED', 'REJECTED_BY_ADMIN'
         priority TEXT, -- 'Low', 'Medium', 'High', 'Critical'
         date_submitted TEXT,
         before_image_url TEXT,
@@ -204,6 +206,11 @@ def init_database():
         resolution_notes TEXT,
         allocated_budget REAL,
         scheme_linked TEXT,
+        assigned_municipality TEXT,
+        admin_reviewer TEXT,
+        admin_review_date TEXT,
+        admin_rejection_reason TEXT,
+        admin_rejection_notes TEXT,
         FOREIGN KEY(user_id) REFERENCES users(user_id)
     );
 
@@ -435,6 +442,7 @@ def load_demo_data(conn):
             "EKB-2026-GRV-88219",
             1,
             "Rahul Sharma",
+            "rahul.sharma@ekbharat.gov.in",
             "Road / Pothole",
             "Uttar Pradesh",
             "Varanasi",
@@ -449,12 +457,18 @@ def load_demo_data(conn):
             "Dr. Rajesh Varma (Central Nodal Officer, DoRD)",
             "Culvert reconstruction and 3.8 KM bituminous all-weather road resurfacing completed under PMGSY Phase IV.",
             4850000.00,
-            "Pradhan Mantri Gram Sadak Yojana (PMGSY)"
+            "Pradhan Mantri Gram Sadak Yojana (PMGSY)",
+            "Varanasi Nagar Nigam & UP PWD Rural Division",
+            "Dr. Rajesh Varma (Joint Secretary & Nodal Officer)",
+            "2026-08-14",
+            "",
+            ""
         ),
         (
             "EKB-2026-GRV-91402",
             2,
             "Priya Patel",
+            "priya.patel@ekbharat.gov.in",
             "Government School / Facility",
             "Gujarat",
             "Mehsana",
@@ -469,12 +483,18 @@ def load_demo_data(conn):
             "Er. Amit Desai (Executive Engineer, Health Infra)",
             "Complete RCC waterproofing, installation of 4 high-grade neonatal beds, and backup solar inverter commissioned under NHM.",
             1950000.00,
-            "National Health Mission (NHM)"
+            "National Health Mission (NHM)",
+            "Kadi Nagarpalika & Health Board",
+            "Dr. Rajesh Varma",
+            "2026-08-27",
+            "",
+            ""
         ),
         (
             "EKB-2026-GRV-94811",
             1,
             "Rahul Sharma",
+            "rahul.sharma@ekbharat.gov.in",
             "Water Supply",
             "Uttar Pradesh",
             "Varanasi",
@@ -489,15 +509,47 @@ def load_demo_data(conn):
             "Pending Inspection Officer",
             "Work order #JJ-UP-8812 issued to UP Jal Nigam. Excavation and pipe replacement underway. Target resolution: 48 hours.",
             620000.00,
-            "Jal Jeevan Mission (JJM)"
+            "Jal Jeevan Mission (JJM)",
+            "Varanasi Harhua Nagar Panchayat & Jal Nigam",
+            "Dr. Rajesh Varma",
+            "2026-09-25",
+            "",
+            ""
+        ),
+        (
+            "EKB-2026-GRV-77102",
+            1,
+            "Rahul Sharma",
+            "rahul.sharma@ekbharat.gov.in",
+            "Water Supply",
+            "Uttar Pradesh",
+            "Varanasi",
+            "Private Orchard Field, Khasra 192",
+            "Requesting free government borewell connection and solar motor inside privately fenced mango orchard farm.",
+            "REJECTED_BY_ADMIN",
+            "Medium",
+            "2026-09-20",
+            "https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=600",
+            "",
+            None,
+            "",
+            "",
+            0.0,
+            "Non-eligible",
+            "Varanasi District Agricultural Office",
+            "Dr. Rajesh Varma (Nodal Officer)",
+            "2026-09-21",
+            "Private Property / Outside Public Community Guidelines",
+            "Physical verification confirms the location is an exclusively private commercial orchard. Public welfare funds under Har Ghar Jal / PMGSY cannot be deployed for individual enclosed private orchards. Citizen is advised to apply for PM-KUSUM Component-B subsidized solar pump."
         )
     ]
     cursor.executemany("""
     INSERT OR REPLACE INTO complaints (
-        complaint_id, user_id, citizen_name, category, state, district, area, description,
+        complaint_id, user_id, citizen_name, citizen_email, category, state, district, area, description,
         status, priority, date_submitted, before_image_url, after_image_url, resolved_date,
-        resolved_by, resolution_notes, allocated_budget, scheme_linked
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        resolved_by, resolution_notes, allocated_budget, scheme_linked,
+        assigned_municipality, admin_reviewer, admin_review_date, admin_rejection_reason, admin_rejection_notes
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     """, demo_complaints)
 
     # 3. Scheme Overlaps & Convergence Intelligence

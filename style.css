@@ -3846,4 +3846,440 @@ button:focus-visible {
     color: #4B5563;
 }
 
+/* =========================================================
+   FOOD-APP STYLE LIVE GRIEVANCE TRACKER & TIMELINE
+   ========================================================= */
 
+.tracker-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(6, 35, 61, 0.75);
+    backdrop-filter: blur(6px);
+    z-index: 10000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    animation: fadeInModal 0.25s ease forwards;
+}
+
+.tracker-modal.open {
+    display: flex;
+}
+
+@keyframes fadeInModal {
+    from { opacity: 0; transform: scale(0.97); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.tracker-dialog {
+    background: #FFFFFF;
+    width: 100%;
+    max-width: 680px;
+    max-height: 90vh;
+    border-radius: 16px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    overflow-y: auto;
+    border: 1px solid var(--gov-border-light);
+    position: relative;
+}
+
+.tracker-header {
+    background: linear-gradient(135deg, #06233D 0%, #0B3B60 100%);
+    color: #FFFFFF;
+    padding: 24px 28px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    position: relative;
+    border-bottom: 3px solid var(--gov-saffron);
+}
+
+.tracker-header-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.15);
+    color: #FFB380;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.tracker-eta-banner {
+    background: #FFF2E8;
+    border: 1px solid #FFD8BE;
+    border-radius: 10px;
+    padding: 12px 18px;
+    margin: 20px 24px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.tracker-eta-pulse {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--gov-saffron);
+    box-shadow: 0 0 0 0 rgba(255, 103, 31, 0.7);
+    animation: statusPulse 1.8s infinite;
+}
+
+@keyframes statusPulse {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 103, 31, 0.7); }
+    70% { transform: scale(1.1); box-shadow: 0 0 0 10px rgba(255, 103, 31, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 103, 31, 0); }
+}
+
+/* Vertical Food-Delivery Style Stepper Timeline */
+.food-timeline {
+    padding: 24px 28px;
+    position: relative;
+}
+
+.food-step {
+    display: grid;
+    grid-template-columns: 44px 1fr;
+    gap: 16px;
+    position: relative;
+    padding-bottom: 24px;
+}
+
+.food-step:last-child {
+    padding-bottom: 0;
+}
+
+.food-step-indicator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.food-step-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 800;
+    z-index: 2;
+    transition: all 0.3s ease;
+    background: #E2E8F0;
+    color: #64748B;
+    border: 2px solid #CBD5E1;
+}
+
+.food-step.completed .food-step-icon {
+    background: var(--gov-green);
+    color: #FFFFFF;
+    border-color: var(--gov-green-dark);
+}
+
+.food-step.active .food-step-icon {
+    background: var(--gov-saffron);
+    color: #FFFFFF;
+    border-color: var(--gov-saffron-dark);
+    box-shadow: 0 0 0 4px var(--gov-saffron-glow);
+    animation: activeStepBounce 2s infinite ease-in-out;
+}
+
+.food-step.rejected .food-step-icon {
+    background: #DC2626;
+    color: #FFFFFF;
+    border-color: #991B1B;
+    box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.2);
+}
+
+@keyframes activeStepBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
+}
+
+.food-step-line {
+    width: 3px;
+    background: #E2E8F0;
+    position: absolute;
+    top: 40px;
+    bottom: -6px;
+    left: 18.5px;
+    z-index: 1;
+}
+
+.food-step.completed .food-step-line {
+    background: var(--gov-green);
+}
+
+.food-step.rejected .food-step-line {
+    background: #DC2626;
+}
+
+.food-step-content {
+    background: #F8FAFC;
+    border: 1px solid var(--gov-border-light);
+    border-radius: 10px;
+    padding: 14px 16px;
+    transition: all 0.2s ease;
+}
+
+.food-step.active .food-step-content {
+    background: #FFFDF9;
+    border-color: var(--gov-saffron);
+    box-shadow: 0 2px 8px rgba(255, 103, 31, 0.1);
+}
+
+.food-step.rejected .food-step-content {
+    background: #FEF2F2;
+    border-color: #F87171;
+}
+
+.food-step-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.food-step-title strong {
+    font-size: 14px;
+    color: var(--gov-navy-dark);
+}
+
+.food-step.rejected .food-step-title strong {
+    color: #991B1B;
+}
+
+.food-step-time {
+    font-size: 11px;
+    color: var(--gov-text-muted);
+    font-weight: 600;
+}
+
+.food-step-desc {
+    font-size: 12.5px;
+    color: var(--gov-text-secondary);
+    margin-top: 5px;
+    line-height: 1.5;
+}
+
+/* Rejection Details Alert Box */
+.rejection-alert-box {
+    background: #FEF2F2;
+    border: 1.5px solid #FCA5A5;
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-top: 10px;
+}
+
+.rejection-alert-box h4 {
+    color: #991B1B;
+    font-size: 13px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.rejection-alert-box p {
+    color: #7F1D1D;
+    font-size: 12px;
+    margin-top: 6px;
+    line-height: 1.5;
+}
+
+/* Live Tracking Button & Status Badges */
+.live-track-btn {
+    background: linear-gradient(135deg, #0B3B60 0%, #06233D 100%);
+    color: #FFFFFF !important;
+    padding: 7px 14px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    transition: all 0.2s ease;
+}
+
+.live-track-btn:hover {
+    background: linear-gradient(135deg, #FF671F 0%, #D4500A 100%);
+    box-shadow: 0 4px 12px rgba(255, 103, 31, 0.3);
+    transform: translateY(-1px);
+}
+
+.btn-reject {
+    background: #DC2626;
+    color: #FFFFFF;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.btn-reject:hover {
+    background: #B91C1C;
+}
+
+.btn-approve {
+    background: #046A38;
+    color: #FFFFFF;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.btn-approve:hover {
+    background: #034D28;
+}
+
+/* Success Confirmation Banner */
+.complaint-success-banner {
+    background: #ECFDF5;
+    border: 1.5px solid #6EE7B7;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Level Badges for Detailed Schemes */
+.scheme-level-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+.level-village {
+    background: #E8F5E9;
+    color: #046A38;
+    border: 1px solid #A5D6A7;
+}
+
+.level-city {
+    background: #EBF3FA;
+    color: #0B3B60;
+    border: 1px solid #93C5FD;
+}
+
+.level-district {
+    background: #FEF3C7;
+    color: #92400E;
+    border: 1px solid #FCD34D;
+}
+
+.level-state {
+    background: #F3E8FF;
+    color: #6B21A8;
+    border: 1px solid #D8B4FE;
+}
+
+.level-central {
+    background: #FFF2E8;
+    color: #D4500A;
+    border: 1px solid #FFD8BE;
+}
+
+/* Gazette News Cards & Badges */
+.gazette-pill {
+    padding: 4px 12px;
+    border-radius: 16px;
+    font-size: 11px;
+    font-weight: 700;
+    background: var(--gov-navy-light);
+    color: var(--gov-navy);
+    display: inline-block;
+}
+
+.gazette-filter-btn {
+    background: #FFFFFF;
+    border: 1px solid var(--gov-border);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--gov-text-secondary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.gazette-filter-btn.active,
+.gazette-filter-btn:hover {
+    background: var(--gov-navy);
+    color: #FFFFFF;
+    border-color: var(--gov-navy);
+}
+
+/* Privacy & Data Isolation Banners */
+.citizen-privacy-banner {
+    background: #F0FDF4;
+    border: 1px solid #BBF7D0;
+    border-radius: 10px;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.citizen-privacy-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #DCFCE7;
+    color: #166534;
+    font-size: 11px;
+    font-weight: 800;
+    padding: 4px 10px;
+    border-radius: 20px;
+    border: 1px solid #86EFAC;
+}
+
+.auth-lock-card {
+    background: #FFFFFF;
+    border: 1.5px dashed #CBD5E1;
+    border-radius: 12px;
+    padding: 32px 24px;
+    text-align: center;
+    box-shadow: var(--gov-shadow-sm);
+    margin-bottom: 24px;
+}
+
+.empty-complaints-box {
+    background: #FFFFFF;
+    border: 1px solid var(--gov-border-light);
+    border-radius: 12px;
+    padding: 36px 20px;
+    text-align: center;
+    box-shadow: var(--gov-shadow-sm);
+}
