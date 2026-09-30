@@ -516,8 +516,8 @@ async function executeAIQuery(customQuestion) {
         resultsArea.innerHTML = `
             <div style="padding: 40px; text-align: center;">
                 <div class="stat-icon" style="font-size: 36px; animation: pulse 1s infinite;">🧠</div>
-                <h3 style="margin-top: 15px; color: var(--gov-navy-dark);">Synthesizing Verified SQL with Government AI...</h3>
-                <p style="color: var(--gov-text-muted); font-size: 13px;">Analyzing cross-ministry schema, auditing read-only security, and fetching records.</p>
+                <h3 style="margin-top: 15px; color: var(--gov-navy-dark);">Analyzing Public Records with AI...</h3>
+                <p style="color: var(--gov-text-muted); font-size: 13px;">Analyzing cross-ministry schema, auditing security, and synthesizing records.</p>
             </div>
         `;
         resultsArea.scrollIntoView({ behavior: "smooth", block: "nearest" });
@@ -635,7 +635,7 @@ function renderAIResults(res) {
                     <span class="section-label">AI SYNTHESIS & GOVERNANCE STATEMENTS</span>
                     <h2 style="font-size: 20px; font-weight: 800; color: var(--gov-navy-dark); margin-top: 5px;">${res.user_question || 'Governance Inquiry Analysis'}</h2>
                 </div>
-                <span class="provenance-tag">🛡️ Verified SQL • SHA-256 Provenance</span>
+                <span class="provenance-tag">🛡️ Verified Data • SHA-256 Provenance</span>
             </div>
             
             <!-- EXECUTIVE PRIMARY STATEMENT -->
@@ -665,11 +665,6 @@ function renderAIResults(res) {
                 <div style="position: relative; height: 320px; width: 100%;">
                     <canvas id="aiChartCanvas"></canvas>
                 </div>
-            </div>
-
-            <div style="margin-top: 20px;">
-                <span style="font-size: 11px; font-weight: 800; color: var(--gov-navy-dark); text-transform: uppercase;">Generated & Validated SQL Query:</span>
-                <div class="sql-code-box">${res.generated_sql || ''}</div>
             </div>
 
             <div style="margin-top: 20px;">
@@ -1068,7 +1063,7 @@ function generateStandaloneHTMLReport(res) {
       <div class="meta-bar">
         <div>Query ID: <strong>EKB-AI-${Date.now().toString().slice(-6)}</strong></div>
         <div>Generated On: <strong>${new Date().toLocaleString()}</strong></div>
-        <span class="badge">🛡️ Verified SQL Output</span>
+        <span class="badge">🛡️ Verified Data Output</span>
       </div>
 
       <div class="question-title">Target Investigation: "${res.user_question || 'Intelligence Synthesis'}"</div>
@@ -1085,9 +1080,6 @@ function generateStandaloneHTMLReport(res) {
           <canvas id="dossierChartCanvas"></canvas>
         </div>
       </div>
-
-      <div class="section-heading">Verified Database SQL Execution Script</div>
-      <div class="sql-box">${res.generated_sql || 'SELECT * FROM national_data;'}</div>
 
       <div class="section-heading">Result Payload Records (${res.data.length} entries)</div>
       <div style="overflow-x: auto;">

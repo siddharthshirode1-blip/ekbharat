@@ -1,151 +1,228 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Official Gazette & Future Updates | EkBhaarat | भारत सरकार</title>
-<link rel="stylesheet" href="style.css">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Official Gazette & Future Updates | EkBhaarat | भारत सरकार</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Merriweather:wght@400;700&display=swap"
+    rel="stylesheet">
 </head>
+
 <body data-page="updates">
 
-<header class="navbar">
-  <div class="logo-area">
-    <div class="logo-symbol">
-      <svg viewBox="0 0 24 24" width="24" height="24" stroke="#FF671F" stroke-width="1.3" fill="none">
-        <circle cx="12" cy="12" r="10" stroke="#C59B27" stroke-width="1.8"></circle>
-        <circle cx="12" cy="12" r="2.2" fill="#FF671F"></circle>
-        <line x1="12" y1="2" x2="12" y2="22"></line>
-        <line x1="2" y1="12" x2="22" y2="12"></line>
-        <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line>
-        <line x1="4.93" y1="19.07" x2="19.07" y2="4.93"></line>
-        <line x1="7.05" y1="2.68" x2="16.95" y2="21.32"></line>
-        <line x1="2.68" y1="7.05" x2="21.32" y2="16.95"></line>
-        <line x1="2.68" y1="16.95" x2="21.32" y2="7.05"></line>
-        <line x1="7.05" y1="21.32" x2="16.95" y2="2.68"></line>
-        <line x1="9.41" y1="2.31" x2="14.59" y2="21.69"></line>
-        <line x1="2.31" y1="9.41" x2="21.69" y2="14.59"></line>
-        <line x1="2.31" y1="14.59" x2="21.69" y2="9.41"></line>
-        <line x1="9.41" y1="21.69" x2="14.59" y2="2.31"></line>
-      </svg>
-    </div>
-    <div class="logo-text">
-      <h2>EkBhaarat</h2>
-      <span>भारत सरकार • Gazette & Future Policy Roadmap</span>
-    </div>
-  </div>
-  <nav></nav>
-  <div class="nav-actions"></div>
-</header>
-
-<main class="page-container" style="max-width: 1200px; margin: 0 auto; padding: 40px 5%;">
-  <!-- HERO HEADER -->
-  <section class="page-hero" style="text-align: center; margin-bottom: 30px;">
-    <span class="section-label">THE GAZETTE OF INDIA • EXTRAORDINARY NOTIFICATIONS</span>
-    <h1 style="font-size: 32px; font-weight: 800; color: var(--gov-navy-dark); margin-top: 8px;">
-      Official Gazette & <span>National Policy Roadmap.</span>
-    </h1>
-    <p style="max-width: 800px; margin: 10px auto 0; font-size: 15px; color: var(--gov-text-secondary);">
-      Authoritative repository of Union Cabinet decisions, landmark infrastructure projects, welfare scheme expansions, green energy transitions, and digital governance gazette releases.
-    </p>
-  </section>
-
-  <!-- SEARCH & FILTER BAR -->
-  <div style="background: #FFFFFF; border: 1px solid var(--gov-border-light); border-radius: 12px; padding: 18px 24px; margin-bottom: 25px; box-shadow: var(--gov-shadow-sm);">
-    <div style="display: flex; gap: 14px; flex-wrap: wrap; align-items: center; justify-content: space-between;">
-      <div style="flex: 1; min-width: 260px;">
-        <input type="text" id="gazetteSearch" placeholder="Search gazette by keyword, ministry, project name, or act..." oninput="filterGazette()" style="width: 100%; padding: 10px 14px; border: 1px solid var(--gov-border); border-radius: 8px; font-size: 13.5px;">
+  <header class="navbar">
+    <div class="logo-area">
+      <div class="logo-symbol">
+        <svg viewBox="0 0 24 24" width="24" height="24" stroke="#FF671F" stroke-width="1.3" fill="none">
+          <circle cx="12" cy="12" r="10" stroke="#C59B27" stroke-width="1.8"></circle>
+          <circle cx="12" cy="12" r="2.2" fill="#FF671F"></circle>
+          <line x1="12" y1="2" x2="12" y2="22"></line>
+          <line x1="2" y1="12" x2="22" y2="12"></line>
+          <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line>
+          <line x1="4.93" y1="19.07" x2="19.07" y2="4.93"></line>
+          <line x1="7.05" y1="2.68" x2="16.95" y2="21.32"></line>
+          <line x1="2.68" y1="7.05" x2="21.32" y2="16.95"></line>
+          <line x1="2.68" y1="16.95" x2="21.32" y2="7.05"></line>
+          <line x1="7.05" y1="21.32" x2="16.95" y2="2.68"></line>
+          <line x1="9.41" y1="2.31" x2="14.59" y2="21.69"></line>
+          <line x1="2.31" y1="9.41" x2="21.69" y2="14.59"></line>
+          <line x1="2.31" y1="14.59" x2="21.69" y2="9.41"></line>
+          <line x1="9.41" y1="21.69" x2="14.59" y2="2.31"></line>
+        </svg>
       </div>
-      <div style="display: flex; gap: 8px; flex-wrap: wrap;" id="gazetteFilterTabs">
-        <button class="gazette-filter-btn active" onclick="setGazetteFilter('All', this)">All Notifications</button>
-        <button class="gazette-filter-btn" onclick="setGazetteFilter('Mega Projects', this)">🏗️ Mega Projects</button>
-        <button class="gazette-filter-btn" onclick="setGazetteFilter('Welfare Schemes', this)">🌾 Welfare Schemes</button>
-        <button class="gazette-filter-btn" onclick="setGazetteFilter('Cabinet Gazette', this)">🏛️ Cabinet Acts</button>
-        <button class="gazette-filter-btn" onclick="setGazetteFilter('Digital & Tech', this)">⚡ Digital & Tech</button>
+      <div class="logo-text">
+        <h2>EkBhaarat</h2>
+        <span>भारत सरकार • Gazette & Future Policy Roadmap</span>
       </div>
     </div>
-  </div>
+    <nav></nav>
+    <div class="nav-actions"></div>
+  </header>
 
-  <!-- ADMIN PUBLISH BANNER -->
-  <div id="adminPublishBanner" style="display: none; background: var(--gov-navy-dark); color: #FFFFFF; padding: 18px 24px; border-radius: 10px; margin-bottom: 25px; align-items: center; justify-content: space-between; border-left: 5px solid var(--gov-saffron);">
-    <div>
-      <strong style="font-size: 15px; display: block;">🏛️ Nodal Officer Gazette Publisher Active</strong>
-      <span style="font-size: 12px; color: #CBD5E1;">You have administrative authorization to publish new upcoming scheme notices.</span>
-    </div>
-    <button class="primary-btn" onclick="openPublishModal()" style="padding: 8px 18px; font-size: 13px;">+ Publish Gazette Update</button>
-  </div>
+  <main class="page-container" style="max-width: 1200px; margin: 0 auto; padding: 40px 5%;">
+    <!-- HERO HEADER -->
+    <section class="page-hero" style="text-align: center; margin-bottom: 30px;">
+      <span class="section-label">THE GAZETTE OF INDIA • EXTRAORDINARY NOTIFICATIONS</span>
+      <h1 style="font-size: 32px; font-weight: 800; color: var(--gov-navy-dark); margin-top: 8px;">
+        Official Gazette & <span>National Policy Roadmap.</span>
+      </h1>
+      <p style="max-width: 800px; margin: 10px auto 0; font-size: 15px; color: var(--gov-text-secondary);">
+        Authoritative repository of Union Cabinet decisions, landmark infrastructure projects, welfare scheme
+        expansions, green energy transitions, and digital governance gazette releases.
+      </p>
+    </section>
 
-  <!-- FUTURE TIMELINE CARDS -->
-  <div id="updatesListContainer">
-    <!-- Populated dynamically by script -->
-  </div>
-</main>
-
-<!-- PUBLISH MODAL -->
-<div id="publishModal" class="gov-modal">
-  <div class="gov-modal-dialog">
-    <div class="gov-modal-header">
-      <h3 style="color:#FFF; font-size:16px;">🏛️ Publish Future Scheme Gazette</h3>
-      <button class="gov-modal-close" onclick="closePublishModal()">&times;</button>
-    </div>
-    <div class="gov-modal-body">
-      <form id="publishForm" onsubmit="submitNewUpdate(event)">
-        <div class="form-group" style="margin-bottom:12px;">
-          <label style="font-weight:700; font-size:12px;">Update Title *</label>
-          <input type="text" id="upTitle" placeholder="e.g. National Agritech AI Drone Subsidy" required style="width:100%; padding:10px; border:1px solid var(--gov-border); border-radius:6px;">
+    <!-- SEARCH & FILTER & PUBLISH ACTION BAR -->
+    <div
+      style="background: #FFFFFF; border: 1px solid var(--gov-border-light); border-radius: 12px; padding: 18px 24px; margin-bottom: 25px; box-shadow: var(--gov-shadow-sm);">
+      <div style="display: flex; gap: 14px; flex-wrap: wrap; align-items: center; justify-content: space-between;">
+        <div style="flex: 1; min-width: 260px;">
+          <input type="text" id="gazetteSearch"
+            placeholder="Search gazette by keyword, ministry, project name, or act..." oninput="filterGazette()"
+            style="width: 100%; padding: 10px 14px; border: 1px solid var(--gov-border); border-radius: 8px; font-size: 13.5px;">
         </div>
-        <div class="form-group" style="margin-bottom:12px;">
-          <label style="font-weight:700; font-size:12px;">Ministry *</label>
-          <input type="text" id="upMinistry" placeholder="e.g. Ministry of Agriculture" required style="width:100%; padding:10px; border:1px solid var(--gov-border); border-radius:6px;">
-        </div>
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px;">
-          <div class="form-group">
-            <label style="font-weight:700; font-size:12px;">Category</label>
-            <select id="upCategory" style="width:100%; padding:10px; border:1px solid var(--gov-border); border-radius:6px;">
-              <option value="Mega Projects">Mega Projects</option>
-              <option value="Welfare Schemes">Welfare Schemes</option>
-              <option value="Cabinet Gazette">Cabinet Gazette</option>
-              <option value="Digital & Tech">Digital & Tech</option>
-              <option value="Upcoming Scheme">Upcoming Scheme</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label style="font-weight:700; font-size:12px;">Target Rollout Date</label>
-            <input type="date" id="upDate" value="2026-11-15" required style="width:100%; padding:10px; border:1px solid var(--gov-border); border-radius:6px;">
+        <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+          <div style="display: flex; gap: 8px; flex-wrap: wrap;" id="gazetteFilterTabs">
+            <button class="gazette-filter-btn active" onclick="setGazetteFilter('All', this)">All Notifications</button>
+            <button class="gazette-filter-btn" onclick="setGazetteFilter('Mega Projects', this)">🏗️ Mega
+              Projects</button>
+            <button class="gazette-filter-btn" onclick="setGazetteFilter('Welfare Schemes', this)">🌾 Welfare
+              Schemes</button>
+            <button class="gazette-filter-btn" onclick="setGazetteFilter('Cabinet Gazette', this)">🏛️ Cabinet
+              Acts</button>
+            <button class="gazette-filter-btn" onclick="setGazetteFilter('Digital & Tech', this)">⚡ Digital &
+              Tech</button>
           </div>
         </div>
-        <div class="form-group" style="margin-bottom:12px;">
-          <label style="font-weight:700; font-size:12px;">Estimated Budget Outlay (₹ Cr) *</label>
-          <input type="number" id="upBudget" value="4500" required style="width:100%; padding:10px; border:1px solid var(--gov-border); border-radius:6px;">
+      </div>
+    </div>
+
+    <!-- ADMIN PUBLISH BANNER -->
+    <div id="adminPublishBanner"
+      style="background: linear-gradient(135deg, #06233D 0%, #0B3B60 100%); color: #FFFFFF; padding: 18px 24px; border-radius: 12px; margin-bottom: 25px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; border-left: 5px solid var(--gov-saffron); box-shadow: var(--gov-shadow-sm);">
+      <div>
+        <strong style="font-size: 15px; display: flex; align-items: center; gap: 8px; color: #FFFFFF;">
+          <span>📜</span> Nodal Authority Gazette Issuance Desk
+        </strong>
+        <span style="font-size: 12.5px; color: #CBD5E1; margin-top: 2px; display: block;">
+          Official Union Cabinet and Central Ministry extraordinary gazette notices and policy releases.
+        </span>
+      </div>
+      <button class="primary-btn" onclick="openPublishModal()"
+        style="padding: 9px 20px; font-size: 13px; font-weight: 700; background: var(--gov-saffron); border-color: var(--gov-saffron);">
+        + Publish Gazette Notification
+      </button>
+    </div>
+
+    <!-- FUTURE TIMELINE CARDS -->
+    <div id="updatesListContainer">
+      <!-- Populated dynamically by script -->
+    </div>
+  </main>
+
+  <!-- PUBLISH MODAL -->
+  <div id="publishModal" class="gov-modal" onclick="if(event.target===this) closePublishModal()">
+    <div class="gov-modal-dialog" style="max-width: 650px;">
+      <div class="gov-modal-header"
+        style="background: linear-gradient(135deg, #06233D 0%, #0B3B60 100%); border-bottom: 3px solid var(--gov-saffron);">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <span style="font-size: 20px;">🏛️</span>
+          <div>
+            <h3 style="color:#FFF; font-size:16px; margin: 0; font-weight: 800;">Publish Gazette Notification</h3>
+            <small style="color: #94A3B8; font-size: 11px;">The Gazette of India • Official Public Record</small>
+          </div>
         </div>
-        <div class="form-group" style="margin-bottom:14px;">
-          <label style="font-weight:700; font-size:12px;">Summary & Citizen Impact *</label>
-          <textarea id="upSummary" rows="3" required style="width:100%; padding:10px; border:1px solid var(--gov-border); border-radius:6px;" placeholder="Provide objective, beneficiaries, and disbursement mechanism..."></textarea>
+        <button class="gov-modal-close" onclick="closePublishModal()" aria-label="Close dialog">&times;</button>
+      </div>
+      <div class="gov-modal-body">
+        <!-- QUICK TEMPLATE PRESETS -->
+        <div
+          style="margin-bottom: 16px; padding: 12px 14px; background: #F8FAFC; border: 1px solid var(--gov-border-light); border-radius: 8px;">
+          <span
+            style="font-size: 11.5px; font-weight: 700; color: var(--gov-text-muted); display: block; margin-bottom: 6px;">⚡
+            Quick Presets (1-Click Fill):</span>
+          <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+            <button type="button" class="outline-btn" style="padding: 4px 10px; font-size: 11px;"
+              onclick="setPresetGazette('drone')">🌾 Agritech Drone Subsidy</button>
+            <button type="button" class="outline-btn" style="padding: 4px 10px; font-size: 11px;"
+              onclick="setPresetGazette('solar')">⚡ PM Solar Rooftop Expansion</button>
+            <button type="button" class="outline-btn" style="padding: 4px 10px; font-size: 11px;"
+              onclick="setPresetGazette('health')">🏥 AI Telemedicine Mission</button>
+            <button type="button" class="outline-btn" style="padding: 4px 10px; font-size: 11px;"
+              onclick="setPresetGazette('semi')">🔬 India Semiconductor Fab-2</button>
+          </div>
         </div>
-        <button type="submit" class="primary-btn" style="width:100%; padding:12px;">Publish Gazette Notification →</button>
-      </form>
+
+        <form id="publishForm" onsubmit="submitNewUpdate(event)">
+          <div class="form-group" style="margin-bottom:12px;">
+            <label
+              style="font-weight:700; font-size:12px; color: var(--gov-navy-dark); display: block; margin-bottom: 4px;">Notification
+              Title *</label>
+            <input type="text" id="upTitle" placeholder="e.g. National Agritech AI Drone Subsidy for Small Farmers"
+              required
+              style="width:100%; padding:10px 12px; border:1px solid var(--gov-border); border-radius:6px; font-size: 13.5px; box-sizing: border-box;">
+          </div>
+          <div class="form-group" style="margin-bottom:12px;">
+            <label
+              style="font-weight:700; font-size:12px; color: var(--gov-navy-dark); display: block; margin-bottom: 4px;">Central
+              Ministry / Department *</label>
+            <input type="text" id="upMinistry" placeholder="e.g. Ministry of Agriculture & Farmers Welfare" required
+              style="width:100%; padding:10px 12px; border:1px solid var(--gov-border); border-radius:6px; font-size: 13.5px; box-sizing: border-box;">
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px;">
+            <div class="form-group">
+              <label
+                style="font-weight:700; font-size:12px; color: var(--gov-navy-dark); display: block; margin-bottom: 4px;">Gazette
+                Category *</label>
+              <select id="upCategory"
+                style="width:100%; padding:10px 12px; border:1px solid var(--gov-border); border-radius:6px; font-size: 13px; box-sizing: border-box;">
+                <option value="Mega Projects">🏗️ Mega Projects</option>
+                <option value="Welfare Schemes">🌾 Welfare Schemes</option>
+                <option value="Cabinet Gazette">🏛️ Cabinet Gazette</option>
+                <option value="Digital & Tech">⚡ Digital & Tech</option>
+                <option value="Upcoming Scheme">✨ Upcoming Scheme</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label
+                style="font-weight:700; font-size:12px; color: var(--gov-navy-dark); display: block; margin-bottom: 4px;">Target
+                Rollout Date *</label>
+              <input type="date" id="upDate" value="2026-11-15" required
+                style="width:100%; padding:9px 12px; border:1px solid var(--gov-border); border-radius:6px; font-size: 13px; box-sizing: border-box;">
+            </div>
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px;">
+            <div class="form-group">
+              <label
+                style="font-weight:700; font-size:12px; color: var(--gov-navy-dark); display: block; margin-bottom: 4px;">Central
+                Outlay (₹ Crore) *</label>
+              <input type="number" id="upBudget" value="4500" min="1" required
+                style="width:100%; padding:10px 12px; border:1px solid var(--gov-border); border-radius:6px; font-size: 13px; box-sizing: border-box;">
+            </div>
+            <div class="form-group">
+              <label
+                style="font-weight:700; font-size:12px; color: var(--gov-navy-dark); display: block; margin-bottom: 4px;">Geographic
+                Scope</label>
+              <input type="text" id="upScope" placeholder="e.g. Pan-India (All 766 Districts)"
+                value="Pan-India Implementation"
+                style="width:100%; padding:10px 12px; border:1px solid var(--gov-border); border-radius:6px; font-size: 13px; box-sizing: border-box;">
+            </div>
+          </div>
+          <div class="form-group" style="margin-bottom:16px;">
+            <label
+              style="font-weight:700; font-size:12px; color: var(--gov-navy-dark); display: block; margin-bottom: 4px;">Summary
+              & Citizen Impact *</label>
+            <textarea id="upSummary" rows="3" required
+              style="width:100%; padding:10px 12px; border:1px solid var(--gov-border); border-radius:6px; font-size: 13px; line-height: 1.5; box-sizing: border-box;"
+              placeholder="Provide objective, beneficiaries, DBT subsidy, and disbursement mechanism..."></textarea>
+          </div>
+          <div style="display: flex; gap: 10px; justify-content: flex-end;">
+            <button type="button" class="outline-btn" onclick="closePublishModal()"
+              style="padding: 10px 18px;">Cancel</button>
+            <button type="submit" id="btnPublishSubmit" class="primary-btn"
+              style="padding: 10px 22px; font-weight: 700;">
+              ✓ Publish Gazette Notification →
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
-</div>
 
-<footer>
-  <div class="footer-gov-info">
-    <div class="footer-nic-text">
-      The Gazette of India • Official Public Record. Compliant with <strong>GIGW 3.0</strong>.
-    </div>
-    <div class="copyright">© 2026 EkBhaarat. All Rights Reserved.</div>
-  </div>
-</footer>
+  <footer></footer>
 
-<script src="script.js"></script>
-<script>
-let currentGazetteCategory = "All";
-let allGazetteData = [];
+  <script src="script.js"></script>
+  <script>
+    let currentGazetteCategory = "All";
+    let allGazetteData = [];
 
-const DEFAULT_GAZETTE_DATA = [
-    {
+    const DEFAULT_GAZETTE_DATA = [
+      {
         id: 1,
         title: "PM E-Bus Sewa: 10,000 Electric Buses Deployment across 169 Urban Centers",
         ministry: "Ministry of Housing and Urban Affairs (MoHUA)",
@@ -156,8 +233,8 @@ const DEFAULT_GAZETTE_DATA = [
         status: "Sanctioned & Tender Active",
         official_gazette_no: "CG-DL-E-29092026-9012",
         scope: "169 Cities across 24 States"
-    },
-    {
+      },
+      {
         id: 2,
         title: "Ayushman Bharat PM-JAY Universal Free Health Coverage for All Citizens Aged 70+",
         ministry: "Ministry of Health and Family Welfare",
@@ -168,8 +245,8 @@ const DEFAULT_GAZETTE_DATA = [
         status: "Cabinet Approved & Active",
         official_gazette_no: "CG-DL-E-22092026-9901",
         scope: "Pan-India Senior Citizens (6 Crore Target)"
-    },
-    {
+      },
+      {
         id: 3,
         title: "BharatNet Phase-III: 100% High-Speed Optical Fiber Connectivity to 2.5 Lakh Gram Panchayats",
         ministry: "Ministry of Communications & Department of Telecommunications (DoT)",
@@ -180,8 +257,8 @@ const DEFAULT_GAZETTE_DATA = [
         status: "Execution Stage 3",
         official_gazette_no: "CG-DL-E-18092026-7711",
         scope: "2.5 Lakh Gram Panchayats in All Districts"
-    },
-    {
+      },
+      {
         id: 4,
         title: "National Green Hydrogen Mission & Clean Agritech Ammonia Subsidies",
         ministry: "Ministry of New and Renewable Energy (MNRE)",
@@ -192,8 +269,8 @@ const DEFAULT_GAZETTE_DATA = [
         status: "Sanctioned",
         official_gazette_no: "CG-DL-E-15092026-7734",
         scope: "Industrial & Coastal Port Hubs"
-    },
-    {
+      },
+      {
         id: 5,
         title: "PM-VishwaKarma 2.0: Collateral-Free Enterprise Credit & Modern Toolkit Subsidy",
         ministry: "Ministry of Micro, Small and Medium Enterprises (MSME)",
@@ -204,8 +281,8 @@ const DEFAULT_GAZETTE_DATA = [
         status: "Active Registration",
         official_gazette_no: "CG-DL-E-27092026-8819",
         scope: "Villages, Towns & Districts Pan-India"
-    },
-    {
+      },
+      {
         id: 6,
         title: "PM-MITRA Mega Integrated Textile Regions and Apparel Parks (7 State Hubs)",
         ministry: "Ministry of Textiles & Ministry of Commerce",
@@ -216,8 +293,8 @@ const DEFAULT_GAZETTE_DATA = [
         status: "Infrastructure Construction",
         official_gazette_no: "CG-DL-E-12092026-6623",
         scope: "7 Flagship Mega Textile Parks"
-    },
-    {
+      },
+      {
         id: 7,
         title: "SVAMITVA Scheme Drone Land Property Survey & Digital 'Gharaunda' Cards",
         ministry: "Ministry of Panchayati Raj",
@@ -228,8 +305,8 @@ const DEFAULT_GAZETTE_DATA = [
         status: "Saturation Rollout",
         official_gazette_no: "CG-DL-E-05092026-5510",
         scope: "6,60,000 Villages in 28 States"
-    },
-    {
+      },
+      {
         id: 8,
         title: "PM Surya Ghar: Muft Bijli Yojana (1 Crore Rooftop Solar Installations)",
         ministry: "Ministry of Power & MNRE",
@@ -240,8 +317,8 @@ const DEFAULT_GAZETTE_DATA = [
         status: "Active Nationally",
         official_gazette_no: "CG-DL-E-01092026-4412",
         scope: "1 Crore Urban & Rural Households"
-    },
-    {
+      },
+      {
         id: 9,
         title: "Aspirational Blocks Programme (ABP): Direct Nutrition & Health Convergence",
         ministry: "NITI Aayog & Ministry of Rural Development",
@@ -252,77 +329,118 @@ const DEFAULT_GAZETTE_DATA = [
         status: "Monthly KPI Saturation",
         official_gazette_no: "CG-DL-E-28082026-3390",
         scope: "500 Aspirational Rural Blocks"
-    }
-];
+      }
+    ];
 
-async function loadFutureUpdates() {
-    const user = getCurrentUser();
-    if (user && user.role === "admin") {
-        const banner = document.getElementById("adminPublishBanner");
-        if (banner) banner.style.display = "flex";
-    }
+    // Presets Helper
+    window.setPresetGazette = function (type) {
+      if (type === 'drone') {
+        document.getElementById("upTitle").value = "Kisan Drone Subsidy Mission: 50% Capital Assistance for Village SHGs";
+        document.getElementById("upMinistry").value = "Ministry of Agriculture and Farmers Welfare";
+        document.getElementById("upCategory").value = "Welfare Schemes";
+        document.getElementById("upDate").value = "2026-12-01";
+        document.getElementById("upBudget").value = "2850";
+        document.getElementById("upScope").value = "2.5 Lakh Gram Panchayats";
+        document.getElementById("upSummary").value = "Provides 50% direct subsidy up to ₹5 Lakh to Farmer Producer Organizations (FPOs) and rural women Self-Help Groups (SHGs) to purchase high-precision fertilizer and seed spraying drones.";
+      } else if (type === 'solar') {
+        document.getElementById("upTitle").value = "National Ultra-Mega Green Hydrogen & Solar Park Acceleration";
+        document.getElementById("upMinistry").value = "Ministry of New and Renewable Energy (MNRE)";
+        document.getElementById("upCategory").value = "Mega Projects";
+        document.getElementById("upDate").value = "2027-02-28";
+        document.getElementById("upBudget").value = "34200";
+        document.getElementById("upScope").value = "Rajasthan, Gujarat & Andhra Pradesh Deserts";
+        document.getElementById("upSummary").value = "Sanctions 20 GW high-capacity solar and green ammonia production corridors with high-voltage direct current (HVDC) transmission link to national electricity grid.";
+      } else if (type === 'health') {
+        document.getElementById("upTitle").value = "Ayushman Bharat AI Tele-ICU & Critical Diagnostic Hubs";
+        document.getElementById("upMinistry").value = "Ministry of Health and Family Welfare";
+        document.getElementById("upCategory").value = "Digital & Tech";
+        document.getElementById("upDate").value = "2026-11-30";
+        document.getElementById("upBudget").value = "8900";
+        document.getElementById("upScope").value = "750 District Civil Hospitals";
+        document.getElementById("upSummary").value = "Connects all district civil hospitals to AI-assisted real-time Tele-ICU command hubs located at AIIMS institutions, enabling instantaneous specialist consultation and continuous vitals monitoring.";
+      } else if (type === 'semi') {
+        document.getElementById("upTitle").value = "India Semiconductor Mission Phase-II: Commercial 14nm Wafer Fab";
+        document.getElementById("upMinistry").value = "Ministry of Electronics and Information Technology (MeitY)";
+        document.getElementById("upCategory").value = "Mega Projects";
+        document.getElementById("upDate").value = "2027-04-15";
+        document.getElementById("upBudget").value = "45000";
+        document.getElementById("upScope").value = "Dholera SIR (Gujarat) & Sanand Hub";
+        document.getElementById("upSummary").value = "50% fiscal capital support approved for mega semiconductor wafer fabrication facility with clean room capability, automotive chip packaging, and silicon photonics research testbeds.";
+      }
+    };
 
-    try {
-        const res = await fetch("/api/updates");
-        const data = await res.json();
-        if (data.updates && data.updates.length > 0) {
-            allGazetteData = data.updates;
-        } else {
-            allGazetteData = DEFAULT_GAZETTE_DATA;
-        }
-    } catch(e) {
-        allGazetteData = DEFAULT_GAZETTE_DATA;
-    }
+    window.openPublishModal = function () {
+      const modal = document.getElementById("publishModal");
+      if (modal) {
+        modal.classList.add("open");
+        modal.style.display = "flex";
+        setTimeout(() => {
+          const titleInput = document.getElementById("upTitle");
+          if (titleInput) titleInput.focus();
+        }, 100);
+      }
+    };
 
-    renderUpdates(allGazetteData);
-}
+    window.closePublishModal = function () {
+      const modal = document.getElementById("publishModal");
+      if (modal) {
+        modal.classList.remove("open");
+        modal.style.display = "none";
+      }
+    };
 
-function setGazetteFilter(category, btn) {
-    currentGazetteCategory = category;
-    document.querySelectorAll(".gazette-filter-btn").forEach(b => b.classList.remove("active"));
-    if (btn) btn.classList.add("active");
-    filterGazette();
-}
+    window.setGazetteFilter = function (category, btn) {
+      currentGazetteCategory = category;
+      document.querySelectorAll(".gazette-filter-btn").forEach(b => b.classList.remove("active"));
+      if (btn) btn.classList.add("active");
+      filterGazette();
+    };
 
-function filterGazette() {
-    const query = document.getElementById("gazetteSearch")?.value.toLowerCase().trim() || "";
-    
-    let filtered = allGazetteData.filter(item => {
-        const matchesCat = currentGazetteCategory === "All" || item.category.toLowerCase().includes(currentGazetteCategory.toLowerCase()) || (currentGazetteCategory === "Mega Projects" && (item.category.includes("Project") || item.category.includes("Upcoming"))) || (currentGazetteCategory === "Welfare Schemes" && (item.category.includes("Welfare") || item.category.includes("Scheme"))) || (currentGazetteCategory === "Cabinet Gazette" && (item.category.includes("Cabinet") || item.category.includes("Gazette") || item.category.includes("Revision"))) || (currentGazetteCategory === "Digital & Tech" && (item.category.includes("Digital") || item.category.includes("Tech")));
+    window.filterGazette = function () {
+      const query = document.getElementById("gazetteSearch")?.value.toLowerCase().trim() || "";
 
-        const matchesQuery = !query || item.title.toLowerCase().includes(query) || item.ministry.toLowerCase().includes(query) || item.summary.toLowerCase().includes(query) || (item.official_gazette_no && item.official_gazette_no.toLowerCase().includes(query));
+      let filtered = allGazetteData.filter(item => {
+        const cat = (item.category || "").toLowerCase();
+        const cur = currentGazetteCategory.toLowerCase();
+        const matchesCat = currentGazetteCategory === "All" || cat.includes(cur) || (currentGazetteCategory === "Mega Projects" && (cat.includes("project") || cat.includes("upcoming"))) || (currentGazetteCategory === "Welfare Schemes" && (cat.includes("welfare") || cat.includes("scheme"))) || (currentGazetteCategory === "Cabinet Gazette" && (cat.includes("cabinet") || cat.includes("gazette") || cat.includes("act"))) || (currentGazetteCategory === "Digital & Tech" && (cat.includes("digital") || cat.includes("tech")));
+
+        const matchesQuery = !query || (item.title && item.title.toLowerCase().includes(query)) || (item.ministry && item.ministry.toLowerCase().includes(query)) || (item.summary && item.summary.toLowerCase().includes(query)) || (item.official_gazette_no && item.official_gazette_no.toLowerCase().includes(query)) || (item.scope && item.scope.toLowerCase().includes(query));
 
         return matchesCat && matchesQuery;
-    });
+      });
 
-    renderUpdates(filtered);
-}
+      renderUpdates(filtered);
+    };
 
-function renderUpdates(updates) {
-    const container = document.getElementById("updatesListContainer");
-    if (!container) return;
+    function renderUpdates(updates) {
+      const container = document.getElementById("updatesListContainer");
+      if (!container) return;
 
-    if (!updates || updates.length === 0) {
+      if (!updates || updates.length === 0) {
         container.innerHTML = `
             <div style="padding: 40px; text-align: center; background: #FFF; border-radius: 12px; border: 1px solid var(--gov-border-light);">
-                <div style="font-size: 32px;">📄</div>
+                <div style="font-size: 36px;">📄</div>
                 <h3 style="font-size: 16px; color: var(--gov-navy-dark); margin-top: 8px;">No Gazette Notifications Found</h3>
                 <p style="font-size: 13px; color: var(--gov-text-muted); margin-top: 4px;">Try adjusting your search terms or filter category.</p>
+                <button class="primary-btn" onclick="openPublishModal()" style="margin-top: 15px; padding: 8px 18px; font-size: 12.5px;">+ Publish a Notice</button>
             </div>
         `;
         return;
-    }
+      }
 
-    container.innerHTML = updates.map(u => `
-        <div class="proof-card" style="padding: 24px; margin-bottom: 22px; background: #FFFFFF; border-radius: 12px; border: 1px solid var(--gov-border-light); box-shadow: var(--gov-shadow-sm);">
+      container.innerHTML = updates.map((u, index) => `
+        <div class="proof-card" style="padding: 24px; margin-bottom: 22px; background: #FFFFFF; border-radius: 12px; border: 1px solid var(--gov-border-light); box-shadow: var(--gov-shadow-sm); position: relative; transition: transform 0.2s ease;">
             <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px;">
                 <div style="flex: 1; min-width: 280px;">
-                    <span class="gazette-pill">${u.category}</span>
+                    <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                        <span class="gazette-pill">${u.category}</span>
+                        ${u.isNew ? `<span style="background: #166534; color: #FFFFFF; font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 4px; text-transform: uppercase;">⚡ Just Published</span>` : ''}
+                    </div>
                     <h3 style="font-size: 18px; font-weight: 800; color: var(--gov-navy-dark); margin-top: 8px; line-height: 1.4;">${u.title}</h3>
                     <span style="font-size: 12.5px; color: var(--gov-text-muted); font-weight: 600; display: block; margin-top: 3px;">🏛️ ${u.ministry}</span>
                 </div>
                 <div style="text-align: right;">
-                    <span class="proof-id-badge" style="background: var(--gov-navy-dark); color: #FFF;">${u.official_gazette_no || 'GAZETTE-2026'}</span>
+                    <span class="proof-id-badge" style="background: var(--gov-navy-dark); color: #FFF; font-family: monospace; font-size: 11px;">${u.official_gazette_no || 'GAZETTE-2026'}</span>
                     <strong style="display: block; margin-top: 5px; font-size: 12px; color: var(--gov-saffron-dark);">Rollout / Target: ${u.target_date}</strong>
                     ${u.scope ? `<span style="font-size: 11px; color: var(--gov-text-muted); display: block; margin-top: 2px;">📍 ${u.scope}</span>` : ''}
                 </div>
@@ -335,58 +453,126 @@ function renderUpdates(updates) {
                     <span style="color: var(--gov-text-muted);">Sanctioned Central Outlay:</span> 
                     <strong style="color: var(--gov-navy-dark); font-size: 14px; margin-left: 4px;">₹${u.expected_outlay_cr ? Number(u.expected_outlay_cr).toLocaleString() : '1,000'} Cr</strong>
                 </div>
-                <div style="display: flex; align-items: center; gap: 12px;">
+                <div>
                     <span style="color: var(--gov-text-muted);">Status: <strong style="color: var(--gov-green);">${u.status || 'Active'}</strong></span>
-                    <button class="outline-btn" style="padding: 5px 12px; font-size: 11.5px;" onclick="showToast('Official Gazette Notification PDF downloaded!')">📥 Download Gazette Notice</button>
                 </div>
             </div>
         </div>
     `).join('');
-}
+    }
 
-function openPublishModal() {
-    document.getElementById("publishModal").classList.add("open");
-}
-function closePublishModal() {
-    document.getElementById("publishModal").classList.remove("open");
-}
+    window.submitNewUpdate = async function (event) {
+      if (event) event.preventDefault();
+      const title = (document.getElementById("upTitle")?.value || "").trim();
+      const ministry = (document.getElementById("upMinistry")?.value || "").trim();
+      const category = document.getElementById("upCategory")?.value || "Mega Projects";
+      const date = document.getElementById("upDate")?.value || new Date().toISOString().slice(0, 10);
+      const budget = parseFloat(document.getElementById("upBudget")?.value || 1000);
+      const scope = (document.getElementById("upScope")?.value || "Pan-India Implementation").trim();
+      const summary = (document.getElementById("upSummary")?.value || "").trim();
 
-async function submitNewUpdate(event) {
-    if (event) event.preventDefault();
-    const title = document.getElementById("upTitle").value;
-    const ministry = document.getElementById("upMinistry").value;
-    const category = document.getElementById("upCategory").value;
-    const date = document.getElementById("upDate").value;
-    const budget = parseFloat(document.getElementById("upBudget").value || 1000);
-    const summary = document.getElementById("upSummary").value;
+      if (!title || !ministry || !summary) {
+        if (typeof showToast === "function") showToast("Please fill in Title, Ministry, and Summary.");
+        return;
+      }
 
-    const newObj = {
+      const todayStr = new Date().toISOString().slice(0, 10).replace(/-/g, '');
+      const randomCode = Math.floor(1000 + Math.random() * 9000);
+
+      const newObj = {
+        id: Date.now(),
         title,
         ministry,
         category,
         target_date: date,
         expected_outlay_cr: budget,
+        scope,
         summary,
         status: "Sanctioned & Active",
-        official_gazette_no: `CG-DL-E-${new Date().toISOString().slice(0,10).replace(/-/g,'')}-${Math.floor(1000+Math.random()*9000)}`
+        official_gazette_no: `CG-DL-E-${todayStr}-${randomCode}`,
+        isNew: true
+      };
+
+      // Insert at beginning of memory list
+      allGazetteData.unshift(newObj);
+
+      // Save to local cache
+      try {
+        localStorage.setItem("ekbharat_gazette_cache", JSON.stringify(allGazetteData));
+      } catch (e) { }
+
+      // Send to backend API
+      try {
+        await fetch("/api/updates", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(newObj)
+        });
+      } catch (e) {
+        console.warn("Backend API sync fallback:", e);
+      }
+
+      if (typeof showToast === "function") {
+        showToast(`✓ Official Gazette Notification "${title.substring(0, 30)}..." published!`);
+      }
+
+      closePublishModal();
+      renderUpdates(allGazetteData);
+
+      // Smooth scroll to container
+      const container = document.getElementById("updatesListContainer");
+      if (container) {
+        container.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      // Reset form
+      document.getElementById("publishForm")?.reset();
+      document.getElementById("upDate").value = "2026-11-15";
+      document.getElementById("upBudget").value = "4500";
+      document.getElementById("upScope").value = "Pan-India Implementation";
     };
 
-    allGazetteData.unshift(newObj);
+    async function loadFutureUpdates() {
+      let loaded = false;
+      try {
+        const res = await fetch("/api/updates");
+        if (res.ok) {
+          const data = await res.json();
+          if (data && data.updates && data.updates.length > 0) {
+            allGazetteData = data.updates;
+            loaded = true;
+          }
+        }
+      } catch (e) {
+        console.warn("Using offline fallback for gazette data");
+      }
 
-    try {
-        await fetch("/api/updates", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(newObj)
-        });
-    } catch(e) { }
+      if (!loaded) {
+        try {
+          const cached = localStorage.getItem("ekbharat_gazette_cache");
+          if (cached) {
+            allGazetteData = JSON.parse(cached);
+            loaded = true;
+          }
+        } catch (e) { }
+      }
 
-    showToast("✓ Official Gazette notification published successfully!");
-    closePublishModal();
-    renderUpdates(allGazetteData);
-}
+      if (!loaded || !allGazetteData || allGazetteData.length === 0) {
+        allGazetteData = DEFAULT_GAZETTE_DATA;
+      }
 
-document.addEventListener("DOMContentLoaded", loadFutureUpdates);
-</script>
+      renderUpdates(allGazetteData);
+    }
+
+    // Global keydown listener for Escape to close modal
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") {
+        closePublishModal();
+      }
+    });
+
+    document.addEventListener("DOMContentLoaded", loadFutureUpdates);
+  </script>
 </body>
+
 </html>

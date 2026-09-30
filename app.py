@@ -731,41 +731,71 @@ def get_updates():
         query += " AND category = ?"
         params.append(category)
 
-    query += " ORDER BY target_date ASC"
+    query += " ORDER BY update_id DESC"
     rows = conn.execute(query, params).fetchall()
     conn.close()
 
+    results = []
+    for r in rows:
+        d = dict(r)
+        d["id"] = d.get("update_id")
+        results.append(d)
+
     return jsonify({
         "status": "success",
-        "count": len(rows),
-        "updates": [dict(r) for r in rows]
+        "count": len(results),
+        "updates": results
     })
 
 @app.route("/api/updates", methods=["POST"])
 def add_update():
-    """Admin adds a future scheme or gazette announcement."""
+    """Admin or nodal officer adds a future scheme or gazette announcement."""
     data = request.get_json() or {}
-    title = data.get("title", "")
-    ministry = data.get("ministry", "Central Ministry")
-    category = data.get("category", "Upcoming Scheme")
-    target_date = data.get("target_date", "2026-12-01")
-    summary = data.get("summary", "")
-    expected_outlay_cr = float(data.get("expected_outlay_cr", 1000.0))
-    status = data.get("status", "Sanctioned")
-    official_gazette_no = data.get("official_gazette_no", f"CG-DL-E-{datetime.now().strftime('%d%m%Y')}-{int(datetime.now().timestamp())%10000:04d}")
+    title = (data.get("title") or "").strip()
+    ministry = (data.get("ministry") or "Central Ministry").strip()
+    category = data.get("category") or "Upcoming Scheme"
+    target_date = data.get("target_date") or datetime.now().strftime("%Y-%m-%d")
+    summary = (data.get("summary") or "").strip()
+    try:
+        expected_outlay_cr = float(data.get("expected_outlay_cr", 1000.0))
+    except Exception:
+        expected_outlay_cr = 1000.0
+    status = data.get("status") or "Sanctioned & Active"
+    today_str = datetime.now().strftime("%d%m%Y")
+    official_gazette_no = data.get("official_gazette_no") or f"CG-DL-E-{today_str}-{int(datetime.now().timestamp()) % 9000 + 1000}"
 
     if not title or not summary:
-        return jsonify({"status": "error", "message": "Title and summary are required"}), 400
+        return jsonify({"status": "error", "message": "Title and summary are required."}), 400
 
     conn = get_connection()
-    conn.execute("""
+    cur = conn.cursor()
+    cur.execute("""
     INSERT INTO future_updates (title, ministry, category, target_date, summary, expected_outlay_cr, status, official_gazette_no, created_at)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
     """, (title, ministry, category, target_date, summary, expected_outlay_cr, status, official_gazette_no, datetime.now().strftime("%Y-%m-%d")))
     conn.commit()
+    new_id = cur.lastrowid
     conn.close()
 
-    return jsonify({"status": "success", "message": "Gazette update published successfully!"})
+    created_obj = {
+        "id": new_id,
+        "update_id": new_id,
+        "title": title,
+        "ministry": ministry,
+        "category": category,
+        "target_date": target_date,
+        "summary": summary,
+        "expected_outlay_cr": expected_outlay_cr,
+        "status": status,
+        "official_gazette_no": official_gazette_no,
+        "created_at": datetime.now().strftime("%Y-%m-%d")
+    }
+
+    return jsonify({
+        "status": "success",
+        "message": f"Gazette update '{title}' published successfully!",
+        "update": created_obj
+    }), 201
 
 # -------------------------------------------------------------
 # ADVANCED DYNAMIC AI GOVERNANCE INTELLIGENCE ENGINE & GUARDRAILS
@@ -1033,9 +1063,6 @@ def generate_html_report_view():
           <canvas id="serverChartCanvas"></canvas>
         </div>
       </div>
-
-      <div style="font-size: 12px; font-weight: 700; text-transform: uppercase; margin-bottom: 6px; color: #475569;">Verified SQL Execution:</div>
-      <div class="sql">{sql.strip()}</div>
       
       <div style="font-size: 12px; font-weight: 700; text-transform: uppercase; margin-bottom: 6px; color: #475569;">Payload Records ({len(data_list)}):</div>
       <div style="overflow-x: auto;">
