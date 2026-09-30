@@ -250,6 +250,7 @@ def init_database():
     # Load data from processed CSVs if available
     load_csv_data(conn)
     load_demo_data(conn)
+    conn.commit()
     conn.close()
     print("Database initialization complete.")
 

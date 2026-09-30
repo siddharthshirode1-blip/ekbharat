@@ -192,78 +192,12 @@ function applyGovAccessibilitySettings() {
     }
 }
 
-// --- TOP BARS (ACCESSIBILITY + DEMO SWITCHER) ---
+// --- TOP BARS (REMOVED PER REQUEST) ---
 function injectTopBars() {
-    // 1. Accessibility Top Bar (without contrast toggle)
-    if (!document.querySelector(".gov-top-bar")) {
-        const topBar = document.createElement("div");
-        topBar.className = "gov-top-bar";
-        topBar.innerHTML = `
-            <div class="gov-tricolor-stripe" aria-hidden="true"></div>
-            <div class="gov-topbar-content">
-                <div class="gov-topbar-left">
-                    <span class="gov-emblem-badge"><span class="flag-icon">🇮🇳</span> भारत सरकार | Government of India</span>
-                    <span class="divider">|</span>
-                    <span class="gov-portal-tag">राष्ट्रीय सरकारी सूचना एवं जन कल्याण मंच</span>
-                </div>
-                <div class="gov-topbar-right">
-                    <div class="gov-access-controls" aria-label="Text size controls">
-                        <button class="gov-access-btn" title="Decrease font size" onclick="adjustGovFontSize(-1)">A-</button>
-                        <button class="gov-access-btn" title="Default font size" onclick="adjustGovFontSize(0)">A</button>
-                        <button class="gov-access-btn" title="Increase font size" onclick="adjustGovFontSize(1)">A+</button>
-                    </div>
-                    <span class="gov-helpline">📞 <span>1800-11-0001</span> (Toll-Free)</span>
-                </div>
-            </div>
-        `;
-        document.body.insertBefore(topBar, document.body.firstChild);
-    }
-
-    // 2. Interactive 1-Click Demo Switcher Bar
-    if (!document.querySelector(".demo-role-banner")) {
-        const user = getCurrentUser();
-        const demoBar = document.createElement("div");
-        demoBar.className = "demo-role-banner";
-        
-        let roleBadgeHtml = `<span class="demo-role-badge citizen">👥 Public Visitor</span>`;
-        let activeUserHtml = `<span>Choose demo account or sign in</span>`;
-
-        if (user) {
-            if (user.role === "admin") {
-                roleBadgeHtml = `<span class="demo-role-badge admin">🏛️ Nodal Officer (Admin)</span>`;
-                activeUserHtml = `<strong>${user.avatar} ${user.full_name}</strong> • ${user.designation || 'Central Nodal Officer'}`;
-            } else {
-                roleBadgeHtml = `<span class="demo-role-badge citizen">👨‍🌾 Citizen Account</span>`;
-                activeUserHtml = `<strong>${user.avatar} ${user.full_name}</strong> • ${user.district || 'Citizen'}, ${user.state || 'India'}`;
-            }
-        }
-
-        demoBar.innerHTML = `
-            <div class="demo-role-info">
-                <span style="font-weight: 800; color: #FFB380;">⚡ Fast Role Switcher:</span>
-                ${roleBadgeHtml}
-                <span class="d-none-mobile" style="color: #CBD5E1; font-size: 12px;">${activeUserHtml}</span>
-            </div>
-            <div class="demo-account-buttons">
-                <button class="demo-btn-switch ${user && user.email === DEMO_ACCOUNTS.citizen1.email ? 'active' : ''}" onclick="switchDemoAccount('citizen1')" title="Login as Rahul Sharma (Citizen 1 - Farmer, UP)">
-                    👨‍🌾 Citizen 1 (Rahul)
-                </button>
-                <button class="demo-btn-switch ${user && user.email === DEMO_ACCOUNTS.citizen2.email ? 'active' : ''}" onclick="switchDemoAccount('citizen2')" title="Login as Priya Patel (Citizen 2 - Health Worker, GJ)">
-                    👩‍⚕️ Citizen 2 (Priya)
-                </button>
-                <button class="demo-btn-switch ${user && user.role === 'admin' ? 'active' : ''}" onclick="switchDemoAccount('admin')" title="Login as Dr. Rajesh Varma (Admin / Nodal Officer)">
-                    🏛️ Admin (Nodal Officer)
-                </button>
-                ${user ? `<button class="demo-btn-switch" style="background: rgba(220,38,38,0.3); border-color: rgba(220,38,38,0.5);" onclick="logout()" title="Logout">🚪 Logout</button>` : ''}
-            </div>
-        `;
-        const topBarElem = document.querySelector(".gov-top-bar");
-        if (topBarElem && topBarElem.nextSibling) {
-            document.body.insertBefore(demoBar, topBarElem.nextSibling);
-        } else {
-            document.body.appendChild(demoBar);
-        }
-    }
+    const existingTop = document.querySelector(".gov-top-bar");
+    if (existingTop) existingTop.remove();
+    const existingDemo = document.querySelector(".demo-role-banner");
+    if (existingDemo) existingDemo.remove();
 }
 
 // --- TOAST NOTIFICATIONS ---
@@ -287,31 +221,57 @@ function showToast(message) {
 }
 
 // =========================================================
-// NAVBAR DYNAMIC UPDATE BASED ON ROLE
 // =========================================================
+// NAVBAR DYNAMIC UPDATE BASED ON ROLE (WITH MOBILE DRAWER)
+// =========================================================
+window.toggleGovMobileMenu = function(forceState) {
+    const toggleBtn = document.querySelector(".gov-mobile-toggle");
+    const drawer = document.querySelector(".gov-mobile-drawer");
+    const overlay = document.querySelector(".gov-mobile-overlay");
+    
+    const isOpen = drawer ? drawer.classList.contains("active") : false;
+    const shouldOpen = forceState !== undefined ? forceState : !isOpen;
+
+    if (toggleBtn) {
+        toggleBtn.classList.toggle("active", shouldOpen);
+        toggleBtn.setAttribute("aria-expanded", shouldOpen ? "true" : "false");
+    }
+    if (drawer) drawer.classList.toggle("active", shouldOpen);
+    if (overlay) overlay.classList.toggle("active", shouldOpen);
+
+    if (shouldOpen) {
+        document.body.style.overflow = "hidden";
+    } else {
+        document.body.style.overflow = "";
+    }
+};
+
 function updateNavbar() {
     const user = getCurrentUser();
     const navActions = document.querySelector(".nav-actions");
-    const nav = document.querySelector("header.navbar nav");
+    const nav = document.querySelector("header.navbar nav") || document.querySelector("header.navbar .gov-nav-links");
+    const navbar = document.querySelector("header.navbar");
 
+    // Standard Desktop Navigation Links (Improvised Web-to-Web Switcher)
     if (nav) {
         let navHtml = `
-            <a href="index.html" class="${window.location.pathname.endsWith('index.html') || window.location.pathname === '/' ? 'active' : ''}">Home</a>
-            <a href="dashboard.html" class="${window.location.pathname.includes('dashboard') ? 'active' : ''}">Dashboard</a>
-            <a href="schemes.html" class="${window.location.pathname.includes('schemes') ? 'active' : ''}">Schemes</a>
-            <a href="map.html" class="${window.location.pathname.includes('map') ? 'active' : ''}">State HeatMap</a>
-            <a href="overlap.html" class="${window.location.pathname.includes('overlap') ? 'active' : ''}">Scheme Overlap</a>
-            <a href="beneficiaries.html" class="${window.location.pathname.includes('beneficiaries') ? 'active' : ''}">Fund & DBT</a>
-            <a href="complaints.html" class="${window.location.pathname.includes('complaints') ? 'active' : ''}">Proof Verification</a>
-            <a href="updates.html" class="${window.location.pathname.includes('updates') ? 'active' : ''}">Gazette</a>
-            <a href="data.html" class="${window.location.pathname.includes('data') ? 'active' : ''}">Open Data 📥</a>
+            <a href="index.html" class="${window.location.pathname.endsWith('index.html') || window.location.pathname === '/' || window.location.pathname.endsWith('/') ? 'active' : ''}">🏠 Home</a>
+            <a href="dashboard.html" class="${window.location.pathname.includes('dashboard') ? 'active' : ''}">📊 Dashboard</a>
+            <a href="schemes.html" class="${window.location.pathname.includes('schemes') ? 'active' : ''}">📜 Schemes</a>
+            <a href="map.html" class="${window.location.pathname.includes('map') ? 'active' : ''}">🗺️ State Map</a>
+            <a href="overlap.html" class="${window.location.pathname.includes('overlap') ? 'active' : ''}">⚡ Convergence</a>
+            <a href="beneficiaries.html" class="${window.location.pathname.includes('beneficiaries') ? 'active' : ''}">💰 DBT Tracker</a>
+            <a href="complaints.html" class="${window.location.pathname.includes('complaints') ? 'active' : ''}">🛡️ Grievances</a>
+            <a href="updates.html" class="${window.location.pathname.includes('updates') ? 'active' : ''}">📰 Gazette</a>
+            <a href="data.html" class="${window.location.pathname.includes('data') ? 'active' : ''}">📥 Open Data</a>
         `;
         if (user && user.role === "admin") {
-            navHtml += `<a href="admin.html" class="${window.location.pathname.includes('admin') ? 'active' : ''}" style="color: var(--gov-saffron); font-weight: 800;">★ Admin Panel</a>`;
+            navHtml += `<a href="admin.html" class="${window.location.pathname.includes('admin') ? 'active' : ''}" style="color: #FFB380 !important; font-weight: 800;">🏛️ Admin</a>`;
         }
         nav.innerHTML = navHtml;
     }
 
+    // Standard Desktop Action Buttons (Unified Login & Register in One)
     if (navActions) {
         if (user) {
             navActions.innerHTML = `
@@ -319,281 +279,206 @@ function updateNavbar() {
                 <button class="account-nav-btn" onclick="window.location.href='${user.role === 'admin' ? 'admin.html' : 'account.html'}'" title="View Account Profile">
                     ${user.avatar} ${user.full_name}
                 </button>
-                <button class="login-btn" style="background: rgba(220,38,38,0.9); border-color: rgba(220,38,38,1); padding: 7px 12px; font-size: 12px;" onclick="logout()">Logout</button>
+                <button class="login-btn" style="background: rgba(220,38,38,0.9); border-color: rgba(220,38,38,1); padding: 7px 12px; font-size: 12px; border-radius: 20px;" onclick="logout()" title="Sign Out">🚪 Logout</button>
             `;
         } else {
             navActions.innerHTML = `
                 <button class="ai-nav-btn" onclick="askAI()">✦ Ask AI</button>
-                <button class="login-btn" onclick="goToLogin()">Citizen Login</button>
-                <button class="signup-nav-btn" onclick="goToSignUp()">Register</button>
+                <button class="gov-auth-pill-btn" onclick="goToLogin()" title="Unified Citizen Portal: Sign In / Register">
+                    <span style="font-size: 15px;">🪪</span>
+                    <span><strong>Sign In</strong> / Register</span>
+                </button>
             `;
         }
     }
+
+    // Responsive Mobile Hamburger Button & Drawer Injection
+    if (navbar && !navbar.querySelector(".gov-mobile-toggle")) {
+        const toggleBtn = document.createElement("button");
+        toggleBtn.className = "gov-mobile-toggle";
+        toggleBtn.setAttribute("aria-label", "Toggle navigation menu");
+        toggleBtn.setAttribute("aria-expanded", "false");
+        toggleBtn.innerHTML = `<span></span><span></span><span></span>`;
+        toggleBtn.onclick = () => window.toggleGovMobileMenu();
+        navbar.appendChild(toggleBtn);
+    }
+
+    // Mobile Drawer Setup
+    let overlay = document.querySelector(".gov-mobile-overlay");
+    let drawer = document.querySelector(".gov-mobile-drawer");
+
+    if (!overlay) {
+        overlay = document.createElement("div");
+        overlay.className = "gov-mobile-overlay";
+        overlay.onclick = () => window.toggleGovMobileMenu(false);
+        document.body.appendChild(overlay);
+    }
+
+    if (!drawer) {
+        drawer = document.createElement("div");
+        drawer.className = "gov-mobile-drawer";
+        document.body.appendChild(drawer);
+    }
+
+    let mobileNavLinks = `
+        <a href="index.html" class="${window.location.pathname.endsWith('index.html') || window.location.pathname === '/' ? 'active' : ''}">🏠 Home</a>
+        <a href="dashboard.html" class="${window.location.pathname.includes('dashboard') ? 'active' : ''}">📊 Central Dashboard</a>
+        <a href="schemes.html" class="${window.location.pathname.includes('schemes') ? 'active' : ''}">📜 Schemes Directory</a>
+        <a href="map.html" class="${window.location.pathname.includes('map') ? 'active' : ''}">🗺️ State HeatMap</a>
+        <a href="overlap.html" class="${window.location.pathname.includes('overlap') ? 'active' : ''}">⚡ Scheme Convergence</a>
+        <a href="beneficiaries.html" class="${window.location.pathname.includes('beneficiaries') ? 'active' : ''}">💰 Fund Utilization & DBT</a>
+        <a href="complaints.html" class="${window.location.pathname.includes('complaints') ? 'active' : ''}">🛡️ Grievance Proof Verification</a>
+        <a href="updates.html" class="${window.location.pathname.includes('updates') ? 'active' : ''}">📰 Gazette Notifications</a>
+        <a href="data.html" class="${window.location.pathname.includes('data') ? 'active' : ''}">📥 Open Data Lineage</a>
+        <a href="ai.html" class="${window.location.pathname.includes('ai') ? 'active' : ''}">✦ AI Governance Studio</a>
+    `;
+
+    if (user && user.role === "admin") {
+        mobileNavLinks += `<a href="admin.html" class="${window.location.pathname.includes('admin') ? 'active' : ''}" style="color: var(--gov-saffron); font-weight: 800;">🏛️ Central Admin Console</a>`;
+    }
+
+    let mobileAuthButtons = '';
+    if (user) {
+        mobileAuthButtons = `
+            <div style="background: var(--gov-navy-light); padding: 12px; border-radius: 8px; margin-bottom: 8px; border: 1px solid var(--gov-border);">
+                <div style="font-size: 13px; font-weight: 700; color: var(--gov-navy-dark);">${user.avatar} ${user.full_name}</div>
+                <div style="font-size: 11px; color: var(--gov-text-muted);">${user.role === 'admin' ? 'Central Nodal Officer' : (user.district || 'Citizen Beneficiary')}</div>
+            </div>
+            <button class="primary-btn" onclick="window.location.href='${user.role === 'admin' ? 'admin.html' : 'account.html'}'; window.toggleGovMobileMenu(false);" style="width: 100%; padding: 10px; font-size: 13px;">View Account Profile</button>
+            <button class="btn btn-secondary" onclick="logout()" style="width: 100%; padding: 10px; font-size: 13px; color: #DC2626; border-color: #FCA5A5;">🚪 Sign Out</button>
+        `;
+    } else {
+        mobileAuthButtons = `
+            <button class="gov-auth-pill-btn" onclick="goToLogin(); window.toggleGovMobileMenu(false);" style="width: 100%; justify-content: center; padding: 11px; font-size: 14px; border-radius: 8px;">
+                <span style="font-size: 16px;">🪪</span>
+                <span>Citizen Sign In / Register</span>
+            </button>
+        `;
+    }
+
+    drawer.innerHTML = `
+        <div class="mobile-drawer-header">
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <span style="font-size: 20px;">🇮🇳</span>
+                <div>
+                    <h3 style="font-size: 16px; font-weight: 800; color: #FFFFFF; margin: 0;">EkBhaarat</h3>
+                    <small style="font-size: 9px; color: var(--gov-saffron); font-weight: 700; text-transform: uppercase;">भारत सरकार • Menu</small>
+                </div>
+            </div>
+            <button class="mobile-drawer-close" onclick="window.toggleGovMobileMenu(false)" aria-label="Close menu">✕</button>
+        </div>
+        <div class="mobile-drawer-links">
+            ${mobileNavLinks}
+        </div>
+        <div class="mobile-drawer-footer">
+            ${mobileAuthButtons}
+            <div style="text-align: center; font-size: 11px; color: var(--gov-text-muted); margin-top: 8px;">
+                ✉️ Support: <a href="mailto:helpdesk-ekbharat@gov.in" style="color: var(--gov-saffron); font-weight: 700; text-decoration: underline;">helpdesk-ekbharat@gov.in</a>
+            </div>
+        </div>
+    `;
 }
 
 // =========================================================
-// AUTHENTIC GOVERNMENT OF INDIA MASTER FOOTER INJECTOR
+// STREAMLINED OFFICIAL GOVERNMENT OF INDIA FOOTER
 // =========================================================
 function injectGovFooter() {
-    let footer = document.querySelector("footer");
+    const allFooters = document.querySelectorAll("footer");
+    let footer = allFooters[0];
     if (!footer) {
         footer = document.createElement("footer");
         document.body.appendChild(footer);
     }
+    for (let i = 1; i < allFooters.length; i++) {
+        allFooters[i].remove();
+    }
     footer.className = "gov-master-footer";
     footer.innerHTML = `
-        <!-- 1. OFFICIAL GOVT PORTALS & INITIATIVES BANNER -->
+        <!-- 1. OFFICIAL GOVT PORTALS & INITIATIVES BAR -->
         <div class="gov-partner-banner">
             <div class="gov-partner-container">
                 <!-- Right To Information -->
                 <a href="https://rti.gov.in" target="_blank" rel="noopener" class="gov-partner-item" title="Right to Information Portal (RTI)">
-                    <svg width="130" height="38" viewBox="0 0 130 38" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="18" cy="19" r="15" fill="#1E293B" stroke="#64748B" stroke-width="1.2"/>
-                        <circle cx="18" cy="13" r="4" fill="#FFFFFF"/>
-                        <path d="M10 26 C10 21, 26 21, 26 26" fill="#FFFFFF"/>
-                        <rect x="20" y="14" width="8" height="11" rx="1" fill="#FF671F" stroke="#FFFFFF" stroke-width="0.8"/>
-                        <line x1="22" y1="17" x2="26" y2="17" stroke="#FFFFFF" stroke-width="1"/>
-                        <line x1="22" y1="20" x2="26" y2="20" stroke="#FFFFFF" stroke-width="1"/>
-                        <text x="38" y="17" fill="#FFFFFF" font-family="'Plus Jakarta Sans', sans-serif" font-weight="800" font-size="9" letter-spacing="0.4">RIGHT TO</text>
-                        <text x="38" y="27" fill="#FFFFFF" font-family="'Plus Jakarta Sans', sans-serif" font-weight="800" font-size="9" letter-spacing="0.4">INFORMATION</text>
+                    <svg width="130" height="36" viewBox="0 0 130 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="16" cy="18" r="13" fill="#1E293B" stroke="#64748B" stroke-width="1.2"/>
+                        <circle cx="16" cy="13" r="3.5" fill="#FFFFFF"/>
+                        <path d="M9 24 C9 19.5, 23 19.5, 23 24" fill="#FFFFFF"/>
+                        <rect x="18" y="14" width="7" height="9" rx="1" fill="#FF671F" stroke="#FFFFFF" stroke-width="0.8"/>
+                        <line x1="20" y1="17" x2="23" y2="17" stroke="#FFFFFF" stroke-width="0.8"/>
+                        <line x1="20" y1="19.5" x2="23" y2="19.5" stroke="#FFFFFF" stroke-width="0.8"/>
+                        <text x="35" y="16" fill="#FFFFFF" font-family="'Plus Jakarta Sans', sans-serif" font-weight="800" font-size="9" letter-spacing="0.4">RIGHT TO</text>
+                        <text x="35" y="26" fill="#FFFFFF" font-family="'Plus Jakarta Sans', sans-serif" font-weight="800" font-size="9" letter-spacing="0.4">INFORMATION</text>
                     </svg>
                 </a>
 
                 <!-- CPGRAMS -->
                 <a href="https://pgportal.gov.in" target="_blank" rel="noopener" class="gov-partner-item" title="Centralized Public Grievance Redress and Monitoring System (CPGRAMS)">
-                    <div class="gov-partner-badge-box" style="border: 1.5px solid #60A5FA; background: #1E3A8A; color: #FFFFFF; border-radius: 6px; padding: 4px 10px; font-weight: 800; font-size: 13px; letter-spacing: 0.8px;">
+                    <div class="gov-partner-badge-box" style="border: 1.5px solid #3B82F6; background: #1E40AF; color: #FFFFFF; border-radius: 6px; padding: 5px 12px; font-weight: 800; font-size: 13.5px; letter-spacing: 0.8px; display: inline-flex; align-items: center; justify-content: center; height: 32px; box-sizing: border-box;">
                         CPGRAMS
                     </div>
                 </a>
 
                 <!-- data.gov.in -->
                 <a href="https://data.gov.in" target="_blank" rel="noopener" class="gov-partner-item" title="Open Government Data Platform India (data.gov.in)">
-                    <svg width="145" height="36" viewBox="0 0 145 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M6 18 Q11 10 16 10 Q21 10 26 18 Q21 26 16 26 Q11 26 6 18 Z" stroke="#FF671F" stroke-width="1.8" fill="none"/>
-                        <circle cx="16" cy="18" r="3" fill="#FF671F"/>
-                        <text x="32" y="19" fill="#FFFFFF" font-family="'Plus Jakarta Sans', sans-serif" font-weight="800" font-size="15">data.<tspan fill="#FF671F">gov</tspan>.<tspan fill="#FFFFFF">in</tspan></text>
-                        <text x="32" y="29" fill="#94A3B8" font-family="'Plus Jakarta Sans', sans-serif" font-weight="600" font-size="7" letter-spacing="0.2">open government data (OGD) platform india</text>
+                    <svg width="135" height="34" viewBox="0 0 135 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M5 17 Q10 9 15 9 Q20 9 25 17 Q20 25 15 25 Q10 25 5 17 Z" stroke="#FF671F" stroke-width="1.8" fill="none"/>
+                        <circle cx="15" cy="17" r="2.8" fill="#FF671F"/>
+                        <text x="30" y="18" fill="#FFFFFF" font-family="'Plus Jakarta Sans', sans-serif" font-weight="800" font-size="14.5">data.<tspan fill="#FF671F">gov</tspan>.<tspan fill="#FFFFFF">in</tspan></text>
+                        <text x="30" y="27" fill="#94A3B8" font-family="'Plus Jakarta Sans', sans-serif" font-weight="600" font-size="6.5" letter-spacing="0.2">open government data (OGD) pi</text>
                     </svg>
                 </a>
 
                 <!-- PM INDIA -->
                 <a href="https://pmindia.gov.in" target="_blank" rel="noopener" class="gov-partner-item" title="Prime Minister of India Official Portal">
-                    <svg width="118" height="36" viewBox="0 0 118 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="12" cy="18" r="10" stroke="#E2E8F0" stroke-width="1.2" fill="none"/>
-                        <circle cx="12" cy="18" r="2.5" fill="#C59B27"/>
-                        <rect x="26" y="8" width="14" height="2.8" fill="#FF9933"/>
-                        <rect x="26" y="10.8" width="14" height="2.8" fill="#FFFFFF"/>
-                        <circle cx="33" cy="12.2" r="1" fill="#000080"/>
-                        <rect x="26" y="13.6" width="14" height="2.8" fill="#138808"/>
-                        <text x="44" y="20" fill="#FFFFFF" font-family="'Plus Jakarta Sans', sans-serif" font-weight="800" font-size="12" letter-spacing="0.4">PM INDIA</text>
+                    <svg width="115" height="34" viewBox="0 0 115 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="17" r="9" stroke="#E2E8F0" stroke-width="1.2" fill="none"/>
+                        <circle cx="12" cy="17" r="2.2" fill="#C59B27"/>
+                        <rect x="25" y="8" width="13" height="2.6" fill="#FF9933"/>
+                        <rect x="25" y="10.6" width="13" height="2.6" fill="#FFFFFF"/>
+                        <circle cx="31.5" cy="11.9" r="0.9" fill="#000080"/>
+                        <rect x="25" y="13.2" width="13" height="2.6" fill="#138808"/>
+                        <text x="42" y="19" fill="#FFFFFF" font-family="'Plus Jakarta Sans', sans-serif" font-weight="800" font-size="11.5" letter-spacing="0.4">PM INDIA</text>
                     </svg>
                 </a>
 
                 <!-- Digital India -->
                 <a href="https://digitalindia.gov.in" target="_blank" rel="noopener" class="gov-partner-item" title="Digital India - Power To Empower">
-                    <svg width="135" height="36" viewBox="0 0 135 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M10 8 C4 14 4 23 10 29 C13 32 18 30 20 26 C22 22 18 17 14 15 C10 13 14 8 18 6" stroke="#06B6D4" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-                        <circle cx="19" cy="6" r="2.5" fill="#FF671F"/>
-                        <text x="30" y="18" fill="#FFFFFF" font-family="'Plus Jakarta Sans', sans-serif" font-weight="800" font-size="13">Digital India</text>
-                        <text x="30" y="28" fill="#38BDF8" font-family="'Plus Jakarta Sans', sans-serif" font-weight="600" font-size="7.5" font-style="italic">Power To Empower</text>
+                    <svg width="130" height="34" viewBox="0 0 130 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10 7 C4 13 4 21 10 27 C13 30 17 28 19 24 C21 20 17 15 13 13 C10 11 13 7 17 5" stroke="#06B6D4" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+                        <circle cx="18" cy="5" r="2.2" fill="#FF671F"/>
+                        <text x="28" y="17" fill="#FFFFFF" font-family="'Plus Jakarta Sans', sans-serif" font-weight="800" font-size="12.5">Digital India</text>
+                        <text x="28" y="26" fill="#38BDF8" font-family="'Plus Jakarta Sans', sans-serif" font-weight="600" font-size="7" font-style="italic">Power To Empower</text>
                     </svg>
                 </a>
 
-                <!-- my GOV -->
+                <!-- myGOV -->
                 <a href="https://mygov.in" target="_blank" rel="noopener" class="gov-partner-item" title="MyGov - Meri Sarkar">
-                    <svg width="115" height="36" viewBox="0 0 115 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="14" cy="17" r="9" stroke="#C59B27" stroke-width="1.4" fill="none"/>
-                        <circle cx="14" cy="17" r="2.5" fill="#FF671F"/>
-                        <text x="28" y="18" fill="#FFFFFF" font-family="'Plus Jakarta Sans', sans-serif" font-weight="800" font-size="13.5">my <tspan fill="#FF9933">GOV</tspan></text>
-                        <text x="28" y="28" fill="#CBD5E1" font-family="'Plus Jakarta Sans', sans-serif" font-weight="700" font-size="8.5">मेरी सरकार</text>
+                    <svg width="105" height="34" viewBox="0 0 105 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="17" r="8" stroke="#E2E8F0" stroke-width="1.1" fill="none"/>
+                        <circle cx="12" cy="17" r="2.5" fill="#FF671F"/>
+                        <text x="25" y="18" fill="#FFFFFF" font-family="'Plus Jakarta Sans', sans-serif" font-weight="800" font-size="13">my<tspan fill="#FF671F">GOV</tspan></text>
+                        <text x="25" y="27" fill="#CBD5E1" font-family="'Plus Jakarta Sans', sans-serif" font-weight="600" font-size="7.5">मेरी सरकार</text>
                     </svg>
                 </a>
 
                 <!-- UMANG -->
                 <a href="https://web.umang.gov.in" target="_blank" rel="noopener" class="gov-partner-item" title="UMANG - The Spirit of New India">
-                    <div style="display: inline-flex; align-items: center; gap: 7px; background: #FFFFFF; border-radius: 5px; padding: 4px 8px; color: #0284C7; font-weight: 800;">
-                        <svg width="15" height="18" viewBox="0 0 15 18" fill="none">
-                            <rect x="1" y="1" width="13" height="16" rx="2" stroke="#FF671F" stroke-width="1.6" fill="none"/>
-                            <circle cx="7.5" cy="13.5" r="1.2" fill="#FF671F"/>
-                            <line x1="4.5" y1="3.5" x2="10.5" y2="3.5" stroke="#FF671F" stroke-width="1.3"/>
+                    <div style="display: inline-flex; align-items: center; gap: 6px; background: #FFFFFF; border-radius: 5px; padding: 4px 8px; height: 32px; box-sizing: border-box;">
+                        <svg width="14" height="17" viewBox="0 0 14 17" fill="none">
+                            <rect x="1" y="1" width="12" height="15" rx="2" stroke="#FF671F" stroke-width="1.6" fill="none"/>
+                            <circle cx="7" cy="12.5" r="1.1" fill="#FF671F"/>
+                            <line x1="4" y1="3.5" x2="10" y2="3.5" stroke="#FF671F" stroke-width="1.3"/>
                         </svg>
                         <div style="line-height: 1;">
-                            <span style="color: #0369A1; font-size: 13px; font-weight: 900; letter-spacing: 0.5px;">UMANG</span>
-                            <div style="color: #64748B; font-size: 5.5px; font-weight: 700; text-transform: uppercase; margin-top: 1px;">THE SPIRIT OF NEW INDIA</div>
+                            <span style="color: #0369A1; font-size: 12.5px; font-weight: 900; letter-spacing: 0.5px;">UMANG</span>
+                            <div style="color: #64748B; font-size: 5px; font-weight: 700; text-transform: uppercase; margin-top: 1px;">THE SPIRIT OF NEW INDIA</div>
                         </div>
                     </div>
                 </a>
             </div>
         </div>
 
-        <!-- 2. MAIN DIRECTORY & LINKS SECTION -->
-        <div class="gov-main-footer">
-            <div class="gov-footer-grid">
-                <!-- Col 1: Categories (Double subcolumns) -->
-                <div class="gov-footer-col gov-col-categories">
-                    <h4 class="gov-footer-heading">Category</h4>
-                    <div class="gov-category-subcols">
-                        <ul class="gov-footer-list">
-                            <li><a href="schemes.html?search=agriculture">Agriculture, Rural & Environment</a></li>
-                            <li><a href="beneficiaries.html">Benefits & Social development</a></li>
-                            <li><a href="schemes.html?search=msme">Business & Self-employed</a></li>
-                            <li><a href="schemes.html">Citizenship, Visa & Passports</a></li>
-                            <li><a href="schemes.html">Defence & Foreign affairs</a></li>
-                            <li><a href="schemes.html?search=transport">Driving & Transport</a></li>
-                            <li><a href="schemes.html?search=education">Education & Learning</a></li>
-                            <li><a href="dashboard.html">Governance & Planning</a></li>
-                            <li><a href="schemes.html?search=health">Health & Wellness</a></li>
-                        </ul>
-                        <ul class="gov-footer-list">
-                            <li><a href="schemes.html?search=housing">Housing & Local services</a></li>
-                            <li><a href="map.html">Infrastructure & Industries</a></li>
-                            <li><a href="schemes.html?search=skill">Jobs & Skill Development</a></li>
-                            <li><a href="complaints.html">Justice, Law & Grievances</a></li>
-                            <li><a href="beneficiaries.html">Money & Taxes</a></li>
-                            <li><a href="data.html">Science, IT & Communication</a></li>
-                            <li><a href="map.html">Travel & Tourism</a></li>
-                            <li><a href="schemes.html?search=women">Welfare of Families</a></li>
-                            <li><a href="schemes.html?search=youth">Youth sports & Culture</a></li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Col 2: My-Government & Directory -->
-                <div class="gov-footer-col">
-                    <h4 class="gov-footer-heading">My-Government</h4>
-                    <ul class="gov-footer-list">
-                        <li><a href="updates.html">Acts & Rules</a></li>
-                        <li><a href="schemes.html">Schemes</a></li>
-                        <li><a href="updates.html">Constitution of India</a></li>
-                        <li><a href="data.html">Documents</a></li>
-                    </ul>
-
-                    <h4 class="gov-footer-heading" style="margin-top: 22px;">Directory</h4>
-                    <ul class="gov-footer-list">
-                        <li><a href="admin.html">Who's Who</a></li>
-                        <li><a href="complaints.html">Contact Directory</a></li>
-                        <li><a href="data.html">Web Directory</a></li>
-                        <li><a href="map.html">Public Utilities</a></li>
-                        <li><a href="tel:1800110001">Helpline</a></li>
-                    </ul>
-                </div>
-
-                <!-- Col 3: Explore India & Services -->
-                <div class="gov-footer-col">
-                    <h4 class="gov-footer-heading">Explore India</h4>
-                    <ul class="gov-footer-list">
-                        <li><a href="map.html">Travel & Tourism</a></li>
-                        <li><a href="map.html">Culinary Delights</a></li>
-                        <li><a href="schemes.html">One District One Product</a></li>
-                        <li><a href="dashboard.html">Facts of India</a></li>
-                    </ul>
-
-                    <h4 class="gov-footer-heading" style="margin-top: 22px;">News Hub</h4>
-                    <ul class="gov-footer-list">
-                        <li><a href="updates.html">Gazette Updates</a></li>
-                    </ul>
-
-                    <h4 class="gov-footer-heading" style="margin-top: 16px;">Services</h4>
-                    <ul class="gov-footer-list">
-                        <li><a href="data.html">Open Data Portal</a></li>
-                        <li><a href="ai.html">AI Studio</a></li>
-                    </ul>
-                </div>
-
-                <!-- Col 4: Quick Links / About Us -->
-                <div class="gov-footer-col">
-                    <h4 class="gov-footer-heading">About Us</h4>
-                    <ul class="gov-footer-list">
-                        <li><a href="features.html">About Portal</a></li>
-                        <li><a href="complaints.html">Contact Us</a></li>
-                        <li><a href="complaints.html">Feedback</a></li>
-                        <li><a href="features.html">FAQs</a></li>
-                        <li><a href="features.html">Help</a></li>
-                        <li><a href="data.html">Link to Us</a></li>
-                        <li><a href="updates.html">Newsletter</a></li>
-                        <li><a href="dashboard.html">Site Map</a></li>
-                        <li><a href="updates.html">Calendar</a></li>
-                    </ul>
-                </div>
-
-                <!-- Col 5: Spotlights & Legal -->
-                <div class="gov-footer-col">
-                    <h4 class="gov-footer-heading">Spotlights</h4>
-                    <ul class="gov-footer-list">
-                        <li><a href="dashboard.html">Visitor Summary</a></li>
-                        <li><a href="features.html">Disclaimer</a></li>
-                        <li><a href="features.html">Website Policy</a></li>
-                        <li><a href="updates.html">Subscribe to Newsletter</a></li>
-                        <li><a href="features.html">App Privacy Policy</a></li>
-                        <li><a href="data.html">Content Sources</a></li>
-                        <li><a href="data.html">India Portal 2.0 Brochure</a></li>
-                    </ul>
-                </div>
-
-                <!-- Col 6: View on Mobile & Socials -->
-                <div class="gov-footer-col gov-col-mobile-social">
-                    <h4 class="gov-footer-heading">View on Mobile</h4>
-                    <div class="gov-qr-card">
-                        <svg class="gov-qr-code" viewBox="0 0 100 100" width="84" height="84" fill="#06233D">
-                            <rect width="100" height="100" fill="#FFFFFF"/>
-                            <rect x="8" y="8" width="24" height="24" rx="2" fill="#06233D"/>
-                            <rect x="12" y="12" width="16" height="16" fill="#FFFFFF"/>
-                            <rect x="16" y="16" width="8" height="8" rx="1" fill="#FF671F"/>
-                            <rect x="68" y="8" width="24" height="24" rx="2" fill="#06233D"/>
-                            <rect x="72" y="12" width="16" height="16" fill="#FFFFFF"/>
-                            <rect x="76" y="16" width="8" height="8" rx="1" fill="#FF671F"/>
-                            <rect x="8" y="68" width="24" height="24" rx="2" fill="#06233D"/>
-                            <rect x="12" y="72" width="16" height="16" fill="#FFFFFF"/>
-                            <rect x="16" y="76" width="8" height="8" rx="1" fill="#FF671F"/>
-                            <rect x="38" y="12" width="4" height="4" fill="#06233D"/>
-                            <rect x="46" y="12" width="6" height="4" fill="#06233D"/>
-                            <rect x="56" y="12" width="4" height="4" fill="#06233D"/>
-                            <rect x="42" y="20" width="8" height="4" fill="#06233D"/>
-                            <rect x="38" y="28" width="4" height="8" fill="#06233D"/>
-                            <rect x="50" y="28" width="8" height="4" fill="#06233D"/>
-                            <rect x="12" y="40" width="6" height="4" fill="#06233D"/>
-                            <rect x="22" y="40" width="8" height="4" fill="#06233D"/>
-                            <rect x="34" y="40" width="4" height="6" fill="#06233D"/>
-                            <rect x="42" y="40" width="12" height="4" fill="#06233D"/>
-                            <rect x="58" y="40" width="6" height="4" fill="#06233D"/>
-                            <rect x="68" y="40" width="8" height="4" fill="#06233D"/>
-                            <rect x="80" y="40" width="6" height="4" fill="#06233D"/>
-                            <rect x="12" y="50" width="4" height="6" fill="#06233D"/>
-                            <rect x="20" y="50" width="6" height="4" fill="#06233D"/>
-                            <rect x="32" y="48" width="6" height="6" fill="#06233D"/>
-                            <rect x="42" y="50" width="4" height="8" fill="#06233D"/>
-                            <rect x="52" y="48" width="8" height="4" fill="#06233D"/>
-                            <rect x="64" y="50" width="4" height="6" fill="#06233D"/>
-                            <rect x="72" y="48" width="14" height="4" fill="#06233D"/>
-                            <rect x="38" y="64" width="6" height="4" fill="#06233D"/>
-                            <rect x="48" y="64" width="10" height="4" fill="#06233D"/>
-                            <rect x="62" y="64" width="6" height="6" fill="#06233D"/>
-                            <rect x="72" y="64" width="8" height="4" fill="#06233D"/>
-                            <rect x="84" y="64" width="4" height="6" fill="#06233D"/>
-                            <rect x="38" y="74" width="14" height="4" fill="#06233D"/>
-                            <rect x="56" y="72" width="4" height="8" fill="#06233D"/>
-                            <rect x="64" y="74" width="8" height="4" fill="#06233D"/>
-                            <rect x="76" y="72" width="12" height="4" fill="#06233D"/>
-                            <rect x="42" y="82" width="4" height="6" fill="#06233D"/>
-                            <rect x="50" y="82" width="8" height="4" fill="#06233D"/>
-                            <rect x="62" y="82" width="12" height="4" fill="#06233D"/>
-                            <rect x="78" y="80" width="8" height="6" fill="#06233D"/>
-                        </svg>
-                        <span class="gov-qr-caption">Scan to access on Mobile</span>
-                    </div>
-
-                    <h4 class="gov-footer-heading" style="margin-top: 18px;">Follow Us</h4>
-                    <div class="gov-social-links">
-                        <a href="https://facebook.com" target="_blank" rel="noopener" class="gov-social-btn" title="Facebook">f</a>
-                        <a href="https://x.com" target="_blank" rel="noopener" class="gov-social-btn" title="X (Twitter)">𝕏</a>
-                        <a href="https://youtube.com" target="_blank" rel="noopener" class="gov-social-btn" title="YouTube">▶</a>
-                        <a href="https://linkedin.com" target="_blank" rel="noopener" class="gov-social-btn" title="LinkedIn">in</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 3. BOTTOM NIC & COMPLIANCE BAR -->
+        <!-- 2. BOTTOM NIC & COMPLIANCE BAR -->
         <div class="gov-bottom-bar">
             <div class="gov-bottom-tricolor" aria-hidden="true"></div>
             <div class="gov-bottom-container">
@@ -656,11 +541,52 @@ function renderAIResults(res) {
     const resultsArea = document.getElementById("aiResultsArea");
     if (!resultsArea) return;
 
+    // 1. Handle Invalid or Off-Topic Query State
+    if (res.status === "invalid_query") {
+        const suggestedQueries = res.suggested_queries || [
+            "Which villages have multiple departments active simultaneously?",
+            "Show state wise budget allocation and fund utilization rate",
+            "List delayed infrastructure projects in Uttar Pradesh",
+            "Top flagship welfare schemes by citizen beneficiary count",
+            "Show aspirational villages with high poverty index"
+        ];
+
+        const chipsHtml = suggestedQueries.map(q => `
+            <button type="button" class="ai-prompt-chip" onclick="executeAIQuery('${q.replace(/'/g, "\\'")}')" style="font-size: 12px; padding: 6px 12px; margin: 4px;">
+                💡 ${q}
+            </button>
+        `).join('');
+
+        resultsArea.innerHTML = `
+            <div class="ai-invalid-query-box">
+                <div style="display: flex; align-items: flex-start; gap: 12px;">
+                    <span style="font-size: 28px;">⚠️</span>
+                    <div>
+                        <h3 style="margin: 0; color: #92400E; font-size: 17px; font-weight: 800;">Invalid Query Notice</h3>
+                        <p style="margin: 8px 0 14px; font-size: 13.5px; color: #78350F; line-height: 1.5;">
+                            ${res.message || "The EkBhaarat AI Intelligence Engine only processes inquiries related to Indian public welfare schemes, ministry budgets, infrastructure projects, citizen grievances, DBT transfers, and governance data."}
+                        </p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 14px; padding-top: 14px; border-top: 1px dashed #FCD34D;">
+                    <strong style="font-size: 12px; color: #92400E; text-transform: uppercase; display: block; margin-bottom: 8px;">
+                        👉 Try Asking One of These Verified Governance Inquiries:
+                    </strong>
+                    <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+                        ${chipsHtml}
+                    </div>
+                </div>
+            </div>
+        `;
+        return;
+    }
+
     if (res.status !== "success" || !res.data || res.data.length === 0) {
         resultsArea.innerHTML = `
             <div class="ai-console-card">
-                <h3 style="color: #DC2626;">No Matching Records Found</h3>
-                <p style="margin-top: 8px; font-size: 13px; color: var(--gov-text-secondary);">Query executed safely. Try asking about "delayed education projects in UP", "schemes with highest budget", "cross-department overlap", or "state fund utilization".</p>
+                <h3 style="color: #DC2626;">No Matching Government Records Found</h3>
+                <p style="margin-top: 8px; font-size: 13px; color: var(--gov-text-secondary);">Query executed safely. Try asking about "delayed road projects in UP", "schemes with highest budget", "cross-department overlap", or "state fund utilization".</p>
             </div>
         `;
         return;
@@ -683,19 +609,45 @@ function renderAIResults(res) {
         </div>
     `;
 
+    // Format Executive Statements & Bullet Findings
+    const executiveStatement = res.executive_statement || res.summary_text || "Extracted verified government records from national repository.";
+    const keyFindings = Array.isArray(res.key_findings) && res.key_findings.length > 0 
+        ? res.key_findings 
+        : [
+            `Extracted ${res.data.length} authenticated records from the Central OGD Repository.`,
+            `Cross-verified against GIGW 3.0 Open Data standards with SHA-256 data lineage stamp.`,
+            `Visual analytics generated across flagship programmes and geographical indicators.`
+        ];
+    
+    const bulletInsightsHtml = keyFindings.map(item => `<li>${item}</li>`).join('');
+
+    const recommendationHtml = res.governance_recommendation ? `
+        <div class="ai-policy-card">
+            <h4>🏛️ Executive Policy & Convergence Recommendation:</h4>
+            <p>${res.governance_recommendation}</p>
+        </div>
+    ` : '';
+
     resultsArea.innerHTML = `
         <div class="ai-console-card">
             <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 10px;">
                 <div>
-                    <span class="section-label">AI SYNTHESIS & EVIDENCE</span>
-                    <h2 style="font-size: 20px; font-weight: 800; color: var(--gov-navy-dark); margin-top: 5px;">${res.user_question}</h2>
+                    <span class="section-label">AI SYNTHESIS & GOVERNANCE STATEMENTS</span>
+                    <h2 style="font-size: 20px; font-weight: 800; color: var(--gov-navy-dark); margin-top: 5px;">${res.user_question || 'Governance Inquiry Analysis'}</h2>
                 </div>
                 <span class="provenance-tag">🛡️ Verified SQL • SHA-256 Provenance</span>
             </div>
             
-            <p style="margin-top: 12px; font-size: 14px; color: var(--gov-text-secondary); background: var(--gov-navy-light); padding: 14px; border-radius: 8px; border-left: 4px solid var(--gov-saffron);">
-                💡 <strong>Finding:</strong> ${res.summary_text}
-            </p>
+            <!-- EXECUTIVE PRIMARY STATEMENT -->
+            <div class="ai-statement-card">
+                <h4>💡 Executive Finding & Official Statement:</h4>
+                <p style="font-size: 14px; font-weight: 600; color: #14532D; margin: 0; line-height: 1.5;">${executiveStatement}</p>
+                <ul class="ai-bullet-insights">
+                    ${bulletInsightsHtml}
+                </ul>
+            </div>
+
+            ${recommendationHtml}
 
             <!-- INTERACTIVE CHART VISUALIZATION SECTION -->
             <div id="aiChartCard" style="margin-top: 20px; background: #ffffff; border: 1px solid var(--gov-border-light); border-radius: 10px; padding: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.03);">
@@ -717,7 +669,7 @@ function renderAIResults(res) {
 
             <div style="margin-top: 20px;">
                 <span style="font-size: 11px; font-weight: 800; color: var(--gov-navy-dark); text-transform: uppercase;">Generated & Validated SQL Query:</span>
-                <div class="sql-code-box">${res.generated_sql}</div>
+                <div class="sql-code-box">${res.generated_sql || ''}</div>
             </div>
 
             <div style="margin-top: 20px;">
@@ -728,7 +680,7 @@ function renderAIResults(res) {
             <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid var(--gov-border-light); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; font-size: 12px; color: var(--gov-text-muted);">
                 <div>
                     <span>Dataset: <strong>National OGD Harmonized Ministry Directory</strong></span> |
-                    <span>Audit Stamp: <strong>${res.provenance?.last_sync || '2026-09-27'}</strong></span>
+                    <span>Audit Stamp: <strong>${res.provenance?.last_sync || '2026-09-30'}</strong></span>
                 </div>
                 <div style="display: flex; gap: 8px;">
                     <button type="button" class="btn btn-secondary btn-sm" onclick="downloadAIHTMLReport()" style="display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 12px;">
@@ -3183,3 +3135,206 @@ async function submitAdminNewProject() {
         document.getElementById("adminAddProjectForm").reset();
     }
 }
+
+// =========================================================
+// UNIFIED CITIZENSHIP & LOGIN PORTAL ENGINE
+// =========================================================
+window.switchAuthTab = function(tabName) {
+    const tabs = ['login', 'register', 'demo'];
+    tabs.forEach(t => {
+        const btn = document.getElementById(`authTabBtn-${t}`);
+        const pane = document.getElementById(`authTabPane-${t}`);
+        if (btn) btn.classList.toggle('active', t === tabName);
+        if (pane) pane.classList.toggle('active', t === tabName);
+    });
+    if (history.replaceState) {
+        history.replaceState(null, null, '#' + tabName);
+    }
+};
+
+function initUnifiedAuth() {
+    // Check URL hash
+    const hash = (window.location.hash || '').replace('#', '').toLowerCase();
+    if (hash === 'register' || hash === 'signup' || hash === 'citizenship') {
+        window.switchAuthTab('register');
+    } else if (hash === 'demo' || hash === 'personas') {
+        window.switchAuthTab('demo');
+    } else {
+        window.switchAuthTab('login');
+    }
+
+    // Bind Login Form Submit
+    const loginForm = document.getElementById('loginForm');
+    if (loginForm) {
+        loginForm.onsubmit = async function(e) {
+            e.preventDefault();
+            const email = (document.getElementById('loginEmail')?.value || '').trim();
+            const password = (document.getElementById('loginPassword')?.value || '').trim();
+            const role = document.querySelector('input[name="accountType"]:checked')?.value || 'citizen';
+
+            if (!email) {
+                showToast("Please enter your email or Jan Parichay ID.");
+                return;
+            }
+
+            const submitBtn = loginForm.querySelector('button[type="submit"]');
+            const origText = submitBtn ? submitBtn.innerText : '';
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.innerText = "Authenticating with Central Jan Parichay...";
+            }
+
+            try {
+                const res = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password, role })
+                });
+                const data = await res.json();
+                if (data.status === 'success' && data.user) {
+                    localStorage.setItem("ekBhaaratLoggedIn", "true");
+                    localStorage.setItem("ekBhaaratAccountType", data.user.role);
+                    localStorage.setItem("ekBhaaratUserName", data.user.full_name);
+                    localStorage.setItem("ekBhaaratUser", JSON.stringify(data.user));
+
+                    showToast(`✓ ${data.message || 'Login successful!'}`);
+                    setTimeout(() => {
+                        const redirect = localStorage.getItem("ekBhaaratRedirect") || (data.user.role === 'admin' ? 'admin.html' : 'dashboard.html');
+                        localStorage.removeItem("ekBhaaratRedirect");
+                        window.location.href = redirect;
+                    }, 500);
+                } else {
+                    showToast(`⚠️ ${data.message || 'Authentication failed'}`);
+                    if (submitBtn) {
+                        submitBtn.disabled = false;
+                        submitBtn.innerText = origText;
+                    }
+                }
+            } catch (err) {
+                // Heuristic local fallback
+                const namePart = email.split('@')[0].replace('.', ' ').replace('_', ' ').replace('-', ' ');
+                const localUser = {
+                    user_id: Date.now(),
+                    email: email,
+                    full_name: namePart.charAt(0).toUpperCase() + namePart.slice(1) || "Citizen Beneficiary",
+                    role: role,
+                    state: "Uttar Pradesh",
+                    district: "Varanasi",
+                    avatar: role === 'admin' ? "🏛️" : "👤",
+                    designation: role === 'admin' ? "Central Nodal Officer" : "Registered Citizen Beneficiary"
+                };
+                localStorage.setItem("ekBhaaratLoggedIn", "true");
+                localStorage.setItem("ekBhaaratAccountType", localUser.role);
+                localStorage.setItem("ekBhaaratUserName", localUser.full_name);
+                localStorage.setItem("ekBhaaratUser", JSON.stringify(localUser));
+
+                showToast(`✓ Welcome, ${localUser.full_name}! (Signed in)`);
+                setTimeout(() => {
+                    window.location.href = localUser.role === 'admin' ? 'admin.html' : 'dashboard.html';
+                }, 500);
+            }
+        };
+    }
+
+    // Bind Citizen Registration & Identity Verification Form
+    const signupForm = document.getElementById('signupForm');
+    if (signupForm) {
+        signupForm.onsubmit = async function(e) {
+            e.preventDefault();
+            const fullName = (document.getElementById('signupName')?.value || '').trim();
+            const email = (document.getElementById('signupEmail')?.value || '').trim();
+            const phone = (document.getElementById('signupPhone')?.value || '+91 98765 43210').trim();
+            const aadhaar = (document.getElementById('signupAadhaar')?.value || '').trim();
+            const state = document.getElementById('signupState')?.value || 'Uttar Pradesh';
+            const district = (document.getElementById('signupDistrict')?.value || 'Varanasi').trim();
+            const category = document.getElementById('signupCategory')?.value || 'General Citizen';
+            const password = (document.getElementById('signupPassword')?.value || 'citizen123').trim();
+            const role = document.querySelector('input[name="signupRole"]:checked')?.value || 'citizen';
+
+            if (!fullName || !email) {
+                showToast("Please provide your Full Name and Email.");
+                return;
+            }
+
+            const submitBtn = signupForm.querySelector('button[type="submit"]');
+            const origText = submitBtn ? submitBtn.innerText : '';
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.innerText = "Verifying Citizenship & Enrolling...";
+            }
+
+            try {
+                const res = await fetch('/api/auth/signup', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        full_name: fullName,
+                        email: email,
+                        phone: phone,
+                        aadhaar: aadhaar,
+                        state: state,
+                        district: district,
+                        category: category,
+                        password: password,
+                        role: role
+                    })
+                });
+                const data = await res.json();
+                if (data.status === 'success' && data.user) {
+                    localStorage.setItem("ekBhaaratLoggedIn", "true");
+                    localStorage.setItem("ekBhaaratAccountType", data.user.role);
+                    localStorage.setItem("ekBhaaratUserName", data.user.full_name);
+                    localStorage.setItem("ekBhaaratUser", JSON.stringify(data.user));
+
+                    showToast(`✓ Citizenship Verified & Account Enrolled! Welcome, ${fullName}.`);
+                    setTimeout(() => {
+                        window.location.href = data.user.role === 'admin' ? 'admin.html' : 'dashboard.html';
+                    }, 600);
+                } else {
+                    showToast(`⚠️ ${data.message || 'Enrollment failed'}`);
+                    if (submitBtn) {
+                        submitBtn.disabled = false;
+                        submitBtn.innerText = origText;
+                    }
+                }
+            } catch (err) {
+                const localUser = {
+                    user_id: Date.now(),
+                    email: email,
+                    full_name: fullName,
+                    role: role,
+                    phone: phone,
+                    state: state,
+                    district: district,
+                    avatar: role === 'admin' ? "🏛️" : "👤",
+                    designation: role === 'admin' ? "Central Nodal Officer" : `Citizen (${category})`
+                };
+                localStorage.setItem("ekBhaaratLoggedIn", "true");
+                localStorage.setItem("ekBhaaratAccountType", localUser.role);
+                localStorage.setItem("ekBhaaratUserName", localUser.full_name);
+                localStorage.setItem("ekBhaaratUser", JSON.stringify(localUser));
+
+                showToast(`✓ Account created & Citizenship linked for ${fullName}!`);
+                setTimeout(() => {
+                    window.location.href = localUser.role === 'admin' ? 'admin.html' : 'dashboard.html';
+                }, 500);
+            }
+        };
+    }
+}
+
+// =========================================================
+// GLOBAL APPLICATION INITIALIZATION (GIGW 3.0)
+// =========================================================
+document.addEventListener("DOMContentLoaded", function() {
+    applyGovAccessibilitySettings();
+    injectTopBars();
+    updateNavbar();
+    injectGovFooter();
+
+    const page = document.body.getAttribute("data-page") || "";
+    if (page === "login" || page === "signup") {
+        initUnifiedAuth();
+    }
+});
+

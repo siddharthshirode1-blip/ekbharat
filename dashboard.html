@@ -1,252 +1,210 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>National Dashboard | EkBhaarat | भारत सरकार</title>
-<link rel="stylesheet" href="style.css">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>National Dashboard | EkBhaarat | भारत सरकार</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Merriweather:wght@400;700&display=swap"
+    rel="stylesheet">
 </head>
+
 <body data-page="dashboard">
 
-<!-- GOVERNMENT OF INDIA TOPBAR -->
-<div class="gov-top-bar">
-  <div class="gov-tricolor-stripe" aria-hidden="true"></div>
-  <div class="gov-topbar-content">
-    <div class="gov-topbar-left">
-      <span class="gov-emblem-badge"><span class="flag-icon">🇮🇳</span> भारत सरकार | Government of India</span>
-      <span class="divider">|</span>
-      <span class="gov-portal-tag">राष्ट्रीय सरकारी सूचना एवं जन कल्याण मंच</span>
-    </div>
-    <div class="gov-topbar-right">
-      <div class="gov-access-controls" aria-label="Accessibility options">
-        <button class="gov-access-btn" title="Decrease font size" onclick="adjustGovFontSize(-1)">A-</button>
-        <button class="gov-access-btn" title="Default font size" onclick="adjustGovFontSize(0)">A</button>
-        <button class="gov-access-btn" title="Increase font size" onclick="adjustGovFontSize(1)">A+</button>
-      </div>
-      <span class="gov-helpline">📞 <span>1800-11-0001</span> (Toll-Free)</span>
-    </div>
-  </div>
-</div>
-
-<!-- NAVBAR -->
-<header class="navbar">
-  <div class="logo-area">
-    <div class="logo-symbol">
-      <svg viewBox="0 0 24 24" width="24" height="24" stroke="#FF671F" stroke-width="1.3" fill="none">
-        <circle cx="12" cy="12" r="10" stroke="#C59B27" stroke-width="1.8"/>
-        <circle cx="12" cy="12" r="2.2" fill="#FF671F"/>
-        <line x1="12" y1="2" x2="12" y2="22"/>
-        <line x1="2" y1="12" x2="22" y2="12"/>
-        <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/>
-        <line x1="4.93" y1="19.07" x2="19.07" y2="4.93"/>
-        <line x1="7.05" y1="2.68" x2="16.95" y2="21.32"/>
-        <line x1="2.68" y1="7.05" x2="21.32" y2="16.95"/>
-        <line x1="2.68" y1="16.95" x2="21.32" y2="7.05"/>
-        <line x1="7.05" y1="21.32" x2="16.95" y2="2.68"/>
-        <line x1="9.41" y1="2.31" x2="14.59" y2="21.69"/>
-        <line x1="2.31" y1="9.41" x2="21.69" y2="14.59"/>
-        <line x1="2.31" y1="14.59" x2="21.69" y2="9.41"/>
-        <line x1="9.41" y1="21.69" x2="14.59" y2="2.31"/>
-      </svg>
-    </div>
-    <div class="logo-text">
-      <h2>EkBhaarat</h2>
-      <span>भारत सरकार • National Governance Dashboard</span>
-    </div>
-  </div>
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="dashboard.html" class="active">Dashboard</a>
-    <a href="schemes.html">Schemes</a>
-    <a href="map.html">State Map</a>
-    <a href="beneficiaries.html">Beneficiaries</a>
-    <a href="complaints.html">Grievance Portal</a>
-  </nav>
-  <div class="nav-actions">
-    <button class="ai-nav-btn" onclick="askAI()">✦ Ask AI</button>
-    <button class="account-nav-btn" onclick="window.location.href='account.html'">🇮🇳 Citizen Account</button>
-  </div>
-</header>
-
-<main>
-  <!-- DASHBOARD HERO -->
-  <section class="page-hero">
-    <span class="section-label">NATIONAL GOVERNANCE INTELLIGENCE</span>
-    <h1>EkBhaarat <span>National Dashboard.</span></h1>
-    <p>Real-time citizen impact indicators, Direct Benefit Transfer (DBT) metrics, flagship welfare schemes, and public grievance resolution monitoring.</p>
-  </section>
-
-  <!-- DASHBOARD STATS -->
-  <section class="beneficiary-stats">
-    <div class="beneficiary-stat-card">
-      <div class="stat-icon">🏛️</div>
-      <small>Central Outlay (FY 2026-27)</small>
-      <strong>₹14.8 Lakh Cr</strong>
-      <p>Allocated for citizen welfare programmes</p>
-    </div>
-    <div class="beneficiary-stat-card">
-      <div class="stat-icon">👥</div>
-      <small>Verified DBT Beneficiaries</small>
-      <strong>94.2 Crore</strong>
-      <p>Direct bank transfers completed</p>
-    </div>
-    <div class="beneficiary-stat-card">
-      <div class="stat-icon">📜</div>
-      <small>Active Flagship Schemes</small>
-      <strong>100+ Programmes</strong>
-      <p>Central Sector & Centrally Sponsored</p>
-    </div>
-    <div class="beneficiary-stat-card">
-      <div class="stat-icon">✓</div>
-      <small>Public Grievance Resolution</small>
-      <strong>93.4%</strong>
-      <p>Average resolution within 30 days</p>
-    </div>
-  </section>
-
-  <!-- MAIN DASHBOARD GRID -->
-  <section class="dashboard-grid">
-    <!-- FLAGSHIP SCHEMES -->
-    <div class="scheme">
-      <div class="details-header">
-        <div>
-          <span class="private-label">CENTRAL FLAGSHIP</span>
-          <h2 style="font-size: 20px; font-weight: 800; margin-top: 6px; color: var(--gov-navy-dark);">Welfare Schemes</h2>
-        </div>
-        <span class="trend-badge" style="background: var(--gov-green-light); color: var(--gov-green);">● Active</span>
-      </div>
-      <p style="margin-top: 8px; font-size: 13px; color: var(--gov-text-secondary);">Key active national flagship initiatives for direct public benefit.</p>
-      
-      <div style="margin-top: 18px; display: flex; flex-direction: column; gap: 12px;">
-        <div style="padding: 12px; border: 1px solid var(--gov-border-light); border-radius: 8px; background: var(--gov-navy-light);">
-          <strong style="color: var(--gov-navy-dark); font-size: 13px; display: block;">PM-KISAN Samman Nidhi</strong>
-          <span style="font-size: 11px; color: var(--gov-text-muted);">₹6,000/year direct transfer • 11.5 Cr Farmers</span>
-        </div>
-        <div style="padding: 12px; border: 1px solid var(--gov-border-light); border-radius: 8px; background: var(--gov-navy-light);">
-          <strong style="color: var(--gov-navy-dark); font-size: 13px; display: block;">Ayushman Bharat (PM-JAY)</strong>
-          <span style="font-size: 11px; color: var(--gov-text-muted);">₹5 Lakh health cover • 55 Cr Citizens</span>
-        </div>
-        <div style="padding: 12px; border: 1px solid var(--gov-border-light); border-radius: 8px; background: var(--gov-navy-light);">
-          <strong style="color: var(--gov-navy-dark); font-size: 13px; display: block;">Jal Jeevan Mission</strong>
-          <span style="font-size: 11px; color: var(--gov-text-muted);">Tap water connections • 78% Rural Coverage</span>
-        </div>
-      </div>
-      <button class="primary-btn" style="width: 100%; margin-top: 20px; padding: 11px;" onclick="window.location.href='schemes.html'">View All Schemes →</button>
-    </div>
-
-    <!-- QUICK SERVICES -->
-    <div class="info-box">
-      <div class="details-header">
-        <div>
-          <span class="private-label">CITIZEN SERVICES</span>
-          <h2 style="font-size: 20px; font-weight: 800; margin-top: 6px; color: var(--gov-navy-dark);">Quick Access</h2>
-        </div>
-      </div>
-      <p style="margin-top: 8px; font-size: 13px; color: var(--gov-text-secondary);">Direct links to national governance tools and services.</p>
-      
-      <div class="quick-links" style="margin-top: 18px;">
-        <a href="schemes.html" class="quick-link">
-          <strong style="color: var(--gov-navy-dark); font-size: 13px; display: block;">🔍 Schemes</strong>
-          <span style="font-size: 11px; color: var(--gov-text-muted);">Explore by ministry</span>
-        </a>
-        <a href="map.html" class="quick-link">
-          <strong style="color: var(--gov-navy-dark); font-size: 13px; display: block;">🗺️ State Map</strong>
-          <span style="font-size: 11px; color: var(--gov-text-muted);">Regional analytics</span>
-        </a>
-        <a href="beneficiaries.html" class="quick-link">
-          <strong style="color: var(--gov-navy-dark); font-size: 13px; display: block;">📊 DBT Data</strong>
-          <span style="font-size: 11px; color: var(--gov-text-muted);">Disbursement stats</span>
-        </a>
-        <a href="complaints.html" class="quick-link">
-          <strong style="color: var(--gov-navy-dark); font-size: 13px; display: block;">🏛️ Grievance</strong>
-          <span style="font-size: 11px; color: var(--gov-text-muted);">Lodge & track issue</span>
-        </a>
-      </div>
-      
-      <div style="margin-top: 22px; padding: 14px; border: 1px solid var(--gov-border-light); border-radius: 10px; background: var(--gov-navy-light);">
-        <strong style="font-size: 12px; color: var(--gov-navy-dark); display: block;">Citizen Helpline (CPGRAMS)</strong>
-        <p style="font-size: 11px; color: var(--gov-text-secondary); margin-top: 4px;">Toll-free portal assistance available 24x7 for all Indian citizens.</p>
-        <span style="display: inline-block; margin-top: 6px; font-weight: 800; color: var(--gov-saffron-dark); font-size: 12px;">📞 1800-11-0001</span>
-      </div>
-    </div>
-
-    <!-- DBT DISBURSEMENT TRENDS -->
-    <div class="trend-card">
-      <div class="details-header">
-        <div>
-          <span class="private-label">DBT GROWTH</span>
-          <h2 style="font-size: 20px; font-weight: 800; margin-top: 6px; color: var(--gov-navy-dark);">Annual Growth</h2>
-        </div>
-        <span class="trend-badge">+18.4% YoY</span>
-      </div>
-      <p style="margin-top: 8px; font-size: 13px; color: var(--gov-text-secondary);">Direct Benefit Transfer growth trajectory (in ₹ Lakh Crore).</p>
-      
-      <div class="trend-bars" style="margin-top: 25px;">
-        <div class="trend-column">
-          <div class="trend-bar" style="height: 48%;"></div>
-          <span class="trend-value">₹4.2L</span>
-          <span style="font-size: 10px; font-weight: 700; color: var(--gov-text-muted);">2023</span>
-        </div>
-        <div class="trend-column">
-          <div class="trend-bar" style="height: 62%;"></div>
-          <span class="trend-value">₹5.8L</span>
-          <span style="font-size: 10px; font-weight: 700; color: var(--gov-text-muted);">2024</span>
-        </div>
-        <div class="trend-column">
-          <div class="trend-bar" style="height: 78%;"></div>
-          <span class="trend-value">₹6.9L</span>
-          <span style="font-size: 10px; font-weight: 700; color: var(--gov-text-muted);">2025</span>
-        </div>
-        <div class="trend-column">
-          <div class="trend-bar" style="height: 94%;"></div>
-          <span class="trend-value">₹8.1L</span>
-          <span style="font-size: 10px; font-weight: 700; color: var(--gov-navy); font-weight: 800;">2026</span>
-        </div>
-      </div>
-      <button class="secondary-btn" style="width: 100%; margin-top: 25px; padding: 11px;" onclick="window.location.href='beneficiaries.html'">Detailed DBT Analytics →</button>
-    </div>
-  </section>
-</main>
-
-<!-- GOVERNMENT FOOTER -->
-<footer>
-  <div class="footer-top">
-    <div class="footer-brand">
-      <div class="logo-symbol small">
-        <svg viewBox="0 0 24 24" width="20" height="20" stroke="#FF671F" stroke-width="1.3" fill="none">
-          <circle cx="12" cy="12" r="10" stroke="#C59B27" stroke-width="1.8"/>
-          <circle cx="12" cy="12" r="2.2" fill="#FF671F"/>
-          <line x1="12" y1="2" x2="12" y2="22"/>
-          <line x1="2" y1="12" x2="22" y2="12"/>
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="logo-area">
+      <div class="logo-symbol">
+        <svg viewBox="0 0 24 24" width="24" height="24" stroke="#FF671F" stroke-width="1.3" fill="none">
+          <circle cx="12" cy="12" r="10" stroke="#C59B27" stroke-width="1.8"></circle>
+          <circle cx="12" cy="12" r="2.2" fill="#FF671F"></circle>
+          <line x1="12" y1="2" x2="12" y2="22"></line>
+          <line x1="2" y1="12" x2="22" y2="12"></line>
+          <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line>
+          <line x1="4.93" y1="19.07" x2="19.07" y2="4.93"></line>
+          <line x1="7.05" y1="2.68" x2="16.95" y2="21.32"></line>
+          <line x1="2.68" y1="7.05" x2="21.32" y2="16.95"></line>
+          <line x1="2.68" y1="16.95" x2="21.32" y2="7.05"></line>
+          <line x1="7.05" y1="21.32" x2="16.95" y2="2.68"></line>
+          <line x1="9.41" y1="2.31" x2="14.59" y2="21.69"></line>
+          <line x1="2.31" y1="9.41" x2="21.69" y2="14.59"></line>
+          <line x1="2.31" y1="14.59" x2="21.69" y2="9.41"></line>
+          <line x1="9.41" y1="21.69" x2="14.59" y2="2.31"></line>
         </svg>
       </div>
-      <div>
-        <strong>EkBhaarat</strong>
-        <p>National Government Intelligence & Citizen Welfare Platform</p>
+      <div class="logo-text">
+        <h2>EkBhaarat</h2>
+        <span>भारत सरकार • Government Intelligence</span>
       </div>
     </div>
-    <div class="footer-links">
-      <a href="index.html">Home</a>
-      <a href="dashboard.html">Dashboard</a>
-      <a href="schemes.html">Schemes</a>
-      <a href="map.html">State Map</a>
-      <a href="complaints.html">CPGRAMS Grievance</a>
-      <a href="account.html">Account</a>
-    </div>
-  </div>
-  <div class="footer-gov-info">
-    <div class="footer-nic-text">
-      Portal designed, developed and hosted by <strong>National Informatics Centre (NIC)</strong> for Ministry of Electronics and Information Technology, Government of India. Compliant with <strong>GIGW 3.0</strong>.
-    </div>
-    <div class="copyright">
-      © 2026 EkBhaarat. All Rights Reserved.
-    </div>
-  </div>
-</footer>
+    <nav></nav>
+    <div class="nav-actions"></div>
+  </header>
 
-<script src="script.js"></script>
+  <main>
+    <!-- DASHBOARD HERO -->
+    <section class="page-hero">
+      <span class="section-label">NATIONAL GOVERNANCE INTELLIGENCE</span>
+      <h1>EkBhaarat <span>National Dashboard.</span></h1>
+      <p>Real-time citizen impact indicators, Direct Benefit Transfer (DBT) metrics, flagship welfare schemes, and
+        public grievance resolution monitoring.</p>
+    </section>
+
+    <!-- DASHBOARD STATS -->
+    <section class="beneficiary-stats">
+      <div class="beneficiary-stat-card">
+        <div class="stat-icon">🏛️</div>
+        <small>Central Outlay (FY 2026-27)</small>
+        <strong>₹14.8 Lakh Cr</strong>
+        <p>Allocated for citizen welfare programmes</p>
+      </div>
+      <div class="beneficiary-stat-card">
+        <div class="stat-icon">👥</div>
+        <small>Verified DBT Beneficiaries</small>
+        <strong>94.2 Crore</strong>
+        <p>Direct bank transfers completed</p>
+      </div>
+      <div class="beneficiary-stat-card">
+        <div class="stat-icon">📜</div>
+        <small>Active Flagship Schemes</small>
+        <strong>100+ Programmes</strong>
+        <p>Central Sector & Centrally Sponsored</p>
+      </div>
+      <div class="beneficiary-stat-card">
+        <div class="stat-icon">✓</div>
+        <small>Public Grievance Resolution</small>
+        <strong>93.4%</strong>
+        <p>Average resolution within 30 days</p>
+      </div>
+    </section>
+
+    <!-- MAIN DASHBOARD GRID -->
+    <section class="dashboard-grid">
+      <!-- FLAGSHIP SCHEMES -->
+      <div class="scheme">
+        <div class="details-header">
+          <div>
+            <span class="private-label">CENTRAL FLAGSHIP</span>
+            <h2 style="font-size: 20px; font-weight: 800; margin-top: 6px; color: var(--gov-navy-dark);">Welfare Schemes
+            </h2>
+          </div>
+          <span class="trend-badge" style="background: var(--gov-green-light); color: var(--gov-green);">● Active</span>
+        </div>
+        <p style="margin-top: 8px; font-size: 13px; color: var(--gov-text-secondary);">Key active national flagship
+          initiatives for direct public benefit.</p>
+
+        <div style="margin-top: 18px; display: flex; flex-direction: column; gap: 12px;">
+          <div
+            style="padding: 12px; border: 1px solid var(--gov-border-light); border-radius: 8px; background: var(--gov-navy-light);">
+            <strong style="color: var(--gov-navy-dark); font-size: 13px; display: block;">PM-KISAN Samman Nidhi</strong>
+            <span style="font-size: 11px; color: var(--gov-text-muted);">₹6,000/year direct transfer • 11.5 Cr
+              Farmers</span>
+          </div>
+          <div
+            style="padding: 12px; border: 1px solid var(--gov-border-light); border-radius: 8px; background: var(--gov-navy-light);">
+            <strong style="color: var(--gov-navy-dark); font-size: 13px; display: block;">Ayushman Bharat
+              (PM-JAY)</strong>
+            <span style="font-size: 11px; color: var(--gov-text-muted);">₹5 Lakh health cover • 55 Cr Citizens</span>
+          </div>
+          <div
+            style="padding: 12px; border: 1px solid var(--gov-border-light); border-radius: 8px; background: var(--gov-navy-light);">
+            <strong style="color: var(--gov-navy-dark); font-size: 13px; display: block;">Jal Jeevan Mission</strong>
+            <span style="font-size: 11px; color: var(--gov-text-muted);">Tap water connections • 78% Rural
+              Coverage</span>
+          </div>
+        </div>
+        <button class="primary-btn" style="width: 100%; margin-top: 20px; padding: 11px;"
+          onclick="window.location.href='schemes.html'">View All Schemes →</button>
+      </div>
+
+      <!-- QUICK SERVICES -->
+      <div class="info-box">
+        <div class="details-header">
+          <div>
+            <span class="private-label">CITIZEN SERVICES</span>
+            <h2 style="font-size: 20px; font-weight: 800; margin-top: 6px; color: var(--gov-navy-dark);">Quick Access
+            </h2>
+          </div>
+        </div>
+        <p style="margin-top: 8px; font-size: 13px; color: var(--gov-text-secondary);">Direct links to national
+          governance tools and services.</p>
+
+        <div class="quick-links" style="margin-top: 18px;">
+          <a href="schemes.html" class="quick-link">
+            <strong style="color: var(--gov-navy-dark); font-size: 13px; display: block;">🔍 Schemes</strong>
+            <span style="font-size: 11px; color: var(--gov-text-muted);">Explore by ministry</span>
+          </a>
+          <a href="map.html" class="quick-link">
+            <strong style="color: var(--gov-navy-dark); font-size: 13px; display: block;">🗺️ State Map</strong>
+            <span style="font-size: 11px; color: var(--gov-text-muted);">Regional analytics</span>
+          </a>
+          <a href="beneficiaries.html" class="quick-link">
+            <strong style="color: var(--gov-navy-dark); font-size: 13px; display: block;">📊 DBT Data</strong>
+            <span style="font-size: 11px; color: var(--gov-text-muted);">Disbursement stats</span>
+          </a>
+          <a href="complaints.html" class="quick-link">
+            <strong style="color: var(--gov-navy-dark); font-size: 13px; display: block;">🏛️ Grievance</strong>
+            <span style="font-size: 11px; color: var(--gov-text-muted);">Lodge & track issue</span>
+          </a>
+        </div>
+
+        <div
+          style="margin-top: 22px; padding: 14px; border: 1px solid var(--gov-border-light); border-radius: 10px; background: var(--gov-navy-light);">
+          <strong style="font-size: 12px; color: var(--gov-navy-dark); display: block;">Citizen Support & Grievances</strong>
+          <p style="font-size: 11px; color: var(--gov-text-secondary); margin-top: 4px;">National portal digital assistance available 24x7.</p>
+          <a href="mailto:helpdesk-ekbharat@gov.in"
+            style="display: inline-block; margin-top: 6px; font-weight: 800; color: var(--gov-saffron-dark); font-size: 12px; text-decoration: none;">✉️ helpdesk-ekbharat@gov.in</a>
+        </div>
+      </div>
+
+      <!-- DBT DISBURSEMENT TRENDS -->
+      <div class="trend-card">
+        <div class="details-header">
+          <div>
+            <span class="private-label">DBT GROWTH</span>
+            <h2 style="font-size: 20px; font-weight: 800; margin-top: 6px; color: var(--gov-navy-dark);">Annual Growth
+            </h2>
+          </div>
+          <span class="trend-badge">+18.4% YoY</span>
+        </div>
+        <p style="margin-top: 8px; font-size: 13px; color: var(--gov-text-secondary);">Direct Benefit Transfer growth
+          trajectory (in ₹ Lakh Crore).</p>
+
+        <div class="trend-bars" style="margin-top: 25px;">
+          <div class="trend-column">
+            <div class="trend-bar" style="height: 48%;"></div>
+            <span class="trend-value">₹4.2L</span>
+            <span style="font-size: 10px; font-weight: 700; color: var(--gov-text-muted);">2023</span>
+          </div>
+          <div class="trend-column">
+            <div class="trend-bar" style="height: 62%;"></div>
+            <span class="trend-value">₹5.8L</span>
+            <span style="font-size: 10px; font-weight: 700; color: var(--gov-text-muted);">2024</span>
+          </div>
+          <div class="trend-column">
+            <div class="trend-bar" style="height: 78%;"></div>
+            <span class="trend-value">₹6.9L</span>
+            <span style="font-size: 10px; font-weight: 700; color: var(--gov-text-muted);">2025</span>
+          </div>
+          <div class="trend-column">
+            <div class="trend-bar" style="height: 94%;"></div>
+            <span class="trend-value">₹8.1L</span>
+            <span style="font-size: 10px; font-weight: 700; color: var(--gov-navy); font-weight: 800;">2026</span>
+          </div>
+        </div>
+        <button class="secondary-btn" style="width: 100%; margin-top: 25px; padding: 11px;"
+          onclick="window.location.href='beneficiaries.html'">Detailed DBT Analytics →</button>
+      </div>
+    </section>
+  </main>
+
+  <footer></footer>
+
+  <script src="script.js"></script>
 </body>
+
 </html>
